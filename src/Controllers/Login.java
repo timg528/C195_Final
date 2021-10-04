@@ -19,5 +19,10 @@ public class Login {
         Platform.exit();
     }
 
+    @FXML
+    private void loginButton(ActionEvent event) {
+
+    }
+
 
 }

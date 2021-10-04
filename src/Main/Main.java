@@ -1,4 +1,4 @@
-package sample;
+package Main;
 
 import Helpers.DBConnection;
 import javafx.application.Application;

@@ -21,7 +21,11 @@ public class DBConnection {
         conn=(Connection) DriverManager.getConnection(dbURL, dbUser, dbPass);
     }
 
-    public static void closeConnection() throws ClassNotFoundException, SQLException, Exception{
+    public static void closeConnection() throws ClassNotFoundException, SQLException, Exception {
         conn.close();
+    }
+
+    public static Connection getConnection() throws ClassNotFoundException, SQLException, Exception{
+        return conn;
     }
 }

@@ -1,8 +1,14 @@
 package Controllers;
 
+import Helpers.DBConnection;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class mainScreen {
     /**
@@ -21,6 +27,29 @@ public class mainScreen {
     @FXML private TableColumn appointmentCustomerIDColumn;
     @FXML private TableColumn appointmentUserIDColumn;
 
+
+    private void loadTable(){
+        // Lets start out by just populating the table
+
+    }
+
+    public static ObservableList<Appointments> getAllAppointments() {
+
+        try{
+            String sql = "SELECT * FROM appointments";
+
+            PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
+
+            ResultSet rs = ps.executeQuery();
+
+            while(rs.next()){
+                int appointmentID = rs.getInt("Appointment_ID");
+                String appointmentTitle = rs.getString("Title");
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
 
 
 }

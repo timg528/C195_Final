@@ -17,6 +17,7 @@ public class DBConnection {
 
     static Connection conn;
 
+    // Manage the connection
     public static void openConnection() throws ClassNotFoundException, SQLException, Exception{
         conn=(Connection) DriverManager.getConnection(dbURL, dbUser, dbPass);
     }
@@ -25,6 +26,8 @@ public class DBConnection {
         conn.close();
     }
 
+
+    // Get Connection
     public static Connection getConnection() throws ClassNotFoundException, SQLException, Exception{
         return conn;
     }

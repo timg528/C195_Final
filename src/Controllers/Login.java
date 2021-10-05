@@ -36,6 +36,7 @@ public class Login {
 
     // Going to separate the login logic from the login button here so I can continue with the screens
     private void loginAction() {
+        /*
         final String username = usernameField.getText();
         final String password = passwordField.getText();
 

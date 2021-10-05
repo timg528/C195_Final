@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Views.MainScreen">
+   <children>
+      <TableView fx:id="appointmentTable" layoutX="63.0" layoutY="66.0" prefHeight="404.0" prefWidth="1074.0">
+        <columns>
+          <TableColumn fx:id="appointmentIDColumn" prefWidth="75.0" text="Appointment_ID" />
+          <TableColumn fx:id="appointmentTitleColumn" prefWidth="75.0" text="Title" />
+            <TableColumn fx:id="appointmentDescriptionColumn" prefWidth="75.0" text="Description" />
+            <TableColumn fx:id="appointmentLocationColumn" prefWidth="135.0" text="Location" />
+            <TableColumn fx:id="appointmentContactColumn" prefWidth="108.0" text="Contact" />
+            <TableColumn fx:id="appointmentTypeColumn" prefWidth="87.0" text="Type" />
+            <TableColumn fx:id="appointmentStartColumn" prefWidth="140.0" text="Start Date &amp; Time" />
+            <TableColumn fx:id="appointmentEndColumn" prefWidth="125.0" text="End Date &amp; Time" />
+            <TableColumn fx:id="appointmentCustomerIDColumn" prefWidth="97.0" text="Customer_ID" />
+            <TableColumn fx:id="appointmentUserIDColumn" prefWidth="93.0" text="User_ID" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>

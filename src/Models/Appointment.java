@@ -39,5 +39,21 @@ public class Appointment {
     public void setDescription(String description){
         this.description = description;
     }
+    public void setLocation(String location) {this.location = location;}
+    public void setType(String type) {this.type = type;}
+    public void setStart(Timestamp start) {this.start = start;}
+    public void setEnd(Timestamp end) {this.end = end;}
+    public void setCustomer(int customer_id) {this.customer_id = customer_id;}
+    public void setUser(int user_id) {this.user_id = user_id;}
+
+    public int getId() { return id;}
+    public String getTitle() {return title;}
+    public String getDescription() {return description;}
+    public String getLocation() {return location;}
+    public String getType() {return type;}
+    public Timestamp getStart() {return start;}
+    public Timestamp getEnd() {return end;}
+    public int getCustomer() {return customer_id;}
+    public int getUser() {return user_id;}
 
 }

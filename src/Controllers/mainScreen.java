@@ -1,6 +1,9 @@
 package Controllers;
 
+import Models.Appointment;
+
 import Helpers.DBConnection;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
@@ -9,6 +12,7 @@ import javafx.scene.control.TableView;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 
 public class mainScreen {
     /**
@@ -33,7 +37,9 @@ public class mainScreen {
 
     }
 
-    public static ObservableList<Appointments> getAllAppointments() {
+    public static ObservableList<Appointment> getAllAppointments() {
+
+        ObservableList<Appointment> appointments = FXCollections.observableArrayList();
 
         try{
             String sql = "SELECT * FROM appointments";
@@ -45,10 +51,26 @@ public class mainScreen {
             while(rs.next()){
                 int appointmentID = rs.getInt("Appointment_ID");
                 String appointmentTitle = rs.getString("Title");
+                String appointmentDescription = rs.getString("Description");
+                String appointmentLocation = rs.getString("Location");
+                String appointmentType = rs.getString("Type");
+                Timestamp appointmentStart = rs.getTimestamp("Start");
+                Timestamp appointmentEnd = rs.getTimestamp("End");
+                int appointmentCustomer = rs.getInt("Customer_ID");
+                int appointmentUser = rs.getInt("User_ID");
+
+                Appointment A = new Appointment(appointmentID, appointmentTitle, appointmentDescription,
+                                                appointmentLocation, appointmentType, appointmentStart,
+                                                appointmentEnd, appointmentCustomer, appointmentUser);
+
+                appointments.add(A);
+
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+
+        return appointments;
     }
 
 

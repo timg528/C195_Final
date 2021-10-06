@@ -68,6 +68,10 @@ public class mainScreen {
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
         return appointments;

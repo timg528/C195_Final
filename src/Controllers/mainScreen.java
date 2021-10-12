@@ -3,18 +3,29 @@ package Controllers;
 import Models.Appointment;
 
 import Helpers.DBConnection;
+import Models.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
+import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.ResourceBundle;
 
-public class mainScreen {
+/**
+ * mainScreen Controller class
+ * @author Tim Graham
+ */
+
+public class mainScreen implements Initializable {
+
+    private final User user;
     /**
      * Alright, so here we'll see all of our appointments in a tableview
      */
@@ -31,6 +42,14 @@ public class mainScreen {
     @FXML private TableColumn appointmentCustomerIDColumn;
     @FXML private TableColumn appointmentUserIDColumn;
 
+    public mainScreen(User user) {
+        this.user = user;
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+    }
 
     private void loadTable(){
         // Lets start out by just populating the table
@@ -41,14 +60,14 @@ public class mainScreen {
 
         ObservableList<Appointment> appointments = FXCollections.observableArrayList();
 
-        try{
+        try {
             String sql = "SELECT * FROM appointments";
 
             PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
 
             ResultSet rs = ps.executeQuery();
 
-            while(rs.next()){
+            while (rs.next()) {
                 int appointmentID = rs.getInt("Appointment_ID");
                 String appointmentTitle = rs.getString("Title");
                 String appointmentDescription = rs.getString("Description");
@@ -60,22 +79,21 @@ public class mainScreen {
                 int appointmentUser = rs.getInt("User_ID");
 
                 Appointment A = new Appointment(appointmentID, appointmentTitle, appointmentDescription,
-                                                appointmentLocation, appointmentType, appointmentStart,
-                                                appointmentEnd, appointmentCustomer, appointmentUser);
+                        appointmentLocation, appointmentType, appointmentStart,
+                        appointmentEnd, appointmentCustomer, appointmentUser);
 
                 appointments.add(A);
 
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         return appointments;
     }
+
 
 
 }

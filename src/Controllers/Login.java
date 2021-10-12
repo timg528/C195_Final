@@ -1,6 +1,7 @@
 package Controllers;
 
 import Helpers.DBConnection;
+import Models.User;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -16,6 +17,7 @@ import javafx.stage.Stage;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class Login {
     /**
@@ -33,15 +35,27 @@ public class Login {
     @FXML private Button loginButton;
     @FXML private Button exitButton;
 
+
     @FXML
     private void exitProgramButton(ActionEvent event) {
         // I should use some better exit code here
         Platform.exit();
     }
 
-    // Going to separate the login logic from the login button here so I can continue with the screens
-    private void loginAction() {
-        /*
+    // I should separate out the credential checking here
+    private void checkCredentials() throws SQLException {
+
+
+    }
+
+    @FXML
+    private void loginButton(ActionEvent event) throws Exception {
+
+        // Static values for testing
+        int userID = 1;
+        String userName = "test";
+        String Password = "test";
+
         final String username = usernameField.getText();
         final String password = passwordField.getText();
 
@@ -49,35 +63,39 @@ public class Login {
 
         System.out.println(selectUser);
 
-        PreparedStatement ps = DBConnection.getConnection().prepareStatement(selectUser);
+        PreparedStatement ps = DBConnection.startConnection().prepareStatement(selectUser);
 
 
         ResultSet rs = ps.executeQuery();
 
-        // Testing to learn Result Set
-        System.out.println(rs.getInt("User_ID"));
-        /**
-         if (rs.getInt("User_ID") != 1) {
-         Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-         errorAlert.setHeaderText("Invalid credentials");
-         errorAlert.showAndWait();
-         }
-         **/
+        if(rs.next()) {
+            User user = new User(rs.getInt("User_ID"), userName, Password);
+            System.out.println("User_ID ="+user.getId());
 
-    }
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/mainScreen.fxml"));
+            mainScreen controller = new mainScreen(user);
 
-    @FXML
-    private void loginButton(ActionEvent event) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/mainScreen.fxml"));
-        mainScreen controller = new mainScreen();
+            loader.setController(controller);
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.show();
 
-        loader.setController(controller);
-        Parent root = loader.load();
-        Scene scene = new Scene(root);
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setScene(scene);
-        stage.setResizable(false);
-        stage.show();
+        } else {
+            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+            errorAlert.setHeaderText("Invalid Credentials");
+            errorAlert.showAndWait();
+        }
+
+
+
+
+
+
+
+
 
 
 

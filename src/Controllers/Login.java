@@ -4,10 +4,15 @@ import Helpers.DBConnection;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -63,7 +68,17 @@ public class Login {
 
     @FXML
     private void loginButton(ActionEvent event) throws Exception {
-        // Temporary code just to keep moving along
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/mainScreen.fxml"));
+        mainScreen controller = new mainScreen();
+
+        loader.setController(controller);
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
+
 
 
     }

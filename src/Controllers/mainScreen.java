@@ -10,12 +10,15 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
 /**
@@ -26,21 +29,23 @@ import java.util.ResourceBundle;
 public class mainScreen implements Initializable {
 
     private final User user;
+    private final static ObservableList<Appointment> appointments = FXCollections.observableArrayList();
+
     /**
      * Alright, so here we'll see all of our appointments in a tableview
      */
 
-    @FXML private TableView appointmentTable;
-    @FXML private TableColumn appointmentIDColumn;
-    @FXML private TableColumn appointmentTitleColumn;
-    @FXML private TableColumn appointmentDescriptionColumn;
-    @FXML private TableColumn appointmentLocationColumn;
-    @FXML private TableColumn appointmentContactColumn;
-    @FXML private TableColumn appointmentTypeColumn;
-    @FXML private TableColumn appointmentStartColumn;
-    @FXML private TableColumn appointmentEndColumn;
-    @FXML private TableColumn appointmentCustomerIDColumn;
-    @FXML private TableColumn appointmentUserIDColumn;
+    @FXML private TableView<Appointment> appointmentsTable;
+    @FXML private TableColumn<Appointment, Integer> appointmentIDColumn;
+    @FXML private TableColumn<Appointment, String> appointmentTitleColumn;
+    @FXML private TableColumn<Appointment, String> appointmentDescriptionColumn;
+    @FXML private TableColumn<Appointment, String> appointmentLocationColumn;
+    @FXML private TableColumn<Appointment, String> appointmentContactColumn;
+    @FXML private TableColumn<Appointment, String> appointmentTypeColumn;
+    @FXML private TableColumn<Appointment, LocalDateTime> appointmentStartColumn;
+    @FXML private TableColumn<Appointment, LocalDateTime> appointmentEndColumn;
+    @FXML private TableColumn<Appointment, Integer> appointmentCustomerIDColumn;
+    @FXML private TableColumn<Appointment, Integer> appointmentUserIDColumn;
 
     public mainScreen(User user) {
         this.user = user;
@@ -48,17 +53,30 @@ public class mainScreen implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        getAllAppointments();
+        generateAppointmentsTable();
 
     }
 
-    private void loadTable(){
-        // Lets start out by just populating the table
+    private void generateAppointmentsTable(){
+        appointmentsTable.setItems(appointments);
+        appointmentIDColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        appointmentTitleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+        appointmentDescriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
+        appointmentLocationColumn.setCellValueFactory(new PropertyValueFactory<>("location"));
+        //appointmentContactColumn.setCellValueFactory(new PropertyValueFactory<>("contact")); // Need to make call to contacts table
+        appointmentTypeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
+        appointmentStartColumn.setCellValueFactory(new PropertyValueFactory<>("start"));
+        appointmentEndColumn.setCellValueFactory(new PropertyValueFactory<>("end"));
+        appointmentCustomerIDColumn.setCellValueFactory(new PropertyValueFactory<>("customer"));
+        appointmentUserIDColumn.setCellValueFactory(new PropertyValueFactory<>("user"));
+
+
 
     }
 
     public static ObservableList<Appointment> getAllAppointments() {
 
-        ObservableList<Appointment> appointments = FXCollections.observableArrayList();
 
         try {
             String sql = "SELECT * FROM appointments";
@@ -83,6 +101,10 @@ public class mainScreen implements Initializable {
                         appointmentEnd, appointmentCustomer, appointmentUser);
 
                 appointments.add(A);
+
+            }
+            for (Appointment A: appointments) {
+                System.out.println("Appointment ID: "+A.getId());
 
             }
         } catch (SQLException throwables) {

@@ -1,7 +1,6 @@
 package Controllers;
 
 import Helpers.DBConnection;
-import Models.Appointment;
 import Models.Customer;
 import Models.User;
 import javafx.collections.FXCollections;
@@ -41,6 +40,9 @@ public class customerScreen implements Initializable {
     @FXML private TableColumn<Customer, String> customerAddressColumn;
     @FXML private TableColumn<Customer, String> customerPostCodeColumn;
     @FXML private TableColumn<Customer, String> customerPhoneColumn;
+
+
+
 
     @FXML private TextField customerIDBox;
     @FXML private TextField customerNameBox;
@@ -91,6 +93,17 @@ public class customerScreen implements Initializable {
         customerAddressColumn.setCellValueFactory(new PropertyValueFactory<>("address"));
         customerPostCodeColumn.setCellValueFactory(new PropertyValueFactory<>("postal"));
         customerPhoneColumn.setCellValueFactory(new PropertyValueFactory<>("phone"));
+
+        customersTable.getSelectionModel().selectedItemProperty().addListener(
+                (observable, oldValue, newValue) ->
+                {
+                    customerIDBox.setText(String.valueOf(newValue.getId()));
+                    customerNameBox.setText(newValue.getName());
+                    customerAddressBox.setText(newValue.getAddress());
+                    postCodeBox.setText(newValue.getPostal());
+                    customerPhoneBox.setText(newValue.getPhone());
+                }
+        );
     }
 
     private void returnToMain(Event event){

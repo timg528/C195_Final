@@ -6,18 +6,26 @@ import Helpers.DBConnection;
 import Models.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+
+import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
@@ -47,6 +55,12 @@ public class mainScreen implements Initializable {
     @FXML private TableColumn<Appointment, Integer> appointmentCustomerIDColumn;
     @FXML private TableColumn<Appointment, Integer> appointmentUserIDColumn;
 
+    @FXML private Button addAppointmentButton;
+    @FXML private Button modifyAppointmentButton;
+    @FXML private Button addCustomerButton;
+    @FXML private Button modifyCustomerButton;
+    @FXML private Button exitButton;
+
     public mainScreen(User user) {
         this.user = user;
     }
@@ -70,19 +84,12 @@ public class mainScreen implements Initializable {
         appointmentEndColumn.setCellValueFactory(new PropertyValueFactory<>("end"));
         appointmentCustomerIDColumn.setCellValueFactory(new PropertyValueFactory<>("customer"));
         appointmentUserIDColumn.setCellValueFactory(new PropertyValueFactory<>("user"));
-
-
-
     }
 
     public static ObservableList<Appointment> getAllAppointments() {
-
-
         try {
             String sql = "SELECT * FROM appointments";
-
             PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
-
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
@@ -101,21 +108,30 @@ public class mainScreen implements Initializable {
                         appointmentEnd, appointmentCustomer, appointmentUser);
 
                 appointments.add(A);
-
-            }
-            for (Appointment A: appointments) {
-                System.out.println("Appointment ID: "+A.getId());
-
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
+        } catch (Exception e) { e.printStackTrace(); }
         return appointments;
     }
 
+    @FXML private void addCustomer(Event event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/addCustomer.fxml"));
+            addCustomer controller = new addCustomer();
 
+            loader.setController(controller);
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.show();
+            } catch (IOException e) { e.printStackTrace(); }
 
+        }
 }
+
+
+
+

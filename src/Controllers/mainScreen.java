@@ -115,10 +115,10 @@ public class mainScreen implements Initializable {
         return appointments;
     }
 
-    @FXML private void addCustomer(Event event) {
+    @FXML private void customerScreen(Event event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/addCustomer.fxml"));
-            addCustomer controller = new addCustomer();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/customerScreen.fxml"));
+            customerScreen controller = new customerScreen(user);
 
             loader.setController(controller);
             Parent root = loader.load();

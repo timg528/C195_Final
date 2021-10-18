@@ -23,8 +23,7 @@
       </TableView>
       <Button fx:id="addAppointmentButton" layoutX="63.0" layoutY="573.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="127.0" text="Add Appointment" />
       <Button fx:id="modifyAppointmentButton" layoutX="63.0" layoutY="627.0" mnemonicParsing="false" text="Modify Appointment" />
-      <Button fx:id="addCustomerButton" layoutX="230.0" layoutY="573.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="127.0" text="Add Customer" />
-      <Button fx:id="modifyCustomer" layoutX="229.0" layoutY="627.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="127.0" text="Modify Customer" />
+      <Button fx:id="customerScreenButton" layoutX="230.0" layoutY="573.0" mnemonicParsing="false" onAction="#customerScreen" prefHeight="25.0" prefWidth="127.0" text="Customers" />
       <Button fx:id="exitButton" layoutX="1010.0" layoutY="749.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="127.0" text="Exit" />
    </children>
 </AnchorPane>

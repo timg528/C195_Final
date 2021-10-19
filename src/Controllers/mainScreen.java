@@ -48,7 +48,7 @@ public class mainScreen implements Initializable {
     @FXML private TableColumn<Appointment, String> appointmentTitleColumn;
     @FXML private TableColumn<Appointment, String> appointmentDescriptionColumn;
     @FXML private TableColumn<Appointment, String> appointmentLocationColumn;
-    @FXML private TableColumn<Appointment, String> appointmentContactColumn;
+    @FXML private TableColumn<Appointment, Integer> appointmentContactColumn;
     @FXML private TableColumn<Appointment, String> appointmentTypeColumn;
     @FXML private TableColumn<Appointment, LocalDateTime> appointmentStartColumn;
     @FXML private TableColumn<Appointment, LocalDateTime> appointmentEndColumn;
@@ -78,7 +78,7 @@ public class mainScreen implements Initializable {
         appointmentTitleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
         appointmentDescriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
         appointmentLocationColumn.setCellValueFactory(new PropertyValueFactory<>("location"));
-        //appointmentContactColumn.setCellValueFactory(new PropertyValueFactory<>("contact")); // Need to make call to contacts table
+        appointmentContactColumn.setCellValueFactory(new PropertyValueFactory<>("contact")); // Need to make call to contacts table
         appointmentTypeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
         appointmentStartColumn.setCellValueFactory(new PropertyValueFactory<>("start"));
         appointmentEndColumn.setCellValueFactory(new PropertyValueFactory<>("end"));
@@ -102,10 +102,11 @@ public class mainScreen implements Initializable {
                 Timestamp appointmentEnd = rs.getTimestamp("End");
                 int appointmentCustomer = rs.getInt("Customer_ID");
                 int appointmentUser = rs.getInt("User_ID");
+                int appointmentContact = rs.getInt("Contact_ID");
 
                 Appointment A = new Appointment(appointmentID, appointmentTitle, appointmentDescription,
                         appointmentLocation, appointmentType, appointmentStart,
-                        appointmentEnd, appointmentCustomer, appointmentUser);
+                        appointmentEnd, appointmentCustomer, appointmentUser, appointmentContact);
 
                 appointments.add(A);
             }

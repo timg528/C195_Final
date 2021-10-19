@@ -16,9 +16,10 @@ public class Appointment {
     private Timestamp end;
     private int customer_id;
     private int user_id;
+    private int contact_id;
 
     public Appointment(int id, String title, String description, String location, String type,
-                       Timestamp start, Timestamp end, int customer_id, int user_id) {
+                       Timestamp start, Timestamp end, int customer_id, int user_id, int contact_id) {
         setId(id);
         setTitle(title);
         setDescription(description);
@@ -28,6 +29,7 @@ public class Appointment {
         setEnd(end);
         setCustomer(customer_id);
         setUser(user_id);
+        setContact(contact_id);
     }
 
     public void setId(int id){
@@ -45,6 +47,7 @@ public class Appointment {
     public void setEnd(Timestamp end) {this.end = end;}
     public void setCustomer(int customer_id) {this.customer_id = customer_id;}
     public void setUser(int user_id) {this.user_id = user_id;}
+    public void setContact(int contact_id) {this.contact_id = contact_id;}
 
     public int getId() { return id;}
     public String getTitle() {return title;}
@@ -55,5 +58,6 @@ public class Appointment {
     public Timestamp getEnd() {return end;}
     public int getCustomer() {return customer_id;}
     public int getUser() {return user_id;}
+    public int getContact() {return contact_id;}
 
 }

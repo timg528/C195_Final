@@ -8,7 +8,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" >
+<AnchorPane prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <TextField fx:id="customerIDBox" disable="true" layoutX="151.0" layoutY="555.0" />
       <Label fx:id="customerIDLabel" layoutX="36.0" layoutY="559.0" text="Customer ID" />
@@ -22,10 +22,10 @@
       <TextField fx:id="customerNameBox" layoutX="151.0" layoutY="599.0" />
       <TextField fx:id="customerAddressBox" layoutX="161.0" layoutY="672.0" />
       <TextField fx:id="customerPhoneBox" layoutX="149.0" layoutY="636.0" />
-      <Button fx:id="createCustomerButton" layoutX="1064.0" layoutY="672.0" mnemonicParsing="false" text="Create Customer" />
+      <Button fx:id="createCustomerButton" layoutX="1064.0" layoutY="672.0" mnemonicParsing="false" onAction="#createButton" text="Create Customer" />
       <TextField fx:id="postCodeBox" layoutX="130.0" layoutY="714.0" />
       <Label fx:id="postCodeLabel" layoutX="43.0" layoutY="718.0" text="Postal Code" />
-      <Button fx:id="cancelButton" layoutX="1064.0" layoutY="739.0" mnemonicParsing="false" text="Cancel" />
+      <Button fx:id="cancelButton" layoutX="1064.0" layoutY="739.0" mnemonicParsing="false" onAction="#cancelButton" text="Cancel" />
       <TableView fx:id="customersTable" layoutX="75.0" layoutY="69.0" prefHeight="445.0" prefWidth="1063.0">
         <columns>
           <TableColumn fx:id="customerIDColumn" prefWidth="75.0" text="Customer ID" />
@@ -35,6 +35,6 @@
             <TableColumn fx:id="customerPhoneColumn" prefWidth="75.0" text="Phone Number" />
         </columns>
       </TableView>
-      <Button layoutX="1064.0" layoutY="706.0" mnemonicParsing="false" text="Update Cusotmer" />
+      <Button fx:id="updateButton" layoutX="1064.0" layoutY="706.0" mnemonicParsing="false" onAction="#updateButton" text="Update Customer" />
    </children>
 </AnchorPane>

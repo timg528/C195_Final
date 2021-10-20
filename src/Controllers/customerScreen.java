@@ -2,6 +2,7 @@ package Controllers;
 
 import Helpers.DBConnection;
 import Models.Customer;
+import Models.Location;
 import Models.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -27,6 +28,7 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class customerScreen implements Initializable {
+    private static ObservableList<Location> locations = FXCollections.observableArrayList();
 
     private final User user;
     private final static ObservableList<Customer> customers = FXCollections.observableArrayList();
@@ -58,6 +60,7 @@ public class customerScreen implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         getAllCustomers();
         generateCustomersTable();
+        generateLocations();
 
     }
 
@@ -77,7 +80,11 @@ public class customerScreen implements Initializable {
 
                 Customer C = new Customer(customerID, customerName, customerAddress, customerPostal,
                         customerDivision, customerPhone);
-                customers.add(C);
+
+                if (!customers.contains(C)) {
+                    customers.add(C);
+                }
+
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -94,6 +101,10 @@ public class customerScreen implements Initializable {
         customerPostCodeColumn.setCellValueFactory(new PropertyValueFactory<>("postal"));
         customerPhoneColumn.setCellValueFactory(new PropertyValueFactory<>("phone"));
 
+        /**
+         * Lambda Expression to dynamically fill in the text fields whenever a row
+         * in the tableview is selected
+         */
         customersTable.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) ->
                 {
@@ -106,6 +117,31 @@ public class customerScreen implements Initializable {
         );
     }
 
+    public static ObservableList<Location> generateLocations() {
+        try {
+            String sql =
+                    "SELECT d.Division_ID, d.Division, d.Country_ID, countries.Country \n" +
+                            "FROM first_level_divisions AS d \n" +
+                            "JOIN countries ON d.Country_ID = countries.Country_ID;";
+            PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                int divisionID = rs.getInt("Division_ID");
+                String divisionName = rs.getString("Division");
+                int countryID = rs.getInt("Country_ID");
+                String countryName = rs.getString("Country");
+
+                Location L = new Location(divisionID, divisionName, countryID, countryName);
+                locations.add(L);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } catch (Exception e) { e.printStackTrace();}
+        return locations;
+    }
+
+    // Button Actions
     private void returnToMain(Event event){
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/mainScreen.fxml"));
@@ -121,8 +157,16 @@ public class customerScreen implements Initializable {
         } catch (Exception e) {e.printStackTrace();}
     }
 
+
+    // On-screen Buttons
     @FXML private void cancelButton(ActionEvent event) {
         returnToMain(event);
+    }
+    @FXML private void createButton(ActionEvent event) {
+
+    }
+    @FXML private void updateButton(ActionEvent event) {
+
     }
 
 

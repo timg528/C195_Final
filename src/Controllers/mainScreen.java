@@ -73,6 +73,7 @@ public class mainScreen implements Initializable {
     }
 
     private void generateAppointmentsTable(){
+        appointmentsTable.getItems().clear();
         appointmentsTable.setItems(appointments);
         appointmentIDColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         appointmentTitleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
@@ -108,7 +109,9 @@ public class mainScreen implements Initializable {
                         appointmentLocation, appointmentType, appointmentStart,
                         appointmentEnd, appointmentCustomer, appointmentUser, appointmentContact);
 
-                appointments.add(A);
+                if(!appointments.contains(A)) {
+                    appointments.add(A);
+                }
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();

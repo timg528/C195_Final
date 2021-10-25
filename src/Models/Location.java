@@ -38,4 +38,5 @@ public class Location {
     public String getCountryName() {
         return countryName;
     }
+
 }

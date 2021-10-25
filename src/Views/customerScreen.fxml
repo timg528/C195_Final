@@ -17,8 +17,8 @@
       <Label fx:id="phoneLabel" layoutX="24.0" layoutY="640.0" text="Phone Number" />
       <Label fx:id="divisionOneLabel" layoutX="369.0" layoutY="718.0" text="Country" />
       <Label fx:id="divisionTwoLabel" layoutX="624.0" layoutY="718.0" text="State" />
-      <ComboBox fx:id="divisionOneBox" layoutX="433.0" layoutY="714.0" prefWidth="150.0" />
-      <ComboBox fx:id="divisionTwoBox" layoutX="681.0" layoutY="714.0" prefWidth="150.0" />
+      <ComboBox fx:id="countryBox" layoutX="433.0" layoutY="714.0" prefWidth="150.0" />
+      <ComboBox fx:id="stateBox" layoutX="681.0" layoutY="714.0" prefWidth="150.0" />
       <TextField fx:id="customerNameBox" layoutX="151.0" layoutY="599.0" />
       <TextField fx:id="customerAddressBox" layoutX="161.0" layoutY="672.0" />
       <TextField fx:id="customerPhoneBox" layoutX="149.0" layoutY="636.0" />

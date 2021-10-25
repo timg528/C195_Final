@@ -6,6 +6,7 @@ import Models.Location;
 import Models.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.ObservableSet;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -14,10 +15,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
@@ -25,7 +23,9 @@ import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 public class customerScreen implements Initializable {
     private static ObservableList<Location> locations = FXCollections.observableArrayList();
@@ -51,6 +51,7 @@ public class customerScreen implements Initializable {
     @FXML private TextField customerAddressBox;
     @FXML private TextField customerPhoneBox;
     @FXML private TextField postCodeBox;
+    @FXML private ComboBox countryBox;
 
 
 
@@ -139,6 +140,10 @@ public class customerScreen implements Initializable {
             throwables.printStackTrace();
         } catch (Exception e) { e.printStackTrace();}
         return locations;
+    }
+
+    public void loadCountryBox() {
+        countryBox.setItems(locations.filtered(location -> location.getCountryName()));
     }
 
     // Button Actions

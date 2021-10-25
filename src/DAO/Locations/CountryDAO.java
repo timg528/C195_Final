@@ -18,7 +18,7 @@ public class CountryDAO {
      * @throws SQLException
      * @throws Exception
      */
-    public ObservableList<Country> getAllCountries() throws SQLException, Exception {
+    public static ObservableList<Country> getAllCountries() throws SQLException, Exception {
         String sql = "SELECT * from countries";
         ObservableList<Country> allCountries = FXCollections.observableArrayList();
 

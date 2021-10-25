@@ -1,9 +1,7 @@
 package Controllers;
 
 import Helpers.DBConnection;
-import Models.Customer;
-import Models.Location;
-import Models.User;
+import Models.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableSet;
@@ -28,7 +26,6 @@ import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 public class customerScreen implements Initializable {
-    private static ObservableList<Location> locations = FXCollections.observableArrayList();
 
     private final User user;
     private final static ObservableList<Customer> customers = FXCollections.observableArrayList();
@@ -51,7 +48,8 @@ public class customerScreen implements Initializable {
     @FXML private TextField customerAddressBox;
     @FXML private TextField customerPhoneBox;
     @FXML private TextField postCodeBox;
-    @FXML private ComboBox countryBox;
+    @FXML private ComboBox<Country> countryBox;
+    @FXML private ComboBox<Division> stateBox;
 
 
 
@@ -61,7 +59,8 @@ public class customerScreen implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         getAllCustomers();
         generateCustomersTable();
-        generateLocations();
+        loadCountryBox();
+
 
     }
 
@@ -118,32 +117,14 @@ public class customerScreen implements Initializable {
         );
     }
 
-    public static ObservableList<Location> generateLocations() {
-        try {
-            String sql =
-                    "SELECT d.Division_ID, d.Division, d.Country_ID, countries.Country \n" +
-                            "FROM first_level_divisions AS d \n" +
-                            "JOIN countries ON d.Country_ID = countries.Country_ID;";
-            PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
-
-            while (rs.next()) {
-                int divisionID = rs.getInt("Division_ID");
-                String divisionName = rs.getString("Division");
-                int countryID = rs.getInt("Country_ID");
-                String countryName = rs.getString("Country");
-
-                Location L = new Location(divisionID, divisionName, countryID, countryName);
-                locations.add(L);
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        } catch (Exception e) { e.printStackTrace();}
-        return locations;
-    }
 
     public void loadCountryBox() {
-        countryBox.setItems(locations.filtered(location -> location.getCountryName()));
+        ObservableList<Country> countries = FXCollections.observableArrayList();
+        countries = Data.getCountries();
+
+
+        countryBox.setItems(countries);
+
     }
 
     // Button Actions

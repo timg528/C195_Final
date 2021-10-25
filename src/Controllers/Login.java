@@ -1,6 +1,7 @@
 package Controllers;
 
 import Helpers.DBConnection;
+import Models.Data;
 import Models.User;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -71,6 +72,7 @@ public class Login {
         if(rs.next()) {
             User user = new User(rs.getInt("User_ID"), userName, Password);
             System.out.println("User_ID ="+user.getId());
+            Data.generateAll();
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/mainScreen.fxml"));
             mainScreen controller = new mainScreen(user);

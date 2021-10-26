@@ -14,6 +14,7 @@ public class CustomerDAO {
     public static ObservableList<Customer> getAllCustomers() throws SQLException, Exception {
         String sql = "SELECT * from customers";
         ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
+        allCustomers.clear();
 
         PreparedStatement ps = DBConnection.startConnection().prepareStatement(sql);
         ResultSet rs = ps.executeQuery();

@@ -12,7 +12,7 @@ import java.sql.SQLException;
 public class CustomerDAO {
 
     public static ObservableList<Customer> getAllCustomers() throws SQLException, Exception {
-        String sql "SELECT * from customers";
+        String sql = "SELECT * from customers";
         ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
 
         PreparedStatement ps = DBConnection.startConnection().prepareStatement(sql);

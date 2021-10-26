@@ -1,6 +1,7 @@
 package Models;
 
 
+import DAO.Customers.CustomerDAO;
 import DAO.Locations.CountryDAO;
 import DAO.Locations.DivisionDAO;
 import Helpers.DBConnection;
@@ -22,6 +23,7 @@ public class Data {
     private static ObservableList<User> users = FXCollections.observableArrayList();
     private static ObservableList<Country> countries = FXCollections.observableArrayList();
     private static ObservableList<Division> divisions = FXCollections.observableArrayList();
+    private static ObservableList<Customer> customers = FXCollections.observableArrayList();
 
 
     /**
@@ -31,12 +33,14 @@ public class Data {
     public static void generateAll() throws SQLException, Exception {
 
         generateCountries();
+        generateDivisions();
+        generateCustomers();
     }
 
     /**
      * This method calls the countries table and generates a list of country objects.
      */
-    private static void generateCountries() throws SQLException, Exception {
+    public static void generateCountries() throws SQLException, Exception {
         countries.clear();
         countries = CountryDAO.getAllCountries();
     }
@@ -45,12 +49,21 @@ public class Data {
         return countries;
     }
 
-    private static void generateDivisions() throws SQLException, Exception {
+    public static void generateDivisions() throws SQLException, Exception {
         divisions.clear();
         divisions = DivisionDAO.getAllDivisions();
     }
 
     public static ObservableList<Division> getDivisions() {
         return divisions;
+    }
+
+    public static void generateCustomers() throws SQLException, Exception {
+        customers.clear();
+        customers = CustomerDAO.getAllCustomers();
+    }
+
+    public static ObservableList<Customer> getCustomers() {
+        return customers;
     }
 }

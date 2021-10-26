@@ -57,13 +57,12 @@ public class customerScreen implements Initializable {
 
 
     public void initialize(URL url, ResourceBundle rb) {
-        getAllCustomers();
         generateCustomersTable();
         loadCountryBox();
 
 
     }
-
+/*
     public static ObservableList<Customer> getAllCustomers() {
         try{
             String sql = "SELECT * FROM customers";
@@ -92,9 +91,9 @@ public class customerScreen implements Initializable {
 
         return customers;
     }
-
+*/
     private void generateCustomersTable(){
-        customersTable.setItems(customers);
+        customersTable.setItems(Data.getCustomers());
         customerIDColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         customerNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         customerAddressColumn.setCellValueFactory(new PropertyValueFactory<>("address"));
@@ -121,7 +120,6 @@ public class customerScreen implements Initializable {
     public void loadCountryBox() {
         ObservableList<Country> countries = FXCollections.observableArrayList();
         countries = Data.getCountries();
-
 
         countryBox.setItems(countries);
 

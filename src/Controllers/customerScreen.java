@@ -85,6 +85,10 @@ public class customerScreen implements Initializable {
                     customerAddressBox.setText(newValue.getAddress());
                     postCodeBox.setText(newValue.getPostal());
                     customerPhoneBox.setText(newValue.getPhone());
+                    stateBox.setValue(Data.getDivision(newValue.getDivision()));
+                    countryBox.setValue(Data.getCountry(
+                                        Data.getDivision(
+                                                newValue.getDivision()).getCountryID()));
                 }
         );
     }
@@ -100,12 +104,9 @@ public class customerScreen implements Initializable {
     @FXML private void selectDivision() {
 
        int countryID = countryBox.getSelectionModel().getSelectedItem().getCountryID();
-       ObservableList<Division> divisions = FXCollections.observableArrayList();
-       divisions = Data.getDivisions();
-       FilteredList<Division> divs = new FilteredList<>(Data.getDivisions());
-       Predicate<Division> country = d -> d.getCountryID() == countryID;
-
-       stateBox.setItems(Data.getDivisions().filtered(d -> d.getCountryID() == countryID));
+       stateBox.setItems(Data.getDivisions()
+               .filtered(d -> d.getCountryID() == countryID)
+               .sorted());
 
     }
 

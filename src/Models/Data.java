@@ -49,6 +49,15 @@ public class Data {
         return countries;
     }
 
+    public static Country getCountry(int countryID) {
+        for (Country c: countries) {
+            if (c.getCountryID() == countryID) {
+                return c;
+            }
+        }
+        return null;
+    }
+
     public static void generateDivisions() throws SQLException, Exception {
         divisions.clear();
         divisions = DivisionDAO.getAllDivisions();
@@ -56,6 +65,15 @@ public class Data {
 
     public static ObservableList<Division> getDivisions() {
         return divisions;
+    }
+
+    public static Division getDivision(int divisionID) {
+        for (Division d : divisions) {
+            if (d.getDivisionID() == divisionID) {
+                return d;
+            }
+        }
+        return null;
     }
 
     public static void generateCustomers() throws SQLException, Exception {

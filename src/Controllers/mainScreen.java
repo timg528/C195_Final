@@ -15,9 +15,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
@@ -56,11 +54,14 @@ public class mainScreen implements Initializable {
     @FXML private TableColumn<Appointment, Integer> appointmentCustomerIDColumn;
     @FXML private TableColumn<Appointment, Integer> appointmentUserIDColumn;
 
-    @FXML private Button addAppointmentButton;
-    @FXML private Button modifyAppointmentButton;
-    @FXML private Button addCustomerButton;
-    @FXML private Button modifyCustomerButton;
-    @FXML private Button exitButton;
+    @FXML private TextField appointmentIDBox, appointmentTitleBox,
+            appointmentDescriptionBox, appointmentLocationBox;
+    @FXML private DatePicker appointmentStartDateBox, appointmentEndDateBox;
+    @FXML private Spinner appointmentStartHourBox, appointmentStartMinuteBox,
+            appointmentEndHourBox, appointmentEndMinuteBox;
+
+
+
 
     public mainScreen(User user) {
         this.user = user;
@@ -85,6 +86,17 @@ public class mainScreen implements Initializable {
         appointmentEndColumn.setCellValueFactory(new PropertyValueFactory<>("end"));
         appointmentCustomerIDColumn.setCellValueFactory(new PropertyValueFactory<>("customer"));
         appointmentUserIDColumn.setCellValueFactory(new PropertyValueFactory<>("user"));
+
+        appointmentsTable.getSelectionModel().selectedItemProperty().addListener(
+                (observable, oldValue, newValue) ->
+                {
+                    appointmentIDBox.setText(String.valueOf(newValue.getId()));
+                    appointmentTitleBox.setText(String.valueOf(newValue.getTitle()));
+                    appointmentDescriptionBox.setText(String.valueOf(newValue.getDescription()));
+                    appointmentLocationBox.setText(String.valueOf(newValue.getLocation()));
+
+                }
+        );
     }
 
 

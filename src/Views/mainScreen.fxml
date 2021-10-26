@@ -38,17 +38,17 @@
       <TextField fx:id="appointmentDescriptionBox" layoutX="178.0" layoutY="564.0" />
       <TextField fx:id="appointmentLocationBox" layoutX="178.0" layoutY="602.0" />
       <Label layoutX="63.0" layoutY="606.0" text="Location" />
-      <DatePicker layoutX="179.0" layoutY="645.0" />
+      <DatePicker fx:id="appointmentStartDateBox" layoutX="179.0" layoutY="645.0" />
       <Label layoutX="64.0" layoutY="649.0" text="Start" />
-      <Spinner layoutX="443.0" layoutY="645.0" prefHeight="25.0" prefWidth="71.0" />
+      <Spinner fx:id="appointmentStartHourBox" layoutX="443.0" layoutY="645.0" prefHeight="25.0" prefWidth="71.0" />
       <Label layoutX="396.0" layoutY="649.0" text="Hour" />
-      <Spinner layoutX="601.0" layoutY="645.0" prefHeight="25.0" prefWidth="71.0" />
+      <Spinner fx:id="appointmentStartMinuteBox" layoutX="601.0" layoutY="645.0" prefHeight="25.0" prefWidth="71.0" />
       <Label layoutX="554.0" layoutY="649.0" text="Minute" />
-      <DatePicker layoutX="179.0" layoutY="681.0" />
+      <DatePicker fx:id="appointmentEndDateBox" layoutX="179.0" layoutY="681.0" />
       <Label layoutX="64.0" layoutY="685.0" text="End" />
-      <Spinner layoutX="443.0" layoutY="681.0" prefHeight="25.0" prefWidth="71.0" />
+      <Spinner fx:id="appointmentEndHourBox" layoutX="443.0" layoutY="681.0" prefHeight="25.0" prefWidth="71.0" />
       <Label layoutX="396.0" layoutY="685.0" text="Hour" />
-      <Spinner layoutX="601.0" layoutY="681.0" prefHeight="25.0" prefWidth="71.0" />
+      <Spinner fx:id="appointmentEndMinuteBox" layoutX="601.0" layoutY="681.0" prefHeight="25.0" prefWidth="71.0" />
       <Label layoutX="554.0" layoutY="685.0" text="Minute" />
    </children>
 </AnchorPane>

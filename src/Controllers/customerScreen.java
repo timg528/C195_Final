@@ -5,6 +5,7 @@ import Models.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableSet;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -23,6 +24,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class customerScreen implements Initializable {
@@ -62,36 +64,7 @@ public class customerScreen implements Initializable {
 
 
     }
-/*
-    public static ObservableList<Customer> getAllCustomers() {
-        try{
-            String sql = "SELECT * FROM customers";
-            PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
 
-            while (rs.next()) {
-                int customerID = rs.getInt("Customer_ID");
-                String customerName = rs.getString("Customer_Name");
-                String customerAddress = rs.getString("Address");
-                String customerPostal = rs.getString("Postal_Code");
-                String customerPhone = rs.getString("Phone");
-                int customerDivision = rs.getInt("Division_ID");
-
-                Customer C = new Customer(customerID, customerName, customerAddress, customerPostal,
-                        customerDivision, customerPhone);
-
-                if (!customers.contains(C)) {
-                    customers.add(C);
-                }
-
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        } catch (Exception e) { e.printStackTrace(); }
-
-        return customers;
-    }
-*/
     private void generateCustomersTable(){
         customersTable.setItems(Data.getCustomers());
         customerIDColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -117,13 +90,26 @@ public class customerScreen implements Initializable {
     }
 
 
-    public void loadCountryBox() {
+    private void loadCountryBox() {
         ObservableList<Country> countries = FXCollections.observableArrayList();
         countries = Data.getCountries();
 
         countryBox.setItems(countries);
+    }
+
+    @FXML private void selectDivision() {
+
+       int countryID = countryBox.getSelectionModel().getSelectedItem().getCountryID();
+       ObservableList<Division> divisions = FXCollections.observableArrayList();
+       divisions = Data.getDivisions();
+       FilteredList<Division> divs = new FilteredList<>(Data.getDivisions());
+       Predicate<Division> country = d -> d.getCountryID() == countryID;
+
+       stateBox.setItems(Data.getDivisions().filtered(d -> d.getCountryID() == countryID));
 
     }
+
+
 
     // Button Actions
     private void returnToMain(Event event){
@@ -153,5 +139,8 @@ public class customerScreen implements Initializable {
 
     }
 
+    @FXML private void clearButton(ActionEvent event) {
+
+    }
 
 }

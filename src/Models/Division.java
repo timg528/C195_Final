@@ -64,4 +64,8 @@ public class Division {
     public String getDivisionName() {
         return divisionName;
     }
+
+    public String toString() {
+        return divisionName;
+    }
 }

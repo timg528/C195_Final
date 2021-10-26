@@ -1,6 +1,7 @@
 package Models;
 
 
+import DAO.Appointments.AppointmentDAO;
 import DAO.Customers.CustomerDAO;
 import DAO.Locations.CountryDAO;
 import DAO.Locations.DivisionDAO;
@@ -24,6 +25,7 @@ public class Data {
     private static ObservableList<Country> countries = FXCollections.observableArrayList();
     private static ObservableList<Division> divisions = FXCollections.observableArrayList();
     private static ObservableList<Customer> customers = FXCollections.observableArrayList();
+    private static ObservableList<Appointment> appointments = FXCollections.observableArrayList();
 
 
     /**
@@ -35,6 +37,7 @@ public class Data {
         generateCountries();
         generateDivisions();
         generateCustomers();
+        generateAppointments();
     }
 
     /**
@@ -83,5 +86,14 @@ public class Data {
 
     public static ObservableList<Customer> getCustomers() {
         return customers;
+    }
+
+    public static void generateAppointments() throws SQLException, Exception {
+        appointments.clear();
+        appointments = AppointmentDAO.getAllAppointments();
+    }
+
+    public static ObservableList<Appointment> getAppointments() {
+        return appointments;
     }
 }

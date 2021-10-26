@@ -3,6 +3,7 @@ package Controllers;
 import Models.Appointment;
 
 import Helpers.DBConnection;
+import Models.Data;
 import Models.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -67,14 +68,13 @@ public class mainScreen implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        getAllAppointments();
-        generateAppointmentsTable();
 
+        generateAppointmentsTable();
     }
 
     private void generateAppointmentsTable(){
         appointmentsTable.getItems().clear();
-        appointmentsTable.setItems(appointments);
+        appointmentsTable.setItems(Data.getAppointments());
         appointmentIDColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         appointmentTitleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
         appointmentDescriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
@@ -87,39 +87,10 @@ public class mainScreen implements Initializable {
         appointmentUserIDColumn.setCellValueFactory(new PropertyValueFactory<>("user"));
     }
 
-    public static ObservableList<Appointment> getAllAppointments() {
-        try {
-            String sql = "SELECT * FROM appointments";
-            PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
 
-            while (rs.next()) {
-                int appointmentID = rs.getInt("Appointment_ID");
-                String appointmentTitle = rs.getString("Title");
-                String appointmentDescription = rs.getString("Description");
-                String appointmentLocation = rs.getString("Location");
-                String appointmentType = rs.getString("Type");
-                Timestamp appointmentStart = rs.getTimestamp("Start");
-                Timestamp appointmentEnd = rs.getTimestamp("End");
-                int appointmentCustomer = rs.getInt("Customer_ID");
-                int appointmentUser = rs.getInt("User_ID");
-                int appointmentContact = rs.getInt("Contact_ID");
-
-                Appointment A = new Appointment(appointmentID, appointmentTitle, appointmentDescription,
-                        appointmentLocation, appointmentType, appointmentStart,
-                        appointmentEnd, appointmentCustomer, appointmentUser, appointmentContact);
-
-                if(!appointments.contains(A)) {
-                    appointments.add(A);
-                }
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        } catch (Exception e) { e.printStackTrace(); }
-        return appointments;
-    }
-
-    @FXML private void customerScreen(Event event) {
+    // Buttons
+    @FXML
+    private void customerScreen(Event event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/customerScreen.fxml"));
             customerScreen controller = new customerScreen(user);
@@ -131,9 +102,31 @@ public class mainScreen implements Initializable {
             stage.setScene(scene);
             stage.setResizable(false);
             stage.show();
-            } catch (IOException e) { e.printStackTrace(); }
-
+            } catch (IOException e) { e.printStackTrace();
         }
+
+    }
+
+    @FXML
+    private void clearButton(Event event) {
+
+    }
+
+    @FXML
+    private void addAppointmentButton(Event event) {
+
+    }
+
+    @FXML
+    private void modifyAppointmentButton(Event event) {
+
+    }
+
+    @FXML
+    private void deleteAppointmentButton(Event event) {
+
+    }
+
 }
 
 

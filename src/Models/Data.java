@@ -21,6 +21,7 @@ import java.sql.SQLException;
  * Inventory object in the Software 1 class.
  */
 public class Data {
+    private static int currentUser = 0;        // Set to 0 for testing
     private static ObservableList<User> users = FXCollections.observableArrayList();
     private static ObservableList<Country> countries = FXCollections.observableArrayList();
     private static ObservableList<Division> divisions = FXCollections.observableArrayList();
@@ -38,6 +39,14 @@ public class Data {
         generateDivisions();
         generateCustomers();
         generateAppointments();
+    }
+
+    public static int getCurrentUser() {
+        return currentUser;
+    }
+
+    public static void setCurrentUser(int currentUser) {
+        currentUser = currentUser;
     }
 
     /**

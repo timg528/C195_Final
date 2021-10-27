@@ -72,6 +72,7 @@ public class Login {
         if(rs.next()) {
             User user = new User(rs.getInt("User_ID"), userName, Password);
             System.out.println("User_ID ="+user.getId());
+            Data.setCurrentUser(user.getId());
             Data.generateAll();
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/mainScreen.fxml"));

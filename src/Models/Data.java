@@ -89,7 +89,7 @@ public class Data {
     }
 
     public static void generateCustomers() throws SQLException, Exception {
-        customers.clear();
+//        customers.clear();
         customers = CustomerDAO.getAllCustomers();
     }
 

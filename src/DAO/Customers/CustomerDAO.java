@@ -2,16 +2,18 @@ package DAO.Customers;
 
 import Helpers.DBConnection;
 import Models.Customer;
+import Models.Data;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 
 public class CustomerDAO {
 
-    public static ObservableList<Customer> getAllCustomers() throws SQLException, Exception {
+    public static ObservableList<Customer> getAllCustomers() throws Exception {
         String sql = "SELECT * from customers";
         ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
         allCustomers.clear();
@@ -32,5 +34,28 @@ public class CustomerDAO {
             allCustomers.add(c);
         }
         return allCustomers;
+    }
+
+    public static void addCustomer(String name, String address, String postal,
+                                   String phone, int divisionID) throws Exception {
+//        String sql = "INSERT INTO customers "+
+//                    "("+Customer_Name+"," Address, Postal_Code, Phone, Division_ID, Create_Date, Last_Update)
+//        VALUES ('Testy McTestFace', '123 Fake Street', '55555', '555-555-5555', 1, CURRENT_TIMESTAMP, current_timestamp);
+
+        String sql = "INSERT INTO customers (Customer_Name, Address, Postal_Code, Phone, "+
+                     "Create_Date, Created_By, Last_Update, Last_Updated_by, Division_ID)"+
+                     "VALUES (?,?,?,?,CURRENT_TIMESTAMP,?,CURRENT_TIMESTAMP,?,?)";
+        PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
+        ps.setString(1, name);                         // Customer_Name
+        ps.setString(2,address);                       // Address
+        ps.setString(3,postal);                        // Postal_Code
+        ps.setString(4,phone);                         // Phone
+        ps.setInt(5, Data.getCurrentUser());           // Created_By
+        ps.setInt(6, Data.getCurrentUser());           // Last_Updated_By
+        ps.setInt(7, divisionID);                      // Division_ID
+
+        System.out.println(ps);
+        ps.executeUpdate();
+
     }
 }

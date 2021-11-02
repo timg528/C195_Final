@@ -2,7 +2,6 @@ package Controllers;
 
 import Models.Appointment;
 
-import Helpers.DBConnection;
 import Models.Data;
 import Models.User;
 import javafx.collections.FXCollections;
@@ -21,10 +20,6 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
@@ -36,7 +31,11 @@ import java.util.ResourceBundle;
 public class mainScreen implements Initializable {
 
     private final User user;
-    private final static ObservableList<Appointment> appointments = FXCollections.observableArrayList();
+    //private final static ObservableList<Appointment> appointments = FXCollections.observableArrayList();
+
+    private final ObservableList<String> hours = FXCollections.observableArrayList();
+    private final ObservableList<String> minutes = FXCollections.observableArrayList();
+    private final ObservableList<String> AMPM = FXCollections.observableArrayList();
 
     /**
      * Alright, so here we'll see all of our appointments in a tableview
@@ -57,18 +56,30 @@ public class mainScreen implements Initializable {
     @FXML private TextField appointmentIDBox, appointmentTitleBox,
             appointmentDescriptionBox, appointmentLocationBox;
     @FXML private DatePicker appointmentStartDateBox, appointmentEndDateBox;
-    @FXML private Spinner appointmentStartHourBox, appointmentStartMinuteBox,
-            appointmentEndHourBox, appointmentEndMinuteBox;
-
-
+    @FXML private ComboBox<String> startHourBox, startMinuteBox, endHourBox, endMinuteBox,
+                                    startAMPM, endAMPM;
 
 
     public mainScreen(User user) {
+
         this.user = user;
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        hours.addAll("0","1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12",
+                          "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23");
+
+        minutes.addAll("0", "15", "30", "45");
+        AMPM.addAll("AM", "PM");
+
+        startHourBox.setItems(hours);
+        startMinuteBox.setItems(minutes);
+        endHourBox.setItems(hours);
+        endMinuteBox.setItems(minutes);
+
+
+
 
         generateAppointmentsTable();
     }
@@ -80,7 +91,7 @@ public class mainScreen implements Initializable {
         appointmentTitleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
         appointmentDescriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
         appointmentLocationColumn.setCellValueFactory(new PropertyValueFactory<>("location"));
-        appointmentContactColumn.setCellValueFactory(new PropertyValueFactory<>("contact")); // Need to make call to contacts table
+        appointmentContactColumn.setCellValueFactory(new PropertyValueFactory<>("contact"));
         appointmentTypeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
         appointmentStartColumn.setCellValueFactory(new PropertyValueFactory<>("start"));
         appointmentEndColumn.setCellValueFactory(new PropertyValueFactory<>("end"));
@@ -94,10 +105,24 @@ public class mainScreen implements Initializable {
                     appointmentTitleBox.setText(String.valueOf(newValue.getTitle()));
                     appointmentDescriptionBox.setText(String.valueOf(newValue.getDescription()));
                     appointmentLocationBox.setText(String.valueOf(newValue.getLocation()));
+                    appointmentStartDateBox.setValue(newValue.getStart().toLocalDateTime().toLocalDate());
+                    appointmentEndDateBox.setValue(newValue.getEnd().toLocalDateTime().toLocalDate());
+                    startHourBox.setValue(String.valueOf(newValue.getStart().toLocalDateTime().
+                            toLocalTime().getHour()));
+                    startMinuteBox.setValue(String.valueOf(newValue.getStart().toLocalDateTime().
+                            toLocalTime().getMinute()));
+                    endHourBox.setValue(String.valueOf(newValue.getEnd().toLocalDateTime().toLocalTime().
+                            getHour()));
+                    endMinuteBox.setValue(String.valueOf(newValue.getEnd().toLocalDateTime().toLocalTime().
+                            getMinute()));
+
+
 
                 }
         );
     }
+
+
 
 
     // Buttons

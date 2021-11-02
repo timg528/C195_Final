@@ -26,6 +26,7 @@ public class AppointmentDAO {
             String appointmentDescription = rs.getString("Description");
             String appointmentLocation = rs.getString("Location");
             String appointmentType = rs.getString("Type");
+            // Need to insert code here that gets the user's local time and changes it
             Timestamp appointmentStart = rs.getTimestamp("Start");
             Timestamp appointmentEnd = rs.getTimestamp("End");
             int appointmentCustomer = rs.getInt("Customer_ID");

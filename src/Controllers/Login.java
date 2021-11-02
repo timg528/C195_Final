@@ -62,9 +62,7 @@ public class Login {
 
         String selectUser = "Select User_ID FROM users WHERE User_Name = '"+username+"' AND Password = '"+password+"'";
 
-        System.out.println(selectUser);
-
-        PreparedStatement ps = DBConnection.startConnection().prepareStatement(selectUser);
+        PreparedStatement ps = DBConnection.getConnection().prepareStatement(selectUser);
 
 
         ResultSet rs = ps.executeQuery();

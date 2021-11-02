@@ -8,7 +8,7 @@ import java.sql.SQLException;
 
 public class DBConnection {
 
-    private static final String sqlDriver = "com.mysql.jdbc.Driver"; //Not sure if this is used
+   // private static final String sqlDriver = "com.mysql.jdbc.Driver"; //Not sure if this is used
 
     private static final String dbName="client_schedule";
     private static final String dbURL="jdbc:mysql://localhost:3306/"+dbName;
@@ -17,30 +17,18 @@ public class DBConnection {
 
     public static Connection conn = null;
 
-    public static Connection startConnection() {
-        try {
-            Class.forName(sqlDriver);
-            conn = DriverManager.getConnection(dbURL, dbUser, dbPass);
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        } catch (ClassNotFoundException e) {
-            System.out.println(e.getMessage());
-        }
+    public static Connection startConnection() throws Exception {
+        conn = DriverManager.getConnection(dbURL, dbUser, dbPass);
         return conn;
     }
-    // Manage the connection
-    public static void openConnection() throws ClassNotFoundException, SQLException, Exception{
-        conn=(Connection) DriverManager.getConnection(dbURL, dbUser, dbPass);
 
-    }
-
-    public static void closeConnection() throws ClassNotFoundException, SQLException, Exception {
+    public static void closeConnection() throws Exception {
         conn.close();
     }
 
 
     // Get Connection
-    public static Connection getConnection() {
+    public static Connection getConnection() throws Exception {
         return conn;
     }
 }

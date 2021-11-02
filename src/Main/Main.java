@@ -21,7 +21,7 @@ public class Main extends Application {
     public static void main(String[] args) {
 
         try{
-            DBConnection.openConnection();
+            DBConnection.startConnection();
         } catch (Exception e){
             e.printStackTrace();
         }

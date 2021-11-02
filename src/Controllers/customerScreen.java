@@ -21,7 +21,7 @@ import java.util.ResourceBundle;
 public class customerScreen implements Initializable {
 
     private final User user;
-    private final static ObservableList<Customer> customers = FXCollections.observableArrayList();
+//    private final static ObservableList<Customer> customers = FXCollections.observableArrayList();
 
     @FXML private Button createCustomerButton;
     @FXML private Button cancelButton;
@@ -57,6 +57,7 @@ public class customerScreen implements Initializable {
     }
 
     private void generateCustomersTable(){
+        customersTable.getSelectionModel().clearSelection();
         customersTable.setItems(Data.getCustomers());
         customerIDColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         customerNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -68,19 +69,23 @@ public class customerScreen implements Initializable {
          * Lambda Expression to dynamically fill in the text fields whenever a row
          * in the tableview is selected
          */
+
         customersTable.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) ->
                 {
-                    customerIDBox.setText(String.valueOf(newValue.getId()));
-                    customerNameBox.setText(newValue.getName());
-                    customerAddressBox.setText(newValue.getAddress());
-                    postCodeBox.setText(newValue.getPostal());
-                    customerPhoneBox.setText(newValue.getPhone());
-                    stateBox.setValue(Data.getDivision(newValue.getDivision()));
-                    countryBox.setValue(Data.getCountry(
-                                        Data.getDivision(
-                                                newValue.getDivision()).getCountryID()));
+                    if (newValue != null) {
+                        customerIDBox.setText(String.valueOf(newValue.getId()));
+                        customerNameBox.setText(newValue.getName());
+                        customerAddressBox.setText(newValue.getAddress());
+                        postCodeBox.setText(newValue.getPostal());
+                        customerPhoneBox.setText(newValue.getPhone());
+                        stateBox.setValue(Data.getDivision(newValue.getDivision()));
+                        countryBox.setValue(Data.getCountry(
+                                Data.getDivision(
+                                        newValue.getDivision()).getCountryID()));
+                    }
                 }
+
         );
     }
 
@@ -93,12 +98,24 @@ public class customerScreen implements Initializable {
     }
 
     @FXML private void selectDivision() {
+        if (countryBox.getSelectionModel().getSelectedItem() != null) {
+            int countryID = countryBox.getSelectionModel().getSelectedItem().getCountryID();
+            stateBox.setItems(Data.getDivisions()
+                    .filtered(d -> d.getCountryID() == countryID)
+                    .sorted());
+        }
 
-       int countryID = countryBox.getSelectionModel().getSelectedItem().getCountryID();
-       stateBox.setItems(Data.getDivisions()
-               .filtered(d -> d.getCountryID() == countryID)
-               .sorted());
+    }
 
+    private void clearFields() {
+        customersTable.getSelectionModel().clearSelection();
+        customerIDBox.clear();
+        customerNameBox.clear();
+        customerAddressBox.clear();
+        postCodeBox.clear();
+        customerPhoneBox.clear();
+        stateBox.setValue(null);
+        countryBox.setValue(null);
     }
 
 
@@ -130,16 +147,25 @@ public class customerScreen implements Initializable {
         CustomerDAO.addCustomer(customerNameBox.getText(), customerAddressBox.getText(),
                                 postCodeBox.getText(),customerPhoneBox.getText(),
                                 divisionID);
+        customersTable.getSelectionModel().clearSelection();
         Data.generateCustomers();
         generateCustomersTable();
 
     }
-    @FXML private void updateButton(ActionEvent event) {
+    @FXML private void updateButton(ActionEvent event) throws Exception {
+        int divisionID = stateBox.getSelectionModel().getSelectedItem().getDivisionID();
 
+        CustomerDAO.updateCustomer(Integer.parseInt(customerIDBox.getText()),
+                customerNameBox.getText(), customerAddressBox.getText(),
+                postCodeBox.getText(),customerPhoneBox.getText(),
+                divisionID);
+
+        Data.generateCustomers();
+        generateCustomersTable();
     }
 
     @FXML private void clearButton(ActionEvent event) {
-
+        clearFields();
     }
 
 }

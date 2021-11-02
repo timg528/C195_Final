@@ -8,8 +8,7 @@ import javafx.collections.ObservableList;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Timestamp;
+
 
 public class CustomerDAO {
 
@@ -38,10 +37,6 @@ public class CustomerDAO {
 
     public static void addCustomer(String name, String address, String postal,
                                    String phone, int divisionID) throws Exception {
-//        String sql = "INSERT INTO customers "+
-//                    "("+Customer_Name+"," Address, Postal_Code, Phone, Division_ID, Create_Date, Last_Update)
-//        VALUES ('Testy McTestFace', '123 Fake Street', '55555', '555-555-5555', 1, CURRENT_TIMESTAMP, current_timestamp);
-
         String sql = "INSERT INTO customers (Customer_Name, Address, Postal_Code, Phone, "+
                      "Create_Date, Created_By, Last_Update, Last_Updated_by, Division_ID)"+
                      "VALUES (?,?,?,?,CURRENT_TIMESTAMP,?,CURRENT_TIMESTAMP,?,?)";
@@ -54,7 +49,28 @@ public class CustomerDAO {
         ps.setInt(6, Data.getCurrentUser());           // Last_Updated_By
         ps.setInt(7, divisionID);                      // Division_ID
 
-        System.out.println(ps);
+        ps.executeUpdate();
+
+    }
+
+    public static void updateCustomer(int id, String name, String address, String postal,
+                                   String phone, int divisionID) throws Exception {
+
+        String sql = "UPDATE customers SET " +
+                     "Customer_Name = ?, Address = ?, Postal_Code = ?, " +
+                     "Phone = ?, Last_Update = CURRENT_TIMESTAMP, Last_Updated_by = ?, " +
+                     "Division_ID = ? " +
+                     "WHERE Customer_ID = ?";
+
+        PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
+        ps.setString(1, name);
+        ps.setString(2, address);
+        ps.setString(3, postal);
+        ps.setString(4, phone);
+        ps.setInt(5, Data.getCurrentUser());
+        ps.setInt(6, divisionID);
+        ps.setInt(7, id);
+
         ps.executeUpdate();
 
     }

@@ -61,5 +61,8 @@ public class Customer {
         return phone;
     }
 
+    @Override
+    public String toString() {return name;}
+
 
 }

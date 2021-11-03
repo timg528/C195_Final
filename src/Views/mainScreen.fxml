@@ -29,7 +29,7 @@
       <Button fx:id="addAppointmentButton" layoutX="580.0" layoutY="749.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="127.0" text="Add Appointment" />
       <Button fx:id="modifyAppointmentButton" layoutX="722.0" layoutY="749.0" mnemonicParsing="false" text="Modify Appointment" />
       <Button fx:id="customerScreenButton" layoutX="1010.0" layoutY="693.0" mnemonicParsing="false" onAction="#customerScreen" prefHeight="25.0" prefWidth="127.0" text="Customers" />
-      <Button fx:id="exitButton" layoutX="1010.0" layoutY="749.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="127.0" text="Exit" />
+      <Button fx:id="exitButton" layoutX="1010.0" layoutY="749.0" mnemonicParsing="false" onAction="#exitButton" prefHeight="25.0" prefWidth="127.0" text="Exit" />
       <Button fx:id="clearButton" layoutX="867.0" layoutY="749.0" mnemonicParsing="false" onAction="#clearButton" prefHeight="25.0" prefWidth="127.0" text="Clear" />
       <TextField fx:id="appointmentIDBox" editable="false" layoutX="178.0" layoutY="489.0" />
       <Label layoutX="63.0" layoutY="493.0" text="Appointment ID" />

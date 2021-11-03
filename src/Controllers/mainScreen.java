@@ -1,7 +1,9 @@
 package Controllers;
 
+import Helpers.DBConnection;
 import Models.*;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -190,6 +192,12 @@ public class mainScreen implements Initializable {
     @FXML
     private void deleteAppointmentButton(Event event) {
 
+    }
+
+    @FXML
+    private void exitButton(Event event) throws Exception {
+        DBConnection.closeConnection();
+        Platform.exit();
     }
 
 }

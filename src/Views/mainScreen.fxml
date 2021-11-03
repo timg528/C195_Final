@@ -4,6 +4,7 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -50,5 +51,13 @@
       <ComboBox fx:id="endHourBox" layoutX="449.0" layoutY="681.0" prefHeight="25.0" prefWidth="78.0" />
       <ComboBox fx:id="startMinuteBox" layoutX="605.0" layoutY="645.0" prefHeight="25.0" prefWidth="78.0" />
       <ComboBox fx:id="endMinuteBox" layoutX="605.0" layoutY="681.0" prefHeight="25.0" prefWidth="78.0" />
+      <RadioButton layoutX="63.0" layoutY="40.0" mnemonicParsing="false" text="Week" />
+      <RadioButton layoutX="124.0" layoutY="40.0" mnemonicParsing="false" text="Month" />
+      <ComboBox fx:id="customerBox" layoutX="600.0" layoutY="489.0" prefWidth="150.0" />
+      <ComboBox fx:id="contactBox" layoutX="600.0" layoutY="534.0" prefWidth="150.0" />
+      <ComboBox fx:id="userBox" layoutX="600.0" layoutY="577.0" prefWidth="150.0" />
+      <Label layoutX="513.0" layoutY="493.0" text="Customer" />
+      <Label layoutX="513.0" layoutY="538.0" text="Contact" />
+      <Label layoutX="518.0" layoutY="581.0" text="User" />
    </children>
 </AnchorPane>

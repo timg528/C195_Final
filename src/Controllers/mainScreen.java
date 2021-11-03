@@ -86,6 +86,7 @@ public class mainScreen implements Initializable {
 
         contactBox.setItems(Data.getContacts().sorted());
         customerBox.setItems(Data.getCustomers().sorted());
+        userBox.setItems(Data.getUsers().sorted());
 
 
     }
@@ -123,6 +124,7 @@ public class mainScreen implements Initializable {
                             getMinute()));
                     contactBox.setValue(Data.getContact(newValue.getContact()));
                     customerBox.setValue(Data.getCustomer(newValue.getCustomer()));
+                    userBox.setValue(Data.getUser(newValue.getUser()));
 
 
 

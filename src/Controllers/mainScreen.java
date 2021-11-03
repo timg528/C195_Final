@@ -108,29 +108,45 @@ public class mainScreen implements Initializable {
         appointmentsTable.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) ->
                 {
-                    appointmentIDBox.setText(String.valueOf(newValue.getId()));
-                    appointmentTitleBox.setText(String.valueOf(newValue.getTitle()));
-                    appointmentDescriptionBox.setText(String.valueOf(newValue.getDescription()));
-                    appointmentLocationBox.setText(String.valueOf(newValue.getLocation()));
-                    appointmentStartDateBox.setValue(newValue.getStart().toLocalDateTime().toLocalDate());
-                    appointmentEndDateBox.setValue(newValue.getEnd().toLocalDateTime().toLocalDate());
-                    startHourBox.setValue(String.valueOf(newValue.getStart().toLocalDateTime().
-                            toLocalTime().getHour()));
-                    startMinuteBox.setValue(String.valueOf(newValue.getStart().toLocalDateTime().
-                            toLocalTime().getMinute()));
-                    endHourBox.setValue(String.valueOf(newValue.getEnd().toLocalDateTime().toLocalTime().
-                            getHour()));
-                    endMinuteBox.setValue(String.valueOf(newValue.getEnd().toLocalDateTime().toLocalTime().
-                            getMinute()));
-                    contactBox.setValue(Data.getContact(newValue.getContact()));
-                    customerBox.setValue(Data.getCustomer(newValue.getCustomer()));
-                    userBox.setValue(Data.getUser(newValue.getUser()));
-
-
-
+                    if (newValue != null) {
+                        appointmentIDBox.setText(String.valueOf(newValue.getId()));
+                        appointmentTitleBox.setText(String.valueOf(newValue.getTitle()));
+                        appointmentDescriptionBox.setText(String.valueOf(newValue.getDescription()));
+                        appointmentLocationBox.setText(String.valueOf(newValue.getLocation()));
+                        appointmentStartDateBox.setValue(newValue.getStart().toLocalDateTime().toLocalDate());
+                        appointmentEndDateBox.setValue(newValue.getEnd().toLocalDateTime().toLocalDate());
+                        startHourBox.setValue(String.valueOf(newValue.getStart().toLocalDateTime().
+                                toLocalTime().getHour()));
+                        startMinuteBox.setValue(String.valueOf(newValue.getStart().toLocalDateTime().
+                                toLocalTime().getMinute()));
+                        endHourBox.setValue(String.valueOf(newValue.getEnd().toLocalDateTime().toLocalTime().
+                                getHour()));
+                        endMinuteBox.setValue(String.valueOf(newValue.getEnd().toLocalDateTime().toLocalTime().
+                                getMinute()));
+                        contactBox.setValue(Data.getContact(newValue.getContact()));
+                        customerBox.setValue(Data.getCustomer(newValue.getCustomer()));
+                        userBox.setValue(Data.getUser(newValue.getUser()));
+                    }
 
                 }
         );
+    }
+
+    private void clearFields() {
+        appointmentsTable.getSelectionModel().clearSelection();
+        appointmentIDBox.clear();
+        appointmentTitleBox.clear();
+        appointmentDescriptionBox.clear();
+        appointmentLocationBox.clear();
+        appointmentStartDateBox.getEditor().clear();
+        appointmentEndDateBox.getEditor().clear();
+        startHourBox.setValue(null);
+        startMinuteBox.setValue(null);
+        endHourBox.setValue(null);
+        endMinuteBox.setValue(null);
+        contactBox.setValue(null);
+        customerBox.setValue(null);
+        userBox.setValue(null);
     }
 
 
@@ -157,6 +173,7 @@ public class mainScreen implements Initializable {
 
     @FXML
     private void clearButton(Event event) {
+        clearFields();
 
     }
 

@@ -25,6 +25,8 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
+import static Helpers.appointmentValidator.appointmentValidator;
+
 /**
  * mainScreen Controller class
  * @author Tim Graham
@@ -208,6 +210,18 @@ public class mainScreen implements Initializable {
 
         Timestamp end = Timestamp.valueOf(appointmentEndDateBox.getValue().toString() + " " +
                 endHourBox.getValue() + ":" + endMinuteBox.getValue() + ":00");
+
+        appointmentValidator(
+                Integer.parseInt(appointmentIDBox.getText()),
+                appointmentTitleBox.getText(),
+                appointmentDescriptionBox.getText(),
+                appointmentLocationBox.getText(),
+                appointmentTypeBox.getText(),
+                start, end,
+                customerBox.getSelectionModel().getSelectedItem().getId(),
+                userBox.getSelectionModel().getSelectedItem().getId(),
+                contactBox.getSelectionModel().getSelectedItem().getContactID()
+                );
 
         AppointmentDAO.updateAppointment(
                 Integer.parseInt(appointmentIDBox.getText()),

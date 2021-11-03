@@ -34,6 +34,7 @@ import static Helpers.appointmentValidator.appointmentValidator;
 
 public class mainScreen implements Initializable {
 
+    private boolean passesValidation;
     private final User user;
     //private final static ObservableList<Appointment> appointments = FXCollections.observableArrayList();
 
@@ -134,6 +135,8 @@ public class mainScreen implements Initializable {
                         customerBox.setValue(Data.getCustomer(newValue.getCustomer()));
                         userBox.setValue(Data.getUser(newValue.getUser()));
 
+
+
                     }
 
                 }
@@ -164,6 +167,12 @@ public class mainScreen implements Initializable {
         Timestamp end = Timestamp.valueOf(appointmentEndDateBox.getValue().toString() + " " +
                         endHourBox.getValue() + ":" + endMinuteBox.getValue() + ":00");
 
+
+    }
+
+
+    private void validate() {
+        passesValidation = false;
 
     }
 

@@ -43,7 +43,8 @@ public class AppointmentDAO {
     }
 
     public static void addAppointment(String title, String description, String location, String type,
-                                      Timestamp start, Timestamp end, int customer_id, int contact_id)
+                                      Timestamp start, Timestamp end, int customer_id, int user_id,
+                                      int contact_id)
             throws Exception {
         String sql = "INSERT INTO appointments (Title, Description, Location, Type, Start, End, " +
                      "Create_Date, Created_By, Last_Update, Last_Updated_By, Customer_ID, User_ID, " +
@@ -61,12 +62,45 @@ public class AppointmentDAO {
         ps.setInt(7, Data.getCurrentUser());
         ps.setInt(8, Data.getCurrentUser());
         ps.setInt(9, customer_id);
-        ps.setInt(10,Data.getCurrentUser());
+        ps.setInt(10,user_id);
         ps.setInt(11, contact_id);
 
         ps.executeUpdate();
 
+    }
 
+    public static void updateAppointment(int id, String title, String description, String location,
+                                         String type, Timestamp start, Timestamp end, int customer_id,
+                                         int user_id, int contact_id )
+            throws Exception {
 
+        String sql = "UPDATE appointments SET " +
+                "Title = ?, " +
+                "Description = ?, " +
+                "Location = ?," +
+                "Type = ?," +
+                "Start = ?, " +
+                "End = ?, " +
+                "Last_Update = CURRENT_TIMESTAMP, " +
+                "Last_Updated_By = ?, " +
+                "Customer_ID = ?, " +
+                "User_ID = ?, " +
+                "Contact_ID = ? " +
+                "WHERE Appointment_ID = ?";
+
+        PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
+        ps.setString(1, title);
+        ps.setString(2, description);
+        ps.setString(3, location);
+        ps.setString(4, type);
+        ps.setTimestamp(5, start);
+        ps.setTimestamp(6, end);
+        ps.setInt(7, Data.getCurrentUser());
+        ps.setInt(8, customer_id);
+        ps.setInt(9, user_id);
+        ps.setInt(10, contact_id);
+        ps.setInt(11, id);
+
+        ps.executeUpdate();
     }
 }

@@ -7,6 +7,7 @@ import DAO.Customers.CustomerDAO;
 import DAO.Locations.CountryDAO;
 import DAO.Locations.DivisionDAO;
 
+import DAO.User.UserDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -37,6 +38,7 @@ public class Data {
         generateContacts();
         generateCustomers();
         generateAppointments();
+        generateUsers();
     }
 
     public static int getCurrentUser() {
@@ -123,6 +125,21 @@ public class Data {
         for (Contact c: contacts) {
             if (c.getContactID() == contactID) {
                 return c;
+            }
+        }
+        return null;
+    }
+
+    public static void generateUsers() throws Exception {
+        users = UserDAO.getAllUsers();
+    }
+
+    public static ObservableList<User> getUsers() {return users;}
+
+    public static User getUser(int userID) {
+        for (User u: users) {
+            if (u.getId() == userID) {
+                return u;
             }
         }
         return null;

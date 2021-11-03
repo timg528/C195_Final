@@ -1,9 +1,7 @@
 package Controllers;
 
-import Models.Appointment;
+import Models.*;
 
-import Models.Data;
-import Models.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -35,7 +33,6 @@ public class mainScreen implements Initializable {
 
     private final ObservableList<String> hours = FXCollections.observableArrayList();
     private final ObservableList<String> minutes = FXCollections.observableArrayList();
-    private final ObservableList<String> AMPM = FXCollections.observableArrayList();
 
     /**
      * Alright, so here we'll see all of our appointments in a tableview
@@ -56,8 +53,12 @@ public class mainScreen implements Initializable {
     @FXML private TextField appointmentIDBox, appointmentTitleBox,
             appointmentDescriptionBox, appointmentLocationBox;
     @FXML private DatePicker appointmentStartDateBox, appointmentEndDateBox;
-    @FXML private ComboBox<String> startHourBox, startMinuteBox, endHourBox, endMinuteBox,
-                                    startAMPM, endAMPM;
+    @FXML private ComboBox<String> startHourBox, startMinuteBox, endHourBox, endMinuteBox;
+
+
+    @FXML private ComboBox<Contact> contactBox;
+    @FXML private ComboBox<Customer> customerBox;
+    @FXML private ComboBox<User> userBox;
 
 
     public mainScreen(User user) {
@@ -67,21 +68,26 @@ public class mainScreen implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        generateComboBoxes();
+        generateAppointmentsTable();
+    }
+
+    private void generateComboBoxes() {
         hours.addAll("0","1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12",
-                          "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23");
+                "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23");
 
         minutes.addAll("0", "15", "30", "45");
-        AMPM.addAll("AM", "PM");
 
         startHourBox.setItems(hours);
         startMinuteBox.setItems(minutes);
         endHourBox.setItems(hours);
         endMinuteBox.setItems(minutes);
 
+        contactBox.setItems(Data.getContacts().sorted());
+        customerBox.setItems(Data.getCustomers().sorted());
 
 
-
-        generateAppointmentsTable();
     }
 
     private void generateAppointmentsTable(){
@@ -115,6 +121,9 @@ public class mainScreen implements Initializable {
                             getHour()));
                     endMinuteBox.setValue(String.valueOf(newValue.getEnd().toLocalDateTime().toLocalTime().
                             getMinute()));
+                    contactBox.setValue(Data.getContact(newValue.getContact()));
+                    customerBox.setValue(Data.getCustomer(newValue.getCustomer()));
+
 
 
 

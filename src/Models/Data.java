@@ -2,18 +2,14 @@ package Models;
 
 
 import DAO.Appointments.AppointmentDAO;
+import DAO.Contacts.ContactDAO;
 import DAO.Customers.CustomerDAO;
 import DAO.Locations.CountryDAO;
 import DAO.Locations.DivisionDAO;
-import Helpers.DBConnection;
-import com.mysql.cj.x.protobuf.MysqlxPrepare;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
 /**
  * This class essentially holds all of the database information locally. It was becoming more
@@ -27,16 +23,18 @@ public class Data {
     private static ObservableList<Division> divisions = FXCollections.observableArrayList();
     private static ObservableList<Customer> customers = FXCollections.observableArrayList();
     private static ObservableList<Appointment> appointments = FXCollections.observableArrayList();
+    private static ObservableList<Contact> contacts = FXCollections.observableArrayList();
 
 
     /**
      * This method is to initialize the Data object. It calls the various generate* methods
      * to copy the database locally.
      */
-    public static void generateAll() throws SQLException, Exception {
+    public static void generateAll() throws Exception {
 
         generateCountries();
         generateDivisions();
+        generateContacts();
         generateCustomers();
         generateAppointments();
     }
@@ -52,7 +50,7 @@ public class Data {
     /**
      * This method calls the countries table and generates a list of country objects.
      */
-    public static void generateCountries() throws SQLException, Exception {
+    public static void generateCountries() throws Exception {
         countries.clear();
         countries = CountryDAO.getAllCountries();
     }
@@ -70,7 +68,7 @@ public class Data {
         return null;
     }
 
-    public static void generateDivisions() throws SQLException, Exception {
+    public static void generateDivisions() throws Exception {
         divisions.clear();
         divisions = DivisionDAO.getAllDivisions();
     }
@@ -88,21 +86,45 @@ public class Data {
         return null;
     }
 
-    public static void generateCustomers() throws SQLException, Exception {
+    public static void generateCustomers() throws Exception {
 
         customers = CustomerDAO.getAllCustomers();
+    }
+
+    public static Customer getCustomer(int customerID) {
+        for (Customer c: customers) {
+            if (c.getId() == customerID) {
+                return c;
+            }
+        }
+        return null;
     }
 
     public static ObservableList<Customer> getCustomers() {
         return customers;
     }
 
-    public static void generateAppointments() throws SQLException, Exception {
+    public static void generateAppointments() throws Exception {
         appointments.clear();
         appointments = AppointmentDAO.getAllAppointments();
     }
 
     public static ObservableList<Appointment> getAppointments() {
         return appointments;
+    }
+
+    public static void generateContacts() throws Exception {
+        contacts = ContactDAO.getAllContacts();
+    }
+
+    public static ObservableList<Contact> getContacts() {return contacts;}
+
+    public static Contact getContact(int contactID) {
+        for (Contact c: contacts) {
+            if (c.getContactID() == contactID) {
+                return c;
+            }
+        }
+        return null;
     }
 }

@@ -27,7 +27,7 @@
         </columns>
       </TableView>
       <Button fx:id="addAppointmentButton" layoutX="580.0" layoutY="749.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="127.0" text="Add Appointment" />
-      <Button fx:id="modifyAppointmentButton" layoutX="722.0" layoutY="749.0" mnemonicParsing="false" text="Modify Appointment" />
+      <Button fx:id="modifyAppointmentButton" layoutX="722.0" layoutY="749.0" mnemonicParsing="false" onAction="#modifyAppointmentButton" text="Modify Appointment" />
       <Button fx:id="customerScreenButton" layoutX="1010.0" layoutY="693.0" mnemonicParsing="false" onAction="#customerScreen" prefHeight="25.0" prefWidth="127.0" text="Customers" />
       <Button fx:id="exitButton" layoutX="1010.0" layoutY="749.0" mnemonicParsing="false" onAction="#exitButton" prefHeight="25.0" prefWidth="127.0" text="Exit" />
       <Button fx:id="clearButton" layoutX="867.0" layoutY="749.0" mnemonicParsing="false" onAction="#clearButton" prefHeight="25.0" prefWidth="127.0" text="Clear" />
@@ -53,11 +53,13 @@
       <ComboBox fx:id="endMinuteBox" layoutX="605.0" layoutY="681.0" prefHeight="25.0" prefWidth="78.0" />
       <RadioButton layoutX="63.0" layoutY="40.0" mnemonicParsing="false" text="Week" />
       <RadioButton layoutX="124.0" layoutY="40.0" mnemonicParsing="false" text="Month" />
-      <ComboBox fx:id="customerBox" layoutX="600.0" layoutY="489.0" prefWidth="150.0" />
-      <ComboBox fx:id="contactBox" layoutX="600.0" layoutY="534.0" prefWidth="150.0" />
-      <ComboBox fx:id="userBox" layoutX="600.0" layoutY="577.0" prefWidth="150.0" />
-      <Label layoutX="513.0" layoutY="493.0" text="Customer" />
-      <Label layoutX="513.0" layoutY="538.0" text="Contact" />
-      <Label layoutX="518.0" layoutY="581.0" text="User" />
+      <ComboBox fx:id="customerBox" layoutX="987.0" layoutY="490.0" prefWidth="150.0" />
+      <ComboBox fx:id="contactBox" layoutX="987.0" layoutY="535.0" prefWidth="150.0" />
+      <ComboBox fx:id="userBox" layoutX="987.0" layoutY="578.0" prefWidth="150.0" />
+      <Label layoutX="900.0" layoutY="494.0" text="Customer" />
+      <Label layoutX="900.0" layoutY="539.0" text="Contact" />
+      <Label layoutX="905.0" layoutY="582.0" text="User" />
+      <Label layoutX="380.0" layoutY="538.0" text="Type" />
+      <TextField fx:id="appointmentTypeBox" layoutX="495.0" layoutY="534.0" />
    </children>
 </AnchorPane>

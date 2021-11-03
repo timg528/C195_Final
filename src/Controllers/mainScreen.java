@@ -1,5 +1,6 @@
 package Controllers;
 
+import DAO.Appointments.AppointmentDAO;
 import Helpers.DBConnection;
 import Models.*;
 
@@ -20,6 +21,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
@@ -52,7 +54,7 @@ public class mainScreen implements Initializable {
     @FXML private TableColumn<Appointment, Integer> appointmentCustomerIDColumn;
     @FXML private TableColumn<Appointment, Integer> appointmentUserIDColumn;
 
-    @FXML private TextField appointmentIDBox, appointmentTitleBox,
+    @FXML private TextField appointmentIDBox, appointmentTitleBox, appointmentTypeBox,
             appointmentDescriptionBox, appointmentLocationBox;
     @FXML private DatePicker appointmentStartDateBox, appointmentEndDateBox;
     @FXML private ComboBox<String> startHourBox, startMinuteBox, endHourBox, endMinuteBox;
@@ -113,6 +115,7 @@ public class mainScreen implements Initializable {
                     if (newValue != null) {
                         appointmentIDBox.setText(String.valueOf(newValue.getId()));
                         appointmentTitleBox.setText(String.valueOf(newValue.getTitle()));
+                        appointmentTypeBox.setText(String.valueOf(newValue.getType()));
                         appointmentDescriptionBox.setText(String.valueOf(newValue.getDescription()));
                         appointmentLocationBox.setText(String.valueOf(newValue.getLocation()));
                         appointmentStartDateBox.setValue(newValue.getStart().toLocalDateTime().toLocalDate());
@@ -128,6 +131,7 @@ public class mainScreen implements Initializable {
                         contactBox.setValue(Data.getContact(newValue.getContact()));
                         customerBox.setValue(Data.getCustomer(newValue.getCustomer()));
                         userBox.setValue(Data.getUser(newValue.getUser()));
+
                     }
 
                 }
@@ -149,6 +153,16 @@ public class mainScreen implements Initializable {
         contactBox.setValue(null);
         customerBox.setValue(null);
         userBox.setValue(null);
+    }
+
+    private void convertToTimestamps() {
+        Timestamp start = Timestamp.valueOf(appointmentStartDateBox.getValue().toString() + " " +
+                          startHourBox.getValue() + ":" + startMinuteBox.getValue() + ":00");
+
+        Timestamp end = Timestamp.valueOf(appointmentEndDateBox.getValue().toString() + " " +
+                        endHourBox.getValue() + ":" + endMinuteBox.getValue() + ":00");
+
+
     }
 
 
@@ -181,11 +195,35 @@ public class mainScreen implements Initializable {
 
     @FXML
     private void addAppointmentButton(Event event) {
+        convertToTimestamps();
 
     }
 
     @FXML
-    private void modifyAppointmentButton(Event event) {
+    private void modifyAppointmentButton(Event event) throws Exception {
+        convertToTimestamps();
+
+        Timestamp start = Timestamp.valueOf(appointmentStartDateBox.getValue().toString() + " " +
+                startHourBox.getValue() + ":" + startMinuteBox.getValue() + ":00");
+
+        Timestamp end = Timestamp.valueOf(appointmentEndDateBox.getValue().toString() + " " +
+                endHourBox.getValue() + ":" + endMinuteBox.getValue() + ":00");
+
+        AppointmentDAO.updateAppointment(
+                Integer.parseInt(appointmentIDBox.getText()),
+                appointmentTitleBox.getText(),
+                appointmentDescriptionBox.getText(),
+                appointmentLocationBox.getText(),
+                appointmentTypeBox.getText(),
+                start, end,
+                customerBox.getSelectionModel().getSelectedItem().getId(),
+                userBox.getSelectionModel().getSelectedItem().getId(),
+                contactBox.getSelectionModel().getSelectedItem().getContactID()
+                );
+        Data.generateAppointments();
+        generateAppointmentsTable();
+
+
 
     }
 

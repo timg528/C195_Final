@@ -205,8 +205,23 @@ public class mainScreen implements Initializable {
     }
 
     @FXML
-    private void addAppointmentButton(Event event) {
-        convertToTimestamps();
+    private void addAppointmentButton(Event event) throws Exception {
+        Timestamp start = Timestamp.valueOf(appointmentStartDateBox.getValue().toString() + " " +
+                startHourBox.getValue() + ":" + startMinuteBox.getValue() + ":00");
+
+        Timestamp end = Timestamp.valueOf(appointmentEndDateBox.getValue().toString() + " " +
+                endHourBox.getValue() + ":" + endMinuteBox.getValue() + ":00");
+
+        AppointmentDAO.addAppointment(
+                appointmentTitleBox.getText(),
+                appointmentDescriptionBox.getText(),
+                appointmentLocationBox.getText(),
+                appointmentTypeBox.getText(),
+                start, end,
+                customerBox.getSelectionModel().getSelectedItem().getId(),
+                userBox.getSelectionModel().getSelectedItem().getId(),
+                contactBox.getSelectionModel().getSelectedItem().getContactID()
+        );
 
     }
 

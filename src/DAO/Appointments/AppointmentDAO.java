@@ -87,6 +87,9 @@ public class AppointmentDAO {
                                          int user_id, int contact_id )
             throws Exception {
 
+        Timestamp appointmentStart = timeConversion.toUTC(start);
+        Timestamp appointmentEnd = timeConversion.toUTC(end);
+
         String sql = "UPDATE appointments SET " +
                 "Title = ?, " +
                 "Description = ?, " +
@@ -106,8 +109,8 @@ public class AppointmentDAO {
         ps.setString(2, description);
         ps.setString(3, location);
         ps.setString(4, type);
-        ps.setTimestamp(5, start);
-        ps.setTimestamp(6, end);
+        ps.setTimestamp(5, appointmentStart);
+        ps.setTimestamp(6, appointmentEnd);
         ps.setInt(7, Data.getCurrentUser());
         ps.setInt(8, customer_id);
         ps.setInt(9, user_id);

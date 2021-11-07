@@ -11,6 +11,8 @@ import DAO.User.UserDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.time.ZoneId;
+
 
 /**
  * This class essentially holds all of the database information locally. It was becoming more
@@ -18,6 +20,7 @@ import javafx.collections.ObservableList;
  * Inventory object in the Software 1 class.
  */
 public class Data {
+    private static ZoneId tz;
     private static int currentUser = 0;        // Set to 0 for testing
     private static ObservableList<User> users = FXCollections.observableArrayList();
     private static ObservableList<Country> countries = FXCollections.observableArrayList();
@@ -143,5 +146,13 @@ public class Data {
             }
         }
         return null;
+    }
+
+    public static void generateLocalData() throws Exception {
+        tz = ZoneId.systemDefault();
+    }
+
+    public static ZoneId getLocalTimezone() throws Exception {
+        return tz;
     }
 }

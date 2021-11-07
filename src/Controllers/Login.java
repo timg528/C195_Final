@@ -10,11 +10,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
+
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -35,6 +33,14 @@ public class Login {
     @FXML private PasswordField passwordField;
     @FXML private Button loginButton;
     @FXML private Button exitButton;
+    @FXML private Label systemTimezone;
+
+    public void initialize() throws Exception {
+        Data.generateLocalData();
+        systemTimezone.setText("Timezone: "+ Data.getLocalTimezone().getId());
+
+    }
+
 
 
     @FXML

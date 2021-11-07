@@ -12,8 +12,9 @@
       <PasswordField fx:id="passwordField" layoutX="525.0" layoutY="357.0" />
       <Label layoutX="461.0" layoutY="289.0" text="Username" />
       <Label layoutX="461.0" layoutY="361.0" text="Password" />
-      <Button fx:id="loginButton" layoutX="574.0" layoutY="421.0" mnemonicParsing="false" text="Log In" onAction="#loginButton" />
+      <Button fx:id="loginButton" layoutX="574.0" layoutY="421.0" mnemonicParsing="false" onAction="#loginButton" text="Log In" />
       <Button fx:id="exitButton" layoutX="582.0" layoutY="484.0" mnemonicParsing="false" onAction="#exitProgramButton" text="Exit" />
+      <Label fx:id="systemTimezone" layoutX="997.0" layoutY="755.0" text="System Timezone Not Found!" />
 
    </children>
 </AnchorPane>

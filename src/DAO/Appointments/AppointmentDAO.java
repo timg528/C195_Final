@@ -9,8 +9,12 @@ import javafx.collections.ObservableList;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class AppointmentDAO {
+    DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     public static ObservableList<Appointment> getAllAppointments() throws Exception {
         String sql = "SELECT * from appointments";
@@ -27,12 +31,19 @@ public class AppointmentDAO {
             String appointmentLocation = rs.getString("Location");
             String appointmentType = rs.getString("Type");
             // Need to insert code here that gets the user's local time and changes it
+
             Timestamp appointmentStart = rs.getTimestamp("Start");
+
             Timestamp appointmentEnd = rs.getTimestamp("End");
             int appointmentCustomer = rs.getInt("Customer_ID");
             int appointmentUser = rs.getInt("User_ID");
             int appointmentContact = rs.getInt("Contact_ID");
 
+//            System.out.print(appointmentStart.toInstant().atZone(Data.getLocalTimezone()).toLocalDateTime());
+            System.out.println("Start: " + appointmentStart.toLocalDateTime().atZone((Data.getLocalTimezone())));
+//            System.out.println(appointmentStart.toLocalDateTime());
+
+            //System.out.println("Appointment Start in timezone = " + start);
             Appointment a = new Appointment(appointmentID, appointmentTitle, appointmentDescription,
                     appointmentLocation, appointmentType, appointmentStart,
                     appointmentEnd, appointmentCustomer, appointmentUser, appointmentContact);

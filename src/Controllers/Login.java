@@ -12,11 +12,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.*;
+
 
 public class Login {
     /**
@@ -38,6 +38,29 @@ public class Login {
     public void initialize() throws Exception {
         Data.generateLocalData();
         systemTimezone.setText("Timezone: "+ Data.getLocalTimezone().getId());
+        System.out.println("Offset: "+ZoneOffset.systemDefault());
+
+        System.out.println(Data.getLocalTimezone().getRules().getOffset(Instant.now()));
+
+
+        Timestamp ts = Timestamp.valueOf(LocalDateTime.now());
+        LocalDateTime ldt = ts.toLocalDateTime();
+        ZonedDateTime zdt = ldt.atZone(ZoneId.of(ZoneId.systemDefault().toString()));
+        ZonedDateTime utczdt = zdt.withZoneSameInstant(ZoneId.of("UTC"));
+        LocalDateTime ldtIn = utczdt.toLocalDateTime();
+
+        ZonedDateTime zdtOut = ldtIn.atZone(ZoneId.of("UTC"));
+        ZonedDateTime zdtOutToLocalTZ = zdtOut.withZoneSameInstant(ZoneId.of(ZoneId.systemDefault().toString()));
+        LocalDateTime ldtOutFinal = zdtOutToLocalTZ.toLocalDateTime();
+
+        System.out.println(ts);
+        System.out.println(ldt);
+        System.out.println(zdt);
+        System.out.println(utczdt);
+        System.out.println(ldtIn);
+        System.out.println(zdtOut);
+        System.out.println(zdtOutToLocalTZ);
+        System.out.println(ldtOutFinal);
 
     }
 
@@ -50,7 +73,7 @@ public class Login {
     }
 
     // I should separate out the credential checking here
-    private void checkCredentials() throws SQLException {
+    private void checkCredentials() throws Exception {
 
 
     }

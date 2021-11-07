@@ -32,20 +32,20 @@ public class AppointmentDAO {
             String appointmentDescription = rs.getString("Description");
             String appointmentLocation = rs.getString("Location");
             String appointmentType = rs.getString("Type");
-            Timestamp start = rs.getTimestamp("Start");
-            Timestamp end = rs.getTimestamp("End");
+            Timestamp appointmentStart = rs.getTimestamp("Start");
+            Timestamp appointmentEnd = rs.getTimestamp("End");
             int appointmentCustomer = rs.getInt("Customer_ID");
             int appointmentUser = rs.getInt("User_ID");
             int appointmentContact = rs.getInt("Contact_ID");
 
 
-            Timestamp appointmentStart = timeConversion.toLocal(start);
-            Timestamp appointmentEnd = timeConversion.toLocal(end);
+            Timestamp start = timeConversion.toLocal(appointmentStart);
+            Timestamp end = timeConversion.toLocal(appointmentEnd);
 
 
             Appointment a = new Appointment(appointmentID, appointmentTitle, appointmentDescription,
-                    appointmentLocation, appointmentType, appointmentStart,
-                    appointmentEnd, appointmentCustomer, appointmentUser, appointmentContact);
+                    appointmentLocation, appointmentType, start,
+                    end, appointmentCustomer, appointmentUser, appointmentContact);
 
             allAppointments.add(a);
         }
@@ -62,13 +62,16 @@ public class AppointmentDAO {
                      "VALUES (?,?,?,?,?,?," + // Title through End
                      "CURRENT_TIMESTAMP, ?, CURRENT_TIMESTAMP, ?,?,?,?)";
 
+        Timestamp appointmentStart = timeConversion.toUTC(start);
+        Timestamp appointmentEnd = timeConversion.toUTC(end);
+
         PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
         ps.setString(1, title);
         ps.setString(2, description);
         ps.setString(3, location);
         ps.setString(4, type);
-        ps.setTimestamp(5, start);
-        ps.setTimestamp(6, end);
+        ps.setTimestamp(5, appointmentStart);
+        ps.setTimestamp(6, appointmentEnd);
         ps.setInt(7, Data.getCurrentUser());
         ps.setInt(8, Data.getCurrentUser());
         ps.setInt(9, customer_id);

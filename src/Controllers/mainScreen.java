@@ -222,12 +222,13 @@ public class mainScreen implements Initializable {
                 userBox.getSelectionModel().getSelectedItem().getId(),
                 contactBox.getSelectionModel().getSelectedItem().getContactID()
         );
+        Data.generateAppointments();
+        generateAppointmentsTable();
 
     }
 
     @FXML
     private void modifyAppointmentButton(Event event) throws Exception {
-        convertToTimestamps();
 
         Timestamp start = Timestamp.valueOf(appointmentStartDateBox.getValue().toString() + " " +
                 startHourBox.getValue() + ":" + startMinuteBox.getValue() + ":00");

@@ -171,11 +171,6 @@ public class mainScreen implements Initializable {
     }
 
 
-    private void validate() {
-        passesValidation = false;
-
-    }
-
 
 
 
@@ -212,6 +207,17 @@ public class mainScreen implements Initializable {
         Timestamp end = Timestamp.valueOf(appointmentEndDateBox.getValue().toString() + " " +
                 endHourBox.getValue() + ":" + endMinuteBox.getValue() + ":00");
 
+        passesValidation = appointmentValidator(
+                appointmentTitleBox.getText(),
+                appointmentDescriptionBox.getText(),
+                appointmentLocationBox.getText(),
+                appointmentTypeBox.getText(),
+                start, end,
+                customerBox.getSelectionModel().getSelectedItem().getId(),
+                userBox.getSelectionModel().getSelectedItem().getId(),
+                contactBox.getSelectionModel().getSelectedItem().getContactID()
+        );
+
         AppointmentDAO.addAppointment(
                 appointmentTitleBox.getText(),
                 appointmentDescriptionBox.getText(),
@@ -236,8 +242,7 @@ public class mainScreen implements Initializable {
         Timestamp end = Timestamp.valueOf(appointmentEndDateBox.getValue().toString() + " " +
                 endHourBox.getValue() + ":" + endMinuteBox.getValue() + ":00");
 
-        appointmentValidator(
-                Integer.parseInt(appointmentIDBox.getText()),
+        passesValidation = appointmentValidator(
                 appointmentTitleBox.getText(),
                 appointmentDescriptionBox.getText(),
                 appointmentLocationBox.getText(),

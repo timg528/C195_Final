@@ -18,8 +18,10 @@ public class appointmentValidator {
             String c = "The appointment's start time is after it's end!";
             popup(t, c);
             return false;
-
         }
+
+        //if (apptstart.isBefore())
+
         return true;
     }
 

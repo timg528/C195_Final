@@ -218,18 +218,21 @@ public class mainScreen implements Initializable {
                 contactBox.getSelectionModel().getSelectedItem().getContactID()
         );
 
-        AppointmentDAO.addAppointment(
-                appointmentTitleBox.getText(),
-                appointmentDescriptionBox.getText(),
-                appointmentLocationBox.getText(),
-                appointmentTypeBox.getText(),
-                start, end,
-                customerBox.getSelectionModel().getSelectedItem().getId(),
-                userBox.getSelectionModel().getSelectedItem().getId(),
-                contactBox.getSelectionModel().getSelectedItem().getContactID()
-        );
-        Data.generateAppointments();
-        generateAppointmentsTable();
+        if (passesValidation) {
+            AppointmentDAO.addAppointment(
+                    appointmentTitleBox.getText(),
+                    appointmentDescriptionBox.getText(),
+                    appointmentLocationBox.getText(),
+                    appointmentTypeBox.getText(),
+                    start, end,
+                    customerBox.getSelectionModel().getSelectedItem().getId(),
+                    userBox.getSelectionModel().getSelectedItem().getId(),
+                    contactBox.getSelectionModel().getSelectedItem().getContactID()
+            );
+            Data.generateAppointments();
+            generateAppointmentsTable();
+        }
+
 
     }
 
@@ -253,22 +256,21 @@ public class mainScreen implements Initializable {
                 contactBox.getSelectionModel().getSelectedItem().getContactID()
                 );
 
-        AppointmentDAO.updateAppointment(
-                Integer.parseInt(appointmentIDBox.getText()),
-                appointmentTitleBox.getText(),
-                appointmentDescriptionBox.getText(),
-                appointmentLocationBox.getText(),
-                appointmentTypeBox.getText(),
-                start, end,
-                customerBox.getSelectionModel().getSelectedItem().getId(),
-                userBox.getSelectionModel().getSelectedItem().getId(),
-                contactBox.getSelectionModel().getSelectedItem().getContactID()
-                );
-        Data.generateAppointments();
-        generateAppointmentsTable();
-
-
-
+        if (passesValidation) {
+            AppointmentDAO.updateAppointment(
+                    Integer.parseInt(appointmentIDBox.getText()),
+                    appointmentTitleBox.getText(),
+                    appointmentDescriptionBox.getText(),
+                    appointmentLocationBox.getText(),
+                    appointmentTypeBox.getText(),
+                    start, end,
+                    customerBox.getSelectionModel().getSelectedItem().getId(),
+                    userBox.getSelectionModel().getSelectedItem().getId(),
+                    contactBox.getSelectionModel().getSelectedItem().getContactID()
+            );
+            Data.generateAppointments();
+            generateAppointmentsTable();
+        }
     }
 
     @FXML

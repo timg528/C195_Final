@@ -40,4 +40,17 @@ public class timeConversion {
         return UTC;
     }
 
+    public static Timestamp localToEST(Timestamp timestamp) throws Exception {
+        Timestamp EST = Timestamp.valueOf(timestamp.toLocalDateTime().atZone(
+                ZoneId.of(Data.getLocalTimezone().getId())).withZoneSameInstant(
+                        ZoneId.of("EST")).toLocalDateTime());
+        return EST;
+    }
+
+    public static Timestamp utcToEST(Timestamp timestamp) throws Exception {
+        Timestamp EST = Timestamp.valueOf(timestamp.toLocalDateTime().atZone(
+                ZoneId.of("UTC")).withZoneSameInstant(
+                ZoneId.of("EST")).toLocalDateTime());
+        return EST;
+    }
 }

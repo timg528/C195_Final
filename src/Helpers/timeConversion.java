@@ -43,14 +43,14 @@ public class timeConversion {
     public static Timestamp localToEST(Timestamp timestamp) throws Exception {
         Timestamp EST = Timestamp.valueOf(timestamp.toLocalDateTime().atZone(
                 ZoneId.of(Data.getLocalTimezone().getId())).withZoneSameInstant(
-                        ZoneId.of("EST")).toLocalDateTime());
+                        ZoneId.of("-05:00")).toLocalDateTime());
         return EST;
     }
 
     public static Timestamp utcToEST(Timestamp timestamp) throws Exception {
         Timestamp EST = Timestamp.valueOf(timestamp.toLocalDateTime().atZone(
                 ZoneId.of("UTC")).withZoneSameInstant(
-                ZoneId.of("EST")).toLocalDateTime());
+                ZoneId.of("-05:00")).toLocalDateTime());
         return EST;
     }
 }

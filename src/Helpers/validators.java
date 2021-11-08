@@ -5,7 +5,7 @@ import javafx.scene.control.Alert;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
-public class appointmentValidator {
+public class validators {
 
     public static boolean appointmentValidator(String title, String description, String location,
                                           String type, Timestamp start, Timestamp end, int customer_id,

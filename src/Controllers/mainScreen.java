@@ -2,6 +2,7 @@ package Controllers;
 
 import DAO.Appointments.AppointmentDAO;
 import Helpers.DBConnection;
+import Helpers.validators;
 import Models.*;
 
 import javafx.application.Platform;
@@ -25,7 +26,6 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
-import static Helpers.appointmentValidator.appointmentValidator;
 
 /**
  * mainScreen Controller class
@@ -207,7 +207,7 @@ public class mainScreen implements Initializable {
         Timestamp end = Timestamp.valueOf(appointmentEndDateBox.getValue().toString() + " " +
                 endHourBox.getValue() + ":" + endMinuteBox.getValue() + ":00");
 
-        passesValidation = appointmentValidator(
+        passesValidation = validators.appointmentValidator(
                 appointmentTitleBox.getText(),
                 appointmentDescriptionBox.getText(),
                 appointmentLocationBox.getText(),
@@ -245,7 +245,7 @@ public class mainScreen implements Initializable {
         Timestamp end = Timestamp.valueOf(appointmentEndDateBox.getValue().toString() + " " +
                 endHourBox.getValue() + ":" + endMinuteBox.getValue() + ":00");
 
-        passesValidation = appointmentValidator(
+        passesValidation = validators.appointmentValidator(
                 appointmentTitleBox.getText(),
                 appointmentDescriptionBox.getText(),
                 appointmentLocationBox.getText(),

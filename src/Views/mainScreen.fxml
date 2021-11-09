@@ -26,7 +26,7 @@
             <TableColumn fx:id="appointmentUserIDColumn" prefWidth="93.0" text="User_ID" />
         </columns>
       </TableView>
-      <Button fx:id="addAppointmentButton" layoutX="580.0" layoutY="749.0" mnemonicParsing="false" onAction="#addAppointmentButton"  prefHeight="25.0" prefWidth="127.0" text="Add Appointment" />
+      <Button fx:id="addAppointmentButton" layoutX="580.0" layoutY="749.0" mnemonicParsing="false" onAction="#addAppointmentButton" prefHeight="25.0" prefWidth="127.0" text="Add Appointment" />
       <Button fx:id="modifyAppointmentButton" layoutX="722.0" layoutY="749.0" mnemonicParsing="false" onAction="#modifyAppointmentButton" text="Modify Appointment" />
       <Button fx:id="customerScreenButton" layoutX="1010.0" layoutY="693.0" mnemonicParsing="false" onAction="#customerScreen" prefHeight="25.0" prefWidth="127.0" text="Customers" />
       <Button fx:id="exitButton" layoutX="1010.0" layoutY="749.0" mnemonicParsing="false" onAction="#exitButton" prefHeight="25.0" prefWidth="127.0" text="Exit" />
@@ -61,5 +61,6 @@
       <Label layoutX="905.0" layoutY="582.0" text="User" />
       <Label layoutX="380.0" layoutY="538.0" text="Type" />
       <TextField fx:id="appointmentTypeBox" layoutX="495.0" layoutY="534.0" />
+      <Button fx:id="deleteAppointmentButton" layoutX="189.0" layoutY="749.0" mnemonicParsing="false" onAction="#deleteAppointmentButton" prefHeight="25.0" prefWidth="127.0" text="Delete Appointment" />
    </children>
 </AnchorPane>

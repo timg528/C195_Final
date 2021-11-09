@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 
@@ -275,6 +276,10 @@ public class mainScreen implements Initializable {
 
     @FXML
     private void deleteAppointmentButton(Event event) {
+        Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmation.setTitle("Are you sure you wish to delete this?");
+        confirmation.setContentText("Click to delete");
+        Optional<ButtonType> confirm = confirmation.showAndWait();
 
     }
 

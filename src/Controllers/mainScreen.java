@@ -275,12 +275,22 @@ public class mainScreen implements Initializable {
     }
 
     @FXML
-    private void deleteAppointmentButton(Event event) {
-        Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION);
-        confirmation.setTitle("Are you sure you wish to delete this?");
-        confirmation.setContentText("Click to delete");
-        Optional<ButtonType> confirm = confirmation.showAndWait();
+    private void deleteAppointmentButton(Event event) throws Exception {
+        if (appointmentIDBox.getText() != null) {
+            Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION);
+            confirmation.setTitle("Are you sure you wish to delete this?");
+            confirmation.setContentText("Click to delete");
+            Optional<ButtonType> confirm = confirmation.showAndWait();
 
+            if (confirm.get() == ButtonType.OK) {
+                AppointmentDAO.deleteAppointment(Integer.parseInt(appointmentIDBox.getText()));
+            }
+
+            Data.generateAppointments();
+            generateAppointmentsTable();
+            clearFields();
+
+        }
     }
 
     @FXML

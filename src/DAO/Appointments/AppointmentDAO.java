@@ -119,4 +119,13 @@ public class AppointmentDAO {
 
         ps.executeUpdate();
     }
+
+    public static void deleteAppointment(Integer appointmentID) throws Exception {
+        String sql = "DELETE FROM appointments WHERE Appointment_ID = ?";
+
+        PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
+        ps.setInt(1, appointmentID);
+
+        ps.executeUpdate();
+    }
 }

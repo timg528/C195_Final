@@ -274,6 +274,10 @@ public class mainScreen implements Initializable {
         }
     }
 
+    private void deleteAppointment(int appointmentID) throws Exception {
+        AppointmentDAO.deleteAppointment(appointmentID);
+    }
+
     @FXML
     private void deleteAppointmentButton(Event event) throws Exception {
         if (appointmentIDBox.getText() != null) {
@@ -283,7 +287,7 @@ public class mainScreen implements Initializable {
             Optional<ButtonType> confirm = confirmation.showAndWait();
 
             if (confirm.get() == ButtonType.OK) {
-                AppointmentDAO.deleteAppointment(Integer.parseInt(appointmentIDBox.getText()));
+                deleteAppointment(Integer.parseInt(appointmentIDBox.getText()));
             }
 
             Data.generateAppointments();

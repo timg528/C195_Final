@@ -147,7 +147,7 @@ public class customerScreen implements Initializable {
     @FXML private void createButton(ActionEvent event) throws Exception {
         int divisionID = stateBox.getSelectionModel().getSelectedItem().getDivisionID();
 
-        CustomerDAO.addCustomer(customerNameBox.getText(), customerAddressBox.getText(),
+        CustomerDAO.createCustomer(customerNameBox.getText(), customerAddressBox.getText(),
                                 postCodeBox.getText(),customerPhoneBox.getText(),
                                 divisionID);
         customersTable.getSelectionModel().clearSelection();

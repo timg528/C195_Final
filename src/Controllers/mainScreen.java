@@ -220,7 +220,7 @@ public class mainScreen implements Initializable {
         );
 
         if (passesValidation) {
-            AppointmentDAO.addAppointment(
+            AppointmentDAO.createAppointment(
                     appointmentTitleBox.getText(),
                     appointmentDescriptionBox.getText(),
                     appointmentLocationBox.getText(),

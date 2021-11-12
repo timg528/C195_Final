@@ -16,7 +16,37 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class AppointmentDAO {
-    DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+
+    public static void createAppointment(String title, String description, String location, String type,
+                                      Timestamp start, Timestamp end, int customer_id, int user_id,
+                                      int contact_id)
+            throws Exception {
+        String sql = "INSERT INTO appointments (Title, Description, Location, Type, Start, End, " +
+                "Create_Date, Created_By, Last_Update, Last_Updated_By, Customer_ID, User_ID, " +
+                "Contact_ID)" +
+                "VALUES (?,?,?,?,?,?," + // Title through End
+                "CURRENT_TIMESTAMP, ?, CURRENT_TIMESTAMP, ?,?,?,?)";
+
+        Timestamp appointmentStart = timeConversion.toUTC(start);
+        Timestamp appointmentEnd = timeConversion.toUTC(end);
+
+        PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
+        ps.setString(1, title);
+        ps.setString(2, description);
+        ps.setString(3, location);
+        ps.setString(4, type);
+        ps.setTimestamp(5, appointmentStart);
+        ps.setTimestamp(6, appointmentEnd);
+        ps.setInt(7, Data.getCurrentUser());
+        ps.setInt(8, Data.getCurrentUser());
+        ps.setInt(9, customer_id);
+        ps.setInt(10,user_id);
+        ps.setInt(11, contact_id);
+
+        ps.executeUpdate();
+
+    }
 
     public static ObservableList<Appointment> getAllAppointments() throws Exception {
         String sql = "SELECT * from appointments";
@@ -52,35 +82,7 @@ public class AppointmentDAO {
         return allAppointments;
     }
 
-    public static void addAppointment(String title, String description, String location, String type,
-                                      Timestamp start, Timestamp end, int customer_id, int user_id,
-                                      int contact_id)
-            throws Exception {
-        String sql = "INSERT INTO appointments (Title, Description, Location, Type, Start, End, " +
-                     "Create_Date, Created_By, Last_Update, Last_Updated_By, Customer_ID, User_ID, " +
-                     "Contact_ID)" +
-                     "VALUES (?,?,?,?,?,?," + // Title through End
-                     "CURRENT_TIMESTAMP, ?, CURRENT_TIMESTAMP, ?,?,?,?)";
 
-        Timestamp appointmentStart = timeConversion.toUTC(start);
-        Timestamp appointmentEnd = timeConversion.toUTC(end);
-
-        PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
-        ps.setString(1, title);
-        ps.setString(2, description);
-        ps.setString(3, location);
-        ps.setString(4, type);
-        ps.setTimestamp(5, appointmentStart);
-        ps.setTimestamp(6, appointmentEnd);
-        ps.setInt(7, Data.getCurrentUser());
-        ps.setInt(8, Data.getCurrentUser());
-        ps.setInt(9, customer_id);
-        ps.setInt(10,user_id);
-        ps.setInt(11, contact_id);
-
-        ps.executeUpdate();
-
-    }
 
     public static void updateAppointment(int id, String title, String description, String location,
                                          String type, Timestamp start, Timestamp end, int customer_id,

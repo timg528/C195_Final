@@ -157,11 +157,11 @@ public class Data {
         rb = ResourceBundle.getBundle("Main/login", Locale.getDefault());
     }
 
-    public static ZoneId getLocalTimezone() throws Exception {
+    public static ZoneId getLocalTimezone() {
         return tz;
     }
 
-    public static ResourceBundle getRB() throws Exception {
+    public static ResourceBundle getRB() {
         return rb;
     }
 }

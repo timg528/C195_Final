@@ -22,7 +22,7 @@
       <TextField fx:id="customerNameBox" layoutX="151.0" layoutY="599.0" />
       <TextField fx:id="customerAddressBox" layoutX="161.0" layoutY="672.0" />
       <TextField fx:id="customerPhoneBox" layoutX="149.0" layoutY="636.0" />
-      <Button fx:id="createCustomerButton" layoutX="1064.0" layoutY="672.0" mnemonicParsing="false" onAction="#createButton" text="Create Customer" />
+      <Button fx:id="createCustomerButton" layoutX="1064.0" layoutY="551.0" mnemonicParsing="false" onAction="#createButton" text="Create Customer" />
       <TextField fx:id="postCodeBox" layoutX="130.0" layoutY="714.0" />
       <Label fx:id="postCodeLabel" layoutX="43.0" layoutY="718.0" text="Postal Code" />
       <Button fx:id="cancelButton" layoutX="1064.0" layoutY="739.0" mnemonicParsing="false" onAction="#cancelButton" text="Cancel" />
@@ -35,7 +35,8 @@
             <TableColumn fx:id="customerPhoneColumn" prefWidth="75.0" text="Phone Number" />
         </columns>
       </TableView>
-      <Button fx:id="updateButton" layoutX="1064.0" layoutY="706.0" mnemonicParsing="false" onAction="#updateButton" text="Update Customer" />
+      <Button fx:id="updateButton" layoutX="1064.0" layoutY="585.0" mnemonicParsing="false" onAction="#updateButton" text="Update Customer" />
       <Button fx:id="clearButton" layoutX="897.0" layoutY="714.0" mnemonicParsing="false" onAction="#clearButton" text="Clear Fields" />
+      <Button fx:id="deleteButton" layoutX="1064.0" layoutY="649.0" mnemonicParsing="false" onAction="#deleteButton" text="Delete Customer" />
    </children>
 </AnchorPane>

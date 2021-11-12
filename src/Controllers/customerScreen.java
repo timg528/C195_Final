@@ -2,6 +2,8 @@ package Controllers;
 
 import DAO.Customers.CustomerDAO;
 import Models.*;
+import Helpers.findAppointments;
+import DAO.Appointments.AppointmentDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -16,6 +18,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class customerScreen implements Initializable {
@@ -166,6 +169,38 @@ public class customerScreen implements Initializable {
 
     @FXML private void clearButton(ActionEvent event) {
         clearFields();
+    }
+
+    @FXML private void deleteButton(ActionEvent event) throws Exception {
+        if (customerIDBox.getText() != null) {
+            ObservableList<Appointment> appointments = FXCollections.observableArrayList();
+            appointments = findAppointments.getAppointmentsbyCustomer(
+                    Integer.parseInt(customerIDBox.getText()));
+
+            String title = "Are you sure you wish to delete this customer?";
+            String context = "This will delete customer "+
+                    customerIDBox.getText() +
+                    " and "+
+                    appointments.stream().count() + " appointments. Are you sure?";
+
+            Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION);
+            confirmation.setTitle(title);
+            confirmation.setContentText(context);
+            Optional<ButtonType> confirm = confirmation.showAndWait();
+
+            if (confirm.get() == ButtonType.OK) {
+                for (Appointment a : appointments) {
+                    AppointmentDAO.deleteAppointment(a.getId());
+                }
+                Data.generateAppointments();
+
+                CustomerDAO.deleteCustomer(Integer.parseInt(customerIDBox.getText()));
+
+                Data.generateCustomers();
+                generateCustomersTable();
+
+            }
+        }
     }
 
 }

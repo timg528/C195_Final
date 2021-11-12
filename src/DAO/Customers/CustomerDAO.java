@@ -74,4 +74,13 @@ public class CustomerDAO {
         ps.executeUpdate();
 
     }
+
+    public static void deleteCustomer(int customerID) throws Exception {
+        String sql = "DELETE FROM customers WHERE Customer_ID = ?";
+
+        PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
+        ps.setInt(1, customerID);
+
+        ps.executeUpdate();
+    }
 }

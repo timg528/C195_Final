@@ -274,7 +274,7 @@ public class mainScreen implements Initializable {
         }
     }
 
-    private void deleteAppointment(int appointmentID) throws Exception {
+    public void deleteAppointment(int appointmentID) throws Exception {
         AppointmentDAO.deleteAppointment(appointmentID);
     }
 

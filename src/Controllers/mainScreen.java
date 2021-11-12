@@ -150,6 +150,7 @@ public class mainScreen implements Initializable {
         appointmentTitleBox.clear();
         appointmentDescriptionBox.clear();
         appointmentLocationBox.clear();
+        appointmentTypeBox.clear();
         appointmentStartDateBox.getEditor().clear();
         appointmentEndDateBox.getEditor().clear();
         startHourBox.setValue(null);
@@ -202,37 +203,53 @@ public class mainScreen implements Initializable {
 
     @FXML
     private void addAppointmentButton(Event event) throws Exception {
-        Timestamp start = Timestamp.valueOf(appointmentStartDateBox.getValue().toString() + " " +
-                startHourBox.getValue() + ":" + startMinuteBox.getValue() + ":00");
+        if (!appointmentTitleBox.getText().isEmpty() &&
+                !appointmentDescriptionBox.getText().isEmpty() &&
+                !appointmentLocationBox.getText().isEmpty() &&
+                !appointmentTypeBox.getText().isEmpty()  &&
+                appointmentStartDateBox.getValue() != null &&
+                !startHourBox.getValue().isEmpty() &&
+                !startMinuteBox.getValue().isEmpty() &&
+                appointmentEndDateBox.getValue() != null &&
+                !endHourBox.getValue().isEmpty() &&
+                !endMinuteBox.getValue().isEmpty() &&
+                customerBox.getValue() != null &&
+                userBox.getValue() != null &&
+                contactBox.getValue() != null) {
 
-        Timestamp end = Timestamp.valueOf(appointmentEndDateBox.getValue().toString() + " " +
-                endHourBox.getValue() + ":" + endMinuteBox.getValue() + ":00");
+                Timestamp start = Timestamp.valueOf(appointmentStartDateBox.getValue().toString() + " " +
+                        startHourBox.getValue() + ":" + startMinuteBox.getValue() + ":00");
 
-        passesValidation = validators.appointmentValidator(
-                appointmentTitleBox.getText(),
-                appointmentDescriptionBox.getText(),
-                appointmentLocationBox.getText(),
-                appointmentTypeBox.getText(),
-                start, end,
-                customerBox.getSelectionModel().getSelectedItem().getId(),
-                userBox.getSelectionModel().getSelectedItem().getId(),
-                contactBox.getSelectionModel().getSelectedItem().getContactID()
-        );
+                Timestamp end = Timestamp.valueOf(appointmentEndDateBox.getValue().toString() + " " +
+                        endHourBox.getValue() + ":" + endMinuteBox.getValue() + ":00");
 
-        if (passesValidation) {
-            AppointmentDAO.createAppointment(
-                    appointmentTitleBox.getText(),
-                    appointmentDescriptionBox.getText(),
-                    appointmentLocationBox.getText(),
-                    appointmentTypeBox.getText(),
-                    start, end,
-                    customerBox.getSelectionModel().getSelectedItem().getId(),
-                    userBox.getSelectionModel().getSelectedItem().getId(),
-                    contactBox.getSelectionModel().getSelectedItem().getContactID()
-            );
-            Data.generateAppointments();
-            generateAppointmentsTable();
-        }
+                passesValidation = validators.appointmentValidator(
+                        appointmentTitleBox.getText(),
+                        appointmentDescriptionBox.getText(),
+                        appointmentLocationBox.getText(),
+                        appointmentTypeBox.getText(),
+                        start, end,
+                        customerBox.getSelectionModel().getSelectedItem().getId(),
+                        userBox.getSelectionModel().getSelectedItem().getId(),
+                        contactBox.getSelectionModel().getSelectedItem().getContactID()
+                );
+
+                if (passesValidation) {
+                    AppointmentDAO.createAppointment(
+                            appointmentTitleBox.getText(),
+                            appointmentDescriptionBox.getText(),
+                            appointmentLocationBox.getText(),
+                            appointmentTypeBox.getText(),
+                            start, end,
+                            customerBox.getSelectionModel().getSelectedItem().getId(),
+                            userBox.getSelectionModel().getSelectedItem().getId(),
+                            contactBox.getSelectionModel().getSelectedItem().getContactID()
+                    );
+                    Data.generateAppointments();
+                    generateAppointmentsTable();
+                }
+            }
+
 
 
     }
@@ -240,26 +257,28 @@ public class mainScreen implements Initializable {
     @FXML
     private void modifyAppointmentButton(Event event) throws Exception {
 
-        Timestamp start = Timestamp.valueOf(appointmentStartDateBox.getValue().toString() + " " +
-                startHourBox.getValue() + ":" + startMinuteBox.getValue() + ":00");
+        if (!appointmentIDBox.getText().isEmpty() &&
+                !appointmentTitleBox.getText().isEmpty() &&
+                !appointmentDescriptionBox.getText().isEmpty() &&
+                !appointmentLocationBox.getText().isEmpty() &&
+                !appointmentTypeBox.getText().isEmpty()  &&
+                appointmentStartDateBox.getValue() != null &&
+                !startHourBox.getValue().isEmpty() &&
+                !startMinuteBox.getValue().isEmpty() &&
+                appointmentEndDateBox.getValue() != null &&
+                !endHourBox.getValue().isEmpty() &&
+                !endMinuteBox.getValue().isEmpty() &&
+                customerBox.getValue() != null &&
+                userBox.getValue() != null &&
+                contactBox.getValue() != null) {
 
-        Timestamp end = Timestamp.valueOf(appointmentEndDateBox.getValue().toString() + " " +
-                endHourBox.getValue() + ":" + endMinuteBox.getValue() + ":00");
+            Timestamp start = Timestamp.valueOf(appointmentStartDateBox.getValue().toString() + " " +
+                    startHourBox.getValue() + ":" + startMinuteBox.getValue() + ":00");
 
-        passesValidation = validators.appointmentValidator(
-                appointmentTitleBox.getText(),
-                appointmentDescriptionBox.getText(),
-                appointmentLocationBox.getText(),
-                appointmentTypeBox.getText(),
-                start, end,
-                customerBox.getSelectionModel().getSelectedItem().getId(),
-                userBox.getSelectionModel().getSelectedItem().getId(),
-                contactBox.getSelectionModel().getSelectedItem().getContactID()
-                );
+            Timestamp end = Timestamp.valueOf(appointmentEndDateBox.getValue().toString() + " " +
+                    endHourBox.getValue() + ":" + endMinuteBox.getValue() + ":00");
 
-        if (passesValidation) {
-            AppointmentDAO.updateAppointment(
-                    Integer.parseInt(appointmentIDBox.getText()),
+            passesValidation = validators.appointmentValidator(
                     appointmentTitleBox.getText(),
                     appointmentDescriptionBox.getText(),
                     appointmentLocationBox.getText(),
@@ -269,8 +288,22 @@ public class mainScreen implements Initializable {
                     userBox.getSelectionModel().getSelectedItem().getId(),
                     contactBox.getSelectionModel().getSelectedItem().getContactID()
             );
-            Data.generateAppointments();
-            generateAppointmentsTable();
+
+            if (passesValidation) {
+                AppointmentDAO.updateAppointment(
+                        Integer.parseInt(appointmentIDBox.getText()),
+                        appointmentTitleBox.getText(),
+                        appointmentDescriptionBox.getText(),
+                        appointmentLocationBox.getText(),
+                        appointmentTypeBox.getText(),
+                        start, end,
+                        customerBox.getSelectionModel().getSelectedItem().getId(),
+                        userBox.getSelectionModel().getSelectedItem().getId(),
+                        contactBox.getSelectionModel().getSelectedItem().getContactID()
+                );
+                Data.generateAppointments();
+                generateAppointmentsTable();
+            }
         }
     }
 

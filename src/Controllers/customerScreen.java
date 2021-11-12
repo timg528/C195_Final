@@ -23,9 +23,6 @@ import java.util.ResourceBundle;
 
 public class customerScreen implements Initializable {
 
-    private final User user;
-//    private final static ObservableList<Customer> customers = FXCollections.observableArrayList();
-
     @FXML private Button createCustomerButton;
     @FXML private Button cancelButton;
 
@@ -49,7 +46,7 @@ public class customerScreen implements Initializable {
 
 
 
-    public customerScreen(User user) {this.user = user; }
+    public customerScreen() {}
 
 
     public void initialize(URL url, ResourceBundle rb) {
@@ -127,7 +124,7 @@ public class customerScreen implements Initializable {
     private void returnToMain(Event event){
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/mainScreen.fxml"));
-            mainScreen controller = new mainScreen(user);
+            mainScreen controller = new mainScreen();
 
             loader.setController(controller);
             Parent root = loader.load();
@@ -144,27 +141,45 @@ public class customerScreen implements Initializable {
     @FXML private void cancelButton(ActionEvent event) {
         returnToMain(event);
     }
-    @FXML private void createButton(ActionEvent event) throws Exception {
-        int divisionID = stateBox.getSelectionModel().getSelectedItem().getDivisionID();
 
-        CustomerDAO.createCustomer(customerNameBox.getText(), customerAddressBox.getText(),
-                                postCodeBox.getText(),customerPhoneBox.getText(),
-                                divisionID);
-        customersTable.getSelectionModel().clearSelection();
-        Data.generateCustomers();
-        generateCustomersTable();
+    @FXML private void createButton(ActionEvent event) throws Exception {
+        if (!customerNameBox.getText().isEmpty() &&
+        !customerAddressBox.getText().isEmpty() &&
+        !postCodeBox.getText().isEmpty() &&
+        !customerPhoneBox.getText().isEmpty() &&
+        stateBox.getValue() != null &&
+        countryBox.getValue() != null) {
+            int divisionID = stateBox.getSelectionModel().getSelectedItem().getDivisionID();
+
+            CustomerDAO.createCustomer(customerNameBox.getText(), customerAddressBox.getText(),
+                    postCodeBox.getText(),customerPhoneBox.getText(),
+                    divisionID);
+            customersTable.getSelectionModel().clearSelection();
+            Data.generateCustomers();
+            generateCustomersTable();
+
+        }
+
 
     }
     @FXML private void updateButton(ActionEvent event) throws Exception {
-        int divisionID = stateBox.getSelectionModel().getSelectedItem().getDivisionID();
+        if (!customerIDBox.getText().isEmpty() &&
+                !customerNameBox.getText().isEmpty() &&
+                !customerAddressBox.getText().isEmpty() &&
+                !postCodeBox.getText().isEmpty() &&
+                !customerPhoneBox.getText().isEmpty() &&
+                stateBox.getValue() != null &&
+                countryBox.getValue() != null) {
+            int divisionID = stateBox.getSelectionModel().getSelectedItem().getDivisionID();
 
-        CustomerDAO.updateCustomer(Integer.parseInt(customerIDBox.getText()),
-                customerNameBox.getText(), customerAddressBox.getText(),
-                postCodeBox.getText(),customerPhoneBox.getText(),
-                divisionID);
+            CustomerDAO.updateCustomer(Integer.parseInt(customerIDBox.getText()),
+                    customerNameBox.getText(), customerAddressBox.getText(),
+                    postCodeBox.getText(), customerPhoneBox.getText(),
+                    divisionID);
 
-        Data.generateCustomers();
-        generateCustomersTable();
+            Data.generateCustomers();
+            generateCustomersTable();
+        }
     }
 
     @FXML private void clearButton(ActionEvent event) {

@@ -36,8 +36,6 @@ import java.util.ResourceBundle;
 public class mainScreen implements Initializable {
 
     private boolean passesValidation;
-    private final User user;
-    //private final static ObservableList<Appointment> appointments = FXCollections.observableArrayList();
 
     private final ObservableList<String> hours = FXCollections.observableArrayList();
     private final ObservableList<String> minutes = FXCollections.observableArrayList();
@@ -69,9 +67,9 @@ public class mainScreen implements Initializable {
     @FXML private ComboBox<User> userBox;
 
 
-    public mainScreen(User user) {
+    public mainScreen() {
 
-        this.user = user;
+
     }
 
     @Override
@@ -181,7 +179,7 @@ public class mainScreen implements Initializable {
     private void customerScreen(Event event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/customerScreen.fxml"));
-            customerScreen controller = new customerScreen(user);
+            customerScreen controller = new customerScreen();
 
             loader.setController(controller);
             Parent root = loader.load();

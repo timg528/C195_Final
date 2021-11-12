@@ -14,7 +14,6 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Timestamp;
 import java.time.*;
 
 
@@ -37,6 +36,9 @@ public class Login {
 
     public void initialize() throws Exception {
         Data.generateLocalData();
+        systemTimezone.setText("System Timezone: " +
+                Data.getLocalTimezone().toString() +
+                " (" + Data.getLocalTimezone().getRules().getOffset(Instant.now()) + ")");
 
     }
 
@@ -44,7 +46,6 @@ public class Login {
 
     @FXML
     private void exitProgramButton(ActionEvent event) {
-        // I should use some better exit code here
         Platform.exit();
     }
 
@@ -57,10 +58,6 @@ public class Login {
     @FXML
     private void loginButton(ActionEvent event) throws Exception {
 
-        // Static values for testing
-        int userID = 1;
-        String userName = "test";
-        String Password = "test";
 
         final String username = usernameField.getText();
         final String password = passwordField.getText();
@@ -73,14 +70,14 @@ public class Login {
         ResultSet rs = ps.executeQuery();
 
         if(rs.next()) {
-            User user = new User(rs.getInt("User_ID"), userName);
+            User user = new User(rs.getInt("User_ID"), username);
             System.out.println("User_ID = "+user.getId());
 
             Data.setCurrentUser(user.getId());
             Data.generateAll();
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/mainScreen.fxml"));
-            mainScreen controller = new mainScreen(user);
+            mainScreen controller = new mainScreen();
 
             loader.setController(controller);
             Parent root = loader.load();
@@ -95,16 +92,6 @@ public class Login {
             errorAlert.setHeaderText("Invalid Credentials");
             errorAlert.showAndWait();
         }
-
-
-
-
-
-
-
-
-
-
 
     }
 

@@ -24,7 +24,7 @@ import java.util.ResourceBundle;
 public class Data {
     private static ResourceBundle rb;
     private static ZoneId tz;
-    private static int currentUser = 0;        // Set to 0 for testing
+    private static int currentUser;        // Set to 0 for testing
     private static ObservableList<User> users = FXCollections.observableArrayList();
     private static ObservableList<Country> countries = FXCollections.observableArrayList();
     private static ObservableList<Division> divisions = FXCollections.observableArrayList();
@@ -52,8 +52,8 @@ public class Data {
         return currentUser;
     }
 
-    public static void setCurrentUser(int currentUser) {
-        currentUser = currentUser;
+    public static void setCurrentUser(int user) {
+        currentUser = user;
     }
 
     /**

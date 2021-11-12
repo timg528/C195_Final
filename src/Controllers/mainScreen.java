@@ -39,6 +39,7 @@ public class mainScreen implements Initializable {
 
     private final ObservableList<String> hours = FXCollections.observableArrayList();
     private final ObservableList<String> minutes = FXCollections.observableArrayList();
+    private final ObservableList<String> months = FXCollections.observableArrayList();
 
     /**
      * Alright, so here we'll see all of our appointments in a tableview
@@ -66,10 +67,13 @@ public class mainScreen implements Initializable {
     @FXML private ComboBox<Customer> customerBox;
     @FXML private ComboBox<User> userBox;
 
+    @FXML private ComboBox<String> periodSelection;
+    @FXML private RadioButton allRadio, weekRadio, monthRadio;
+    final ToggleGroup period = new ToggleGroup();
+
+
 
     public mainScreen() {
-
-
     }
 
     @Override
@@ -77,9 +81,15 @@ public class mainScreen implements Initializable {
 
         generateComboBoxes();
         generateAppointmentsTable();
+
+        allRadio.setToggleGroup(period);
+        weekRadio.setToggleGroup(period);
+        monthRadio.setToggleGroup(period);
+        allRadio.setSelected(true);
     }
 
     private void generateComboBoxes() {
+
         hours.addAll("0","1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12",
                 "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23");
 
@@ -98,6 +108,8 @@ public class mainScreen implements Initializable {
     }
 
     private void generateAppointmentsTable(){
+
+
         appointmentsTable.getItems().clear();
         appointmentsTable.setItems(Data.getAppointments());
         appointmentIDColumn.setCellValueFactory(new PropertyValueFactory<>("id"));

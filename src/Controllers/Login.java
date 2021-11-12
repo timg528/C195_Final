@@ -14,6 +14,8 @@ import javafx.stage.Stage;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.time.*;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 
 public class Login {
@@ -31,11 +33,24 @@ public class Login {
     @FXML private PasswordField passwordField;
     @FXML private Label systemTimezone;
 
+    @FXML private Label usernameLabel, passwordLabel;
+    @FXML private Button loginButton, exitButton;
+
+    ResourceBundle rb;
+
     public void initialize() throws Exception {
         Data.generateLocalData();
-        systemTimezone.setText("System Timezone: " +
+        rb = Data.getRB();
+
+        usernameLabel.setText(rb.getString("username"));
+        passwordLabel.setText(rb.getString("password"));
+        loginButton.setText(rb.getString("login"));
+        exitButton.setText(rb.getString("exit"));
+        systemTimezone.setText(rb.getString("timezone") + ": \n" +
                 Data.getLocalTimezone().toString() +
                 " (" + Data.getLocalTimezone().getRules().getOffset(Instant.now()) + ")");
+
+
 
     }
 

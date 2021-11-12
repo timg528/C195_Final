@@ -12,6 +12,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.time.ZoneId;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 
 /**
@@ -20,6 +22,7 @@ import java.time.ZoneId;
  * Inventory object in the Software 1 class.
  */
 public class Data {
+    private static ResourceBundle rb;
     private static ZoneId tz;
     private static int currentUser = 0;        // Set to 0 for testing
     private static ObservableList<User> users = FXCollections.observableArrayList();
@@ -43,6 +46,7 @@ public class Data {
         generateAppointments();
         generateUsers();
     }
+
 
     public static int getCurrentUser() {
         return currentUser;
@@ -150,9 +154,14 @@ public class Data {
 
     public static void generateLocalData() throws Exception {
         tz = ZoneId.systemDefault();
+        rb = ResourceBundle.getBundle("Main/login", Locale.CANADA_FRENCH);
     }
 
     public static ZoneId getLocalTimezone() throws Exception {
         return tz;
+    }
+
+    public static ResourceBundle getRB() throws Exception {
+        return rb;
     }
 }

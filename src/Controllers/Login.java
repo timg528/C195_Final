@@ -91,13 +91,13 @@ public class Login {
 
             } else {
                 Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-                errorAlert.setHeaderText("Invalid Credentials");
+                errorAlert.setHeaderText(rb.getString("invalidcreds"));
                 errorAlert.showAndWait();
             }
         } else {
             Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-            errorAlert.setHeaderText("Invalid Username");
-            errorAlert.setContentText("You must use test as the username");
+            errorAlert.setHeaderText(rb.getString("invaliduser"));
+            errorAlert.setContentText(rb.getString("usetest"));
             errorAlert.showAndWait();
         }
 

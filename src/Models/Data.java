@@ -154,7 +154,7 @@ public class Data {
 
     public static void generateLocalData() throws Exception {
         tz = ZoneId.systemDefault();
-        rb = ResourceBundle.getBundle("Main/login", Locale.CANADA_FRENCH);
+        rb = ResourceBundle.getBundle("Main/login", Locale.getDefault());
     }
 
     public static ZoneId getLocalTimezone() throws Exception {

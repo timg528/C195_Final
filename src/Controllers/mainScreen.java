@@ -27,6 +27,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.time.Month;
+import java.time.temporal.IsoFields;
 import java.time.temporal.WeekFields;
 import java.util.Locale;
 import java.util.Optional;
@@ -66,7 +68,7 @@ public class mainScreen implements Initializable {
 
     @FXML private TextField appointmentIDBox, appointmentTitleBox, appointmentTypeBox,
             appointmentDescriptionBox, appointmentLocationBox;
-    @FXML private DatePicker appointmentStartDateBox, appointmentEndDateBox;
+    @FXML private DatePicker appointmentStartDateBox, appointmentEndDateBox, dateFilter;
     @FXML private ComboBox<String> startHourBox, startMinuteBox, endHourBox, endMinuteBox;
 
 
@@ -81,14 +83,6 @@ public class mainScreen implements Initializable {
 
 
     public mainScreen() {
-      /*  period.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
-            @Override
-            public void changed(ObservableValue<? extends Toggle> observableValue, Toggle toggle, Toggle t1) {
-                RadioButton radioButton = (RadioButton)period.getSelectedToggle();
-
-                if (radioButton.)
-            }
-        }); */
     }
 
     @Override
@@ -123,23 +117,26 @@ public class mainScreen implements Initializable {
     }
 
     @FXML private void periodSelector() {
+        WeekFields weekFields = WeekFields.of(Locale.US);
+        Month selectedMonth = dateFilter.getValue().getMonth();
+        int selectedWeek = dateFilter.getValue().get(weekFields.weekOfWeekBasedYear());
+
         if (allRadio.isSelected()) {
             appointments = Data.getAppointments();
             appointmentsTable.setItems(appointments);
         }
         if (monthRadio.isSelected()) {
             appointments = Data.getAppointments().filtered(a -> a.getStart().toLocalDateTime()
-                    .getMonth() == LocalDateTime.now().getMonth());
+                    .getMonth() == selectedMonth);
             appointmentsTable.setItems(appointments);
         }
         if (weekRadio.isSelected()) {
-            WeekFields weekFields = WeekFields.of(Locale.US);
+
             int thisWeek = LocalDateTime.now().get(weekFields.weekOfWeekBasedYear());
             appointments = Data.getAppointments().filtered(
                     appointment -> appointment.getStart().toLocalDateTime()
-                            .get(weekFields.weekOfWeekBasedYear()) == thisWeek);
+                            .get(weekFields.weekOfWeekBasedYear()) == selectedWeek);
             appointmentsTable.setItems(appointments);
-
 
         }
     }
@@ -148,6 +145,7 @@ public class mainScreen implements Initializable {
 
 
     private void generateAppointmentsTable(){
+
 
         appointmentsTable.getItems().clear();
         appointmentsTable.setItems(Data.getAppointments());

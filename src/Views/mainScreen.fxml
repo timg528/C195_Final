@@ -63,6 +63,6 @@
       <TextField fx:id="appointmentTypeBox" layoutX="495.0" layoutY="534.0" />
       <Button fx:id="deleteAppointmentButton" layoutX="189.0" layoutY="749.0" mnemonicParsing="false" onAction="#deleteAppointmentButton" prefHeight="25.0" prefWidth="127.0" text="Delete Appointment" />
       <RadioButton fx:id="allRadio" layoutX="179.0" layoutY="40.0" mnemonicParsing="false" onAction="#periodSelector" text="All" />
-      <ComboBox fx:id="periodSelection" layoutX="534.0" layoutY="36.0" prefHeight="25.0" prefWidth="78.0" />
+      <DatePicker fx:id="dateFilter" layoutX="389.0" layoutY="36.0" onAction="#periodSelector" />
    </children>
 </AnchorPane>

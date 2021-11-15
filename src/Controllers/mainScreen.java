@@ -26,8 +26,10 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.time.ZonedDateTime;
 import java.time.temporal.IsoFields;
 import java.time.temporal.WeekFields;
 import java.util.Locale;
@@ -88,6 +90,7 @@ public class mainScreen implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+        dateFilter.setValue(ZonedDateTime.now().toLocalDate());
         generateComboBoxes();
         generateAppointmentsTable();
 
@@ -147,6 +150,7 @@ public class mainScreen implements Initializable {
     private void generateAppointmentsTable(){
 
 
+        allRadio.setSelected(true);
         appointmentsTable.getItems().clear();
         appointmentsTable.setItems(Data.getAppointments());
         appointmentIDColumn.setCellValueFactory(new PropertyValueFactory<>("id"));

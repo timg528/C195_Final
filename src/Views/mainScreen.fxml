@@ -51,8 +51,8 @@
       <ComboBox fx:id="endHourBox" layoutX="449.0" layoutY="681.0" prefHeight="25.0" prefWidth="78.0" />
       <ComboBox fx:id="startMinuteBox" layoutX="605.0" layoutY="645.0" prefHeight="25.0" prefWidth="78.0" />
       <ComboBox fx:id="endMinuteBox" layoutX="605.0" layoutY="681.0" prefHeight="25.0" prefWidth="78.0" />
-      <RadioButton fx:id="monthRadio" layoutX="233.0" layoutY="40.0" mnemonicParsing="false" text="Month" />
-      <RadioButton fx:id="weekRadio" layoutX="310.0" layoutY="40.0" mnemonicParsing="false" text="Week" />
+      <RadioButton fx:id="monthRadio" layoutX="233.0" layoutY="40.0" mnemonicParsing="false" onAction="#periodSelector" text="Month" />
+      <RadioButton fx:id="weekRadio" layoutX="310.0" layoutY="40.0" mnemonicParsing="false" onAction="#periodSelector" text="Week" />
       <ComboBox fx:id="customerBox" layoutX="987.0" layoutY="490.0" prefWidth="150.0" />
       <ComboBox fx:id="contactBox" layoutX="987.0" layoutY="535.0" prefWidth="150.0" />
       <ComboBox fx:id="userBox" layoutX="987.0" layoutY="578.0" prefWidth="150.0" />
@@ -62,7 +62,7 @@
       <Label layoutX="380.0" layoutY="538.0" text="Type" />
       <TextField fx:id="appointmentTypeBox" layoutX="495.0" layoutY="534.0" />
       <Button fx:id="deleteAppointmentButton" layoutX="189.0" layoutY="749.0" mnemonicParsing="false" onAction="#deleteAppointmentButton" prefHeight="25.0" prefWidth="127.0" text="Delete Appointment" />
-      <RadioButton fx:id="allRadio" layoutX="179.0" layoutY="40.0" mnemonicParsing="false" text="All" />
+      <RadioButton fx:id="allRadio" layoutX="179.0" layoutY="40.0" mnemonicParsing="false" onAction="#periodSelector" text="All" />
       <ComboBox fx:id="periodSelection" layoutX="534.0" layoutY="36.0" prefHeight="25.0" prefWidth="78.0" />
    </children>
 </AnchorPane>

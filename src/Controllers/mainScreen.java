@@ -6,9 +6,12 @@ import Helpers.validators;
 import Models.*;
 
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import javafx.collections.transformation.FilteredList;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -24,6 +27,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.time.temporal.WeekFields;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -40,6 +45,8 @@ public class mainScreen implements Initializable {
     private final ObservableList<String> hours = FXCollections.observableArrayList();
     private final ObservableList<String> minutes = FXCollections.observableArrayList();
     private final ObservableList<String> months = FXCollections.observableArrayList();
+
+    private ObservableList<Appointment> appointments = FXCollections.observableArrayList();
 
     /**
      * Alright, so here we'll see all of our appointments in a tableview
@@ -74,6 +81,14 @@ public class mainScreen implements Initializable {
 
 
     public mainScreen() {
+      /*  period.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
+            @Override
+            public void changed(ObservableValue<? extends Toggle> observableValue, Toggle toggle, Toggle t1) {
+                RadioButton radioButton = (RadioButton)period.getSelectedToggle();
+
+                if (radioButton.)
+            }
+        }); */
     }
 
     @Override
@@ -107,8 +122,32 @@ public class mainScreen implements Initializable {
 
     }
 
-    private void generateAppointmentsTable(){
+    @FXML private void periodSelector() {
+        if (allRadio.isSelected()) {
+            appointments = Data.getAppointments();
+            appointmentsTable.setItems(appointments);
+        }
+        if (monthRadio.isSelected()) {
+            appointments = Data.getAppointments().filtered(a -> a.getStart().toLocalDateTime()
+                    .getMonth() == LocalDateTime.now().getMonth());
+            appointmentsTable.setItems(appointments);
+        }
+        if (weekRadio.isSelected()) {
+            WeekFields weekFields = WeekFields.of(Locale.US);
+            int thisWeek = LocalDateTime.now().get(weekFields.weekOfWeekBasedYear());
+            appointments = Data.getAppointments().filtered(
+                    appointment -> appointment.getStart().toLocalDateTime()
+                            .get(weekFields.weekOfWeekBasedYear()) == thisWeek);
+            appointmentsTable.setItems(appointments);
 
+
+        }
+    }
+
+
+
+
+    private void generateAppointmentsTable(){
 
         appointmentsTable.getItems().clear();
         appointmentsTable.setItems(Data.getAppointments());

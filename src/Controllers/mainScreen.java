@@ -270,7 +270,7 @@ public class mainScreen implements Initializable {
                 Timestamp end = Timestamp.valueOf(appointmentEndDateBox.getValue().toString() + " " +
                         endHourBox.getValue() + ":" + endMinuteBox.getValue() + ":00");
 
-                passesValidation = validators.appointmentValidator(
+                passesValidation = validators.addValidator(
                         appointmentTitleBox.getText(),
                         appointmentDescriptionBox.getText(),
                         appointmentLocationBox.getText(),
@@ -325,7 +325,8 @@ public class mainScreen implements Initializable {
             Timestamp end = Timestamp.valueOf(appointmentEndDateBox.getValue().toString() + " " +
                     endHourBox.getValue() + ":" + endMinuteBox.getValue() + ":00");
 
-            passesValidation = validators.appointmentValidator(
+            passesValidation = validators.modifyValidator(
+                    Integer.parseInt(appointmentIDBox.getText()),
                     appointmentTitleBox.getText(),
                     appointmentDescriptionBox.getText(),
                     appointmentLocationBox.getText(),

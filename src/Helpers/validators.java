@@ -82,7 +82,9 @@ public class validators {
                 LocalDateTime aStart = timeConversion.localToEST(a.getStart()).toLocalDateTime();
                 LocalDateTime aEnd = timeConversion.localToEST(a.getEnd()).toLocalDateTime();
 
-                conflictChecker(apptStart, apptEnd, aStart, aEnd, a.getId());
+                if(!conflictChecker(apptStart, apptEnd, aStart, aEnd, a.getId())) {
+                    return false;
+                }
             }
         }
         return true;
@@ -111,7 +113,9 @@ public class validators {
             LocalDateTime aStart = timeConversion.localToEST(a.getStart()).toLocalDateTime();
             LocalDateTime aEnd = timeConversion.localToEST(a.getEnd()).toLocalDateTime();
             if (a.getId() != id){
-                conflictChecker(apptStart, apptEnd, aStart, aEnd, a.getId());
+                if(!conflictChecker(apptStart, apptEnd, aStart, aEnd, a.getId())){
+                    return false;
+                }
             }
 
         }
@@ -121,30 +125,37 @@ public class validators {
     public static boolean conflictChecker(LocalDateTime apptStart, LocalDateTime apptEnd,
                                           LocalDateTime aStart, LocalDateTime aEnd, int aID) throws Exception {
 
+        // Check if the start and end times are the same
+        if (apptStart.equals(aStart) && apptEnd.equals(aEnd)) {
+            String t = "Overlap detected!";
+            String c = "This appointment starts and ends at the same time as appointment " + aID;
+            popup(t,c);
+            return false;
+        }
 
-                // Now we check that the appStart is after aStart but before aEnd
-                if (apptStart.isAfter(aStart) && apptStart.isBefore(aEnd)) {
-                    String t = "Overlap detected!";
-                    String c = "The start of this appointment overlaps appointment " + aID;
-                    popup(t,c);
-                    return false;
-                }
+        // Now we check that the appStart is after aStart but before aEnd
+        if (apptStart.isAfter(aStart) && apptStart.isBefore(aEnd)) {
+            String t = "Overlap detected!";
+            String c = "The start of this appointment overlaps appointment " + aID;
+            popup(t,c);
+            return false;
+        }
 
-                // Now to check that the appEnd is after aStart but before aEnd
-                if (apptEnd.isAfter(aStart) && apptEnd.isBefore(aEnd)) {
-                    String t = "Overlap detected!";
-                    String c = "The end of this appointment overlaps appointment " + aID;
-                    popup(t,c);
-                    return false;
-                }
+        // Now to check that the appEnd is after aStart but before aEnd
+        if (apptEnd.isAfter(aStart) && apptEnd.isBefore(aEnd)) {
+            String t = "Overlap detected!";
+            String c = "The end of this appointment overlaps appointment " + aID;
+            popup(t,c);
+            return false;
+        }
 
-                // Now to check that we're not overlapping appointment a
-                if (apptStart.isBefore(aStart) && apptEnd.isAfter(aEnd)) {
-                    String t = "Overlap detected!";
-                    String c = "This appointment completely overlaps appointment " + aID;
-                    popup(t,c);
-                    return false;
-                }
+        // Now to check that we're not overlapping appointment a
+        if (apptStart.isBefore(aStart) && apptEnd.isAfter(aEnd)) {
+            String t = "Overlap detected!";
+            String c = "This appointment completely overlaps appointment " + aID;
+            popup(t,c);
+            return false;
+        }
 
 
 

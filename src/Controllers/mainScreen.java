@@ -225,14 +225,24 @@ the user log-in date and time stamp that will be tracked in part C
     @FXML
     private void generateReport(Event event) throws Exception {
         if (reportTypeBox.getValue() != null) {
-            switch (reportTypeBox.getValue()){
+ /*           switch (reportTypeBox.getValue()){
                 case "Appointments" : Helpers.reports.appointmentReport();
                 case "Contact Schedule" : Helpers.reports.contactSchedule();
-                case "User Load": Helpers.reports.userReport();
+                case "User Load": Helpers.reports.userReport(); */
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/reportScreen.fxml"));
+            reportScreen controller = new reportScreen(reportTypeBox.getValue());
+
+            loader.setController(controller);
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.show();
         }
 
 
-        }
+
 
     }
 

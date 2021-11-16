@@ -6,12 +6,8 @@ import Helpers.validators;
 import Models.*;
 
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
-import javafx.collections.transformation.FilteredList;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -27,7 +23,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.Timestamp;
 import java.time.*;
-import java.time.temporal.IsoFields;
 import java.time.temporal.WeekFields;
 import java.util.Locale;
 import java.util.Optional;
@@ -45,13 +40,11 @@ public class mainScreen implements Initializable {
 
     private final ObservableList<String> hours = FXCollections.observableArrayList();
     private final ObservableList<String> minutes = FXCollections.observableArrayList();
-    private final ObservableList<String> months = FXCollections.observableArrayList();
+    private final ObservableList<String> reportTypes = FXCollections.observableArrayList();
+
 
     private ObservableList<Appointment> appointments = FXCollections.observableArrayList();
 
-    /**
-     * Alright, so here we'll see all of our appointments in a tableview
-     */
 
     @FXML private TableView<Appointment> appointmentsTable;
     @FXML private TableColumn<Appointment, Integer> appointmentIDColumn;
@@ -107,6 +100,8 @@ public class mainScreen implements Initializable {
 
         minutes.addAll("0", "15", "30", "45");
 
+        reportTypes.addAll("Appointments", "Contact Schedule", "User Load");
+
         startHourBox.setItems(hours);
         startMinuteBox.setItems(minutes);
         endHourBox.setItems(hours);
@@ -116,6 +111,7 @@ public class mainScreen implements Initializable {
         customerBox.setItems(Data.getCustomers().sorted());
         userBox.setItems(Data.getUsers().sorted());
 
+        reportTypeBox.setItems(reportTypes);
 
     }
 
@@ -187,8 +183,6 @@ public class mainScreen implements Initializable {
                         customerBox.setValue(Data.getCustomer(newValue.getCustomer()));
                         userBox.setValue(Data.getUser(newValue.getUser()));
 
-
-
                     }
 
                 }
@@ -213,21 +207,35 @@ public class mainScreen implements Initializable {
         userBox.setValue(null);
     }
 
-    private void convertToTimestamps() {
-        Timestamp start = Timestamp.valueOf(appointmentStartDateBox.getValue().toString() + " " +
-                          startHourBox.getValue() + ":" + startMinuteBox.getValue() + ":00");
+    // Buttons
 
-        Timestamp end = Timestamp.valueOf(appointmentEndDateBox.getValue().toString() + " " +
-                        endHourBox.getValue() + ":" + endMinuteBox.getValue() + ":00");
+    /*
+    f.  Write code that generates accurate information in each of the following reports and will display the reports
+     in the user interface:
+Note: You do not need to save and print the reports to a file or provide a screenshot.
 
+•  the total number of customer appointments by type and month
+
+•  a schedule for each contact in your organization that includes appointment ID, title, type and description, start
+date and time, end date and time, and customer ID
+
+•  an additional report of your choice that is different from the two other required reports in this prompt and from
+the user log-in date and time stamp that will be tracked in part C
+     */
+    @FXML
+    private void generateReport(Event event) throws Exception {
+        if (reportTypeBox.getValue() != null) {
+            switch (reportTypeBox.getValue()){
+                case "Appointments" : Helpers.reports.appointmentReport();
+                case "Contact Schedule" : Helpers.reports.contactSchedule();
+                case "User Load": Helpers.reports.userReport();
+        }
+
+
+        }
 
     }
 
-
-
-
-
-    // Buttons
     @FXML
     private void customerScreen(Event event) {
         try {
@@ -383,10 +391,7 @@ public class mainScreen implements Initializable {
         }
     }
 
-    @FXML
-    private void generateReport(Event event) throws Exception {
 
-    }
 
     @FXML
     private void exitButton(Event event) throws Exception {

@@ -26,10 +26,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Timestamp;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.Month;
-import java.time.ZonedDateTime;
+import java.time.*;
 import java.time.temporal.IsoFields;
 import java.time.temporal.WeekFields;
 import java.util.Locale;
@@ -94,10 +91,13 @@ public class mainScreen implements Initializable {
         generateComboBoxes();
         generateAppointmentsTable();
 
+        impendingAppointment();
+
         allRadio.setToggleGroup(period);
         weekRadio.setToggleGroup(period);
         monthRadio.setToggleGroup(period);
         allRadio.setSelected(true);
+
     }
 
     private void generateComboBoxes() {
@@ -386,6 +386,33 @@ public class mainScreen implements Initializable {
     private void exitButton(Event event) throws Exception {
         DBConnection.closeConnection();
         Platform.exit();
+    }
+
+    private void impendingAppointment() {
+        boolean impAppt = false;
+
+        for (Appointment appointment : Data.getAppointments()) {
+            if (Duration.between(LocalDateTime.now(), appointment.getStart().toLocalDateTime()).toMinutes() <= 15 &&
+                    Duration.between(LocalDateTime.now(), appointment.getStart().toLocalDateTime()).toMinutes() >= 0) {
+                String t = "Appointment within 15 minutes";
+                String c = "Appointment " + appointment.getId() + " starts today at " +
+                        appointment.getStart();
+                popup(t,c);
+                impAppt = true;
+            }
+        }
+        if (!impAppt) {
+            String t = "No appointments within 15 minutes";
+            String c = t;
+            popup(t,c);
+        }
+    }
+
+    private void popup(String title, String content) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setContentText(content);
+        alert.showAndWait();
     }
 
 }

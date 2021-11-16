@@ -1,0 +1,2 @@
+Access attempt: 2021-11-16T16:06:01.645202600-05:00[America/New_York]		Username: test		Successful: true
+Access attempt: 2021-11-16T16:06:50.095195800-05:00[America/New_York]		Username: accessloggertest		Successful: false

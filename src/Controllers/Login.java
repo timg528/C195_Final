@@ -11,6 +11,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.PrintWriter;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.time.*;
@@ -75,6 +79,7 @@ public class Login {
 
             if(rs.next()) {
                 Data.setCurrentUser(rs.getInt("User_ID"));
+                accessLogger(true);
                 Data.generateAll();
 
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/mainScreen.fxml"));
@@ -89,18 +94,26 @@ public class Login {
                 stage.show();
 
             } else {
+                accessLogger(false);
                 Alert errorAlert = new Alert(Alert.AlertType.ERROR);
                 errorAlert.setHeaderText(rb.getString("invalidcreds"));
                 errorAlert.showAndWait();
             }
         } else {
+            accessLogger(false);
             Alert errorAlert = new Alert(Alert.AlertType.ERROR);
             errorAlert.setHeaderText(rb.getString("invaliduser"));
             errorAlert.setContentText(rb.getString("usetest"));
             errorAlert.showAndWait();
         }
 
+    }
 
+    private void accessLogger(boolean success) throws Exception {
+        PrintWriter pw = new PrintWriter(new FileOutputStream(new File("login_activity.txt"), true));
+        pw.append("Access attempt: " + ZonedDateTime.of(LocalDateTime.now(), Data.getLocalTimezone()) +
+                "\t\tUsername: " + usernameField.getText() +"\t\tSuccessful: " + success + "\n");
+        pw.close();
 
     }
 

@@ -1,6 +1,10 @@
 package Controllers;
 
 
+import Models.Appointment;
+import Models.Contact;
+import Models.Data;
+import Models.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -15,13 +19,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
-import org.w3c.dom.Text;
 
 
 import java.net.URL;
 import java.time.Month;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 public class reportScreen implements Initializable {
 
@@ -39,45 +44,90 @@ public class reportScreen implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        reportText.setText("");
+
         switch (reportType) {
-            case "Appointments" :
-                reportText.setText("");
-                appointmentReport();
+            case "Appointments" : appointmentReport(); break;
+            case "Contact Schedule" : contactReport(); break;
+            case "User Load" : userReport(); break;
+
+
         }
 
     }
-/*
-    private void populateComboBox() {
-        reportTypes.addAll("Appointments", "Contact Schedule", "User Load");
-    }
 
-    @FXML private void generateReport() {
 
-    }
-*/
     private void appointmentReport() {
-        StringBuilder report = new StringBuilder();
-        HashMap<String, Integer> numberByType = Helpers.reports.appointmentbyType();
-        HashMap<Month, Integer> numberByMonth = Helpers.reports.appointmentByMonth();
-        report.append("Count\t\t\t: Type\n");
-        numberByType.forEach((v,k) -> report.append(k + "\t\t\t: " + v + "\n" ));
-        report.append("\n\n\n#######################\n\n\n");
-        report.append("Count\t\t\t: Type\n");
-        numberByMonth.forEach((v,k) -> report.append(k + "\t\t\t: " + v + "\n"));
-        System.out.println(report);
-        reportText.setText(report.toString());
+        Set<String> types = new HashSet<>();
+        Set<Month> months = new HashSet<>();
+        HashMap<String, Integer> numberByType = new HashMap<>();
+        HashMap<Month, Integer> numberByMonth = new HashMap<>();
 
+        for (Appointment appointment: Data.getAppointments()) {
+            months.add(appointment.getStart().toLocalDateTime().getMonth());
+            types.add(appointment.getType());
+        }
 
+        for (String type: types) {
+            int count = 0;
+            for (Appointment appointment: Data.getAppointments()) {
 
+                if (type.equals(appointment.getType())) {
+                    count++;
+                }
+                numberByType.put(type, count);
+            }
+        }
+        for (Month month: months) {
+            int count = 0;
+            for (Appointment appointment: Data.getAppointments()) {
+                if (month.equals(appointment.getStart().toLocalDateTime().getMonth())) {
+                    count++;
+                }
+                numberByMonth.put(month, count);
+            }
+        }
+
+        reportText.appendText("Count \t\tType\n");
+        numberByType.forEach((k,v) -> reportText.appendText(v + "\t\t" + k + "\n"));
+        reportText.appendText("\n\n\nCount \t\tMonth\n");
+        numberByMonth.forEach((k,v) -> reportText.appendText(v + "\t\t" + k + "\n"));
 
     }
 
     private void contactReport() {
-
+        for (Contact contact: Data.getContacts()) {
+            reportText.appendText("Contact:" + contact.getContactName() + "\n");
+            for (Appointment appointment: Data.getAppointments()) {
+                if (appointment.getContact() == contact.getContactID()) {
+                    reportText.appendText("Appointment ID: " + appointment.getId() +
+                            " \tTitle: " + appointment.getTitle() +
+                            "\tType: " + appointment.getType() +
+                            "\tDescription: " + appointment.getDescription() +
+                            "\tStart: " + appointment.getStart() +
+                            "\tEnd: " + appointment.getEnd() +
+                            "\tCustomer: " + appointment.getCustomer() + "\n");
+                }
+                System.out.println("\n\n");
+            }
+        }
     }
 
     private void userReport() {
+        for (User user: Data.getUsers()) {
+            reportText.appendText("User: " + user.getUsername() + "\n");
+            for (Appointment appointment: Data.getAppointments()) {
+                if (appointment.getUser() == user.getId()) {
+                    reportText.appendText("Appointment ID: " + appointment.getId() +
+                            " \tTitle: " + appointment.getTitle() +
+                            "\tType: " + appointment.getType() +
+                            "\tDescription: " + appointment.getDescription() +
+                            "\tStart: " + appointment.getStart() +
+                            "\tEnd: " + appointment.getEnd() +
+                            "\tCustomer: " + appointment.getCustomer() + "\n");
+                }
+                System.out.println("\n\n");
+            }
+        }
 
     }
 

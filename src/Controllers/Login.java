@@ -20,7 +20,9 @@ import java.sql.ResultSet;
 import java.time.*;
 import java.util.ResourceBundle;
 
-
+/**
+ * This class handles the login functions of the application
+ */
 public class Login {
     /**
      *  Requirement A1: Create a log-in form with the following capabilities:
@@ -41,6 +43,13 @@ public class Login {
 
     ResourceBundle rb;
 
+    /**
+     * This initializes the screen and calls Data.generateLocalData() to generate the localization data,
+     * then Data.getRB() to pull the resource bundle for localization. This allows for the localization data
+     * to be used on other pages should I wish to extend this in the future.
+     * Finally, it uses the localization data to display the text on the screen.
+     * @throws Exception If there is an issue
+     */
     public void initialize() throws Exception {
         Data.generateLocalData();
         rb = Data.getRB();
@@ -57,12 +66,25 @@ public class Login {
 
     }
 
+    /**
+     * This performs a simple exit of the program
+     */
     @FXML
     private void exitProgramButton() {
         Platform.exit();
     }
 
 
+    /**
+     * This takes the values entered for username and password and first verifies that the username is 'test'
+     * per the instructions. If it's not, it throws an error. If it is, it then opens a database connection
+     * and searches for a user with a matching password. If the database finds it, the user is then directed to the
+     * main screen. If not, an error message pops up.
+     * For both successful and unsuccessful login attempts, accesslogger() is called and passed a boolean value
+     * based on the success.
+     * @param event This is the user action on the screen
+     * @throws Exception if there's an issue
+     */
     @FXML
     private void loginButton(ActionEvent event) throws Exception {
 
@@ -109,6 +131,12 @@ public class Login {
 
     }
 
+    /**
+     * This handles writing to the access log file. It always records the ZonedTimeStamp of the access, the
+     * username attempted, and whether the attempt was successful or not.
+     * @param success This boolean is passed as true if the login attempt was successful, false if not.
+     * @throws Exception In case of issues.
+     */
     private void accessLogger(boolean success) throws Exception {
         PrintWriter pw = new PrintWriter(new FileOutputStream(new File("login_activity.txt"), true));
         pw.append("Access attempt: " + ZonedDateTime.of(LocalDateTime.now(), Data.getLocalTimezone()) +

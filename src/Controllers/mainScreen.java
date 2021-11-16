@@ -75,7 +75,7 @@ public class mainScreen implements Initializable {
     @FXML private ComboBox<Customer> customerBox;
     @FXML private ComboBox<User> userBox;
 
-    @FXML private ComboBox<String> periodSelection;
+    @FXML private ComboBox<String> periodSelection, reportTypeBox;
     @FXML private RadioButton allRadio, weekRadio, monthRadio;
     final ToggleGroup period = new ToggleGroup();
 
@@ -368,7 +368,8 @@ public class mainScreen implements Initializable {
         if (appointmentIDBox.getText() != null) {
             Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION);
             confirmation.setTitle("Are you sure you wish to delete this?");
-            confirmation.setContentText("Click to delete");
+            confirmation.setContentText("Click to delete " + appointmentTypeBox.getText() +
+                            "appointment " + appointmentIDBox.getText());
             Optional<ButtonType> confirm = confirmation.showAndWait();
 
             if (confirm.get() == ButtonType.OK) {
@@ -380,6 +381,11 @@ public class mainScreen implements Initializable {
             clearFields();
 
         }
+    }
+
+    @FXML
+    private void generateReport(Event event) throws Exception {
+
     }
 
     @FXML

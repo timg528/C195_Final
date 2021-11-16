@@ -28,7 +28,7 @@
       </TableView>
       <Button fx:id="addAppointmentButton" layoutX="580.0" layoutY="749.0" mnemonicParsing="false" onAction="#addAppointmentButton" prefHeight="25.0" prefWidth="127.0" text="Add Appointment" />
       <Button fx:id="modifyAppointmentButton" layoutX="722.0" layoutY="749.0" mnemonicParsing="false" onAction="#modifyAppointmentButton" text="Modify Appointment" />
-      <Button fx:id="customerScreenButton" layoutX="1010.0" layoutY="693.0" mnemonicParsing="false" onAction="#customerScreen" prefHeight="25.0" prefWidth="127.0" text="Customers" />
+      <Button fx:id="customerScreenButton" layoutX="1010.0" layoutY="653.0" mnemonicParsing="false" onAction="#customerScreen" prefHeight="65.0" prefWidth="127.0" text="Customers" />
       <Button fx:id="exitButton" layoutX="1010.0" layoutY="749.0" mnemonicParsing="false" onAction="#exitButton" prefHeight="25.0" prefWidth="127.0" text="Exit" />
       <Button fx:id="clearButton" layoutX="867.0" layoutY="749.0" mnemonicParsing="false" onAction="#clearButton" prefHeight="25.0" prefWidth="127.0" text="Clear" />
       <TextField fx:id="appointmentIDBox" editable="false" layoutX="178.0" layoutY="489.0" />
@@ -64,5 +64,7 @@
       <Button fx:id="deleteAppointmentButton" layoutX="189.0" layoutY="749.0" mnemonicParsing="false" onAction="#deleteAppointmentButton" prefHeight="25.0" prefWidth="127.0" text="Delete Appointment" />
       <RadioButton fx:id="allRadio" layoutX="179.0" layoutY="40.0" mnemonicParsing="false" onAction="#periodSelector" text="All" />
       <DatePicker fx:id="dateFilter" layoutX="389.0" layoutY="36.0" onAction="#periodSelector" />
+      <Button fx:id="reportButton" layoutX="844.0" layoutY="694.0" mnemonicParsing="false" onAction="#generateReport" prefHeight="25.0" prefWidth="150.0" text="Print Report" />
+      <ComboBox fx:id="reportTypeBox" layoutX="842.0" layoutY="654.0" prefWidth="150.0" promptText="Report Type" />
    </children>
 </AnchorPane>

@@ -5,8 +5,6 @@ import Models.Appointment;
 import Models.Contact;
 import Models.Data;
 import Models.User;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -30,7 +28,6 @@ import java.util.Set;
 
 public class reportScreen implements Initializable {
 
-    private final ObservableList<String> reportTypes = FXCollections.observableArrayList();
     private String reportType;
 
     @FXML private TextArea reportText;
@@ -49,8 +46,6 @@ public class reportScreen implements Initializable {
             case "Appointments" : appointmentReport(); break;
             case "Contact Schedule" : contactReport(); break;
             case "User Load" : userReport(); break;
-
-
         }
 
     }

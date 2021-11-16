@@ -21,6 +21,10 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+
+/**
+ * This class handles creating, reading, updating, and deleting customers.
+ */
 public class customerScreen implements Initializable {
 
     @FXML private Button createCustomerButton;
@@ -49,6 +53,11 @@ public class customerScreen implements Initializable {
     public customerScreen() {}
 
 
+    /**
+     * This initializes the page by running the generateCustomersTable and loadCountryBox methods.
+     * @param url
+     * @param rb
+     */
     public void initialize(URL url, ResourceBundle rb) {
         generateCustomersTable();
         loadCountryBox();
@@ -56,6 +65,17 @@ public class customerScreen implements Initializable {
 
     }
 
+    /**
+     * This method handles filling the customer tableview with customer data. Users can select
+     * dustomers in order to modify or delete them, or use their data as a template for creating a new
+     * customer in the database.
+     * <p><b>
+     * This method features a Lambda function that adds a listener to the tableview so that
+     * when a user clicks on a customer, the text and combo boxes are filled out using that customer's
+     * data.
+     * </b>
+     * </p>
+     */
     private void generateCustomersTable(){
         customersTable.getSelectionModel().clearSelection();
         customersTable.setItems(Data.getCustomers());
@@ -90,6 +110,9 @@ public class customerScreen implements Initializable {
     }
 
 
+    /**
+     * This handles loading the country box from the Data model
+     */
     private void loadCountryBox() {
         ObservableList<Country> countries = FXCollections.observableArrayList();
         countries = Data.getCountries();
@@ -97,6 +120,9 @@ public class customerScreen implements Initializable {
         countryBox.setItems(countries);
     }
 
+    /**
+     * This handles filtering the options available in the division box through a filtered stream
+     */
     @FXML private void selectDivision() {
         if (countryBox.getSelectionModel().getSelectedItem() != null) {
             int countryID = countryBox.getSelectionModel().getSelectedItem().getCountryID();
@@ -107,6 +133,10 @@ public class customerScreen implements Initializable {
 
     }
 
+    /**
+     * This method handles clearing out the text and combo boxes. It was necessary to separate it out from the
+     * clearButton as there are other actions which require the fields to clear.
+     */
     private void clearFields() {
         customersTable.getSelectionModel().clearSelection();
         customerIDBox.clear();
@@ -121,6 +151,12 @@ public class customerScreen implements Initializable {
 
 
     // Button Actions
+
+    /**
+     * This handles returning to the main page. I made it separate in case there were any actions
+     * other than clicking the cancel button that would require sending the user back to main.
+     * @param event
+     */
     private void returnToMain(Event event){
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/mainScreen.fxml"));
@@ -138,10 +174,22 @@ public class customerScreen implements Initializable {
 
 
     // On-screen Buttons
+
+    /**
+     * This allows the user of the program to leave the customer screen
+     * @param event
+     */
     @FXML private void cancelButton(ActionEvent event) {
         returnToMain(event);
     }
 
+    /**
+     * This method first checks that all of the boxes are filled, except for the customerID box,
+     * then passes those values to the CustomerDAO.createCustomer which creates the customer in the database.
+     * It then calls the Data.generateCustomers method to refresh the Data object and refreshes the tableview.
+     * @param event
+     * @throws Exception
+     */
     @FXML private void createButton(ActionEvent event) throws Exception {
         if (!customerNameBox.getText().isEmpty() &&
         !customerAddressBox.getText().isEmpty() &&
@@ -162,6 +210,14 @@ public class customerScreen implements Initializable {
 
 
     }
+
+    /**
+     * This updates the selected customer after verifying that all the fields and boxes have values.
+     * Once it's validated, it calls the CustomerDAO.updateCustomer with the values, then calls
+     * Data.generateCustomers and refreshes the tableview.
+     * @param event
+     * @throws Exception
+     */
     @FXML private void updateButton(ActionEvent event) throws Exception {
         if (!customerIDBox.getText().isEmpty() &&
                 !customerNameBox.getText().isEmpty() &&
@@ -182,10 +238,24 @@ public class customerScreen implements Initializable {
         }
     }
 
+    /**
+     * This allows the user to clear all the fields and tableview selection
+     * @param event
+     */
     @FXML private void clearButton(ActionEvent event) {
         clearFields();
     }
 
+    /**
+     * This allows the user to delete a customer.
+     * It first finds all the appointments by that customer and presents a confirmation box asking the user
+     * if they want to delete those appointments and that customer. If the user answers in the affirmative,
+     * the method then loops through all the appointments by the customer and calls deleteAppointment on each,
+     * then it deletes the customer. Finally, it refreshes the Data object's appointment and customer lists before
+     * refreshing the tableview.
+     * @param event
+     * @throws Exception
+     */
     @FXML private void deleteButton(ActionEvent event) throws Exception {
         if (customerIDBox.getText() != null) {
             ObservableList<Appointment> appointments = FXCollections.observableArrayList();

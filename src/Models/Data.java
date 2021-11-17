@@ -57,8 +57,8 @@ public class Data {
     }
 
     /**
-     * This sets the current user
-     * @param user
+     * This sets the current user as part of the Login screen's login function
+     * @param user ID of the user who just logged in
      */
     public static void setCurrentUser(int user) {
         currentUser = user;
@@ -96,7 +96,7 @@ public class Data {
 
     /**
      * Generates an observable list of Divisions
-     * @throws Exception
+     * @throws Exception In case of SQL or other exception
      */
     public static void generateDivisions() throws Exception {
         divisions.clear();
@@ -231,9 +231,8 @@ public class Data {
 
     /**
      * Creates a timezone object and selects resource bundle based on the application user's computer settings
-     * @throws Exception In case of various issues
      */
-    public static void generateLocalData() throws Exception {
+    public static void generateLocalData() {
         tz = ZoneId.systemDefault();
         rb = ResourceBundle.getBundle("Main/login", Locale.getDefault());
     }

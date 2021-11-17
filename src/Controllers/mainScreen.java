@@ -252,6 +252,10 @@ public class mainScreen implements Initializable {
             stage.setScene(scene);
             stage.setResizable(false);
             stage.show();
+        } else {
+            String t = "No report type selected";
+            String c = "Please select a report type and try again";
+            popup(t,c);
         }
 
 
@@ -346,7 +350,11 @@ public class mainScreen implements Initializable {
                     Data.generateAppointments();
                     generateAppointmentsTable();
                 }
-            }
+            } else {
+            String t = "Not all information filled in";
+            String c = "Please double check the fields and dropdowns and try again";
+            popup(t,c);
+        }
 
 
 
@@ -410,6 +418,10 @@ public class mainScreen implements Initializable {
                 Data.generateAppointments();
                 generateAppointmentsTable();
             }
+        } else {
+            String t = "No appointment selected";
+            String c = "Please select an appointment to update";
+            popup(t,c);
         }
     }
 
@@ -438,6 +450,10 @@ public class mainScreen implements Initializable {
             generateAppointmentsTable();
             clearFields();
 
+        } else {
+            String t = "No appointment selected";
+            String c = "Select an appointment to delete";
+            popup(t,c);
         }
     }
 

@@ -12,6 +12,12 @@ import java.sql.SQLException;
 
 public class DivisionDAO {
 
+    /**
+     * This returns the list of all Divisions, regardless of Country
+     * @return Observable list of allDivisions
+     * @throws SQLException
+     * @throws Exception
+     */
     public static ObservableList<Division> getAllDivisions() throws SQLException, Exception {
         String sql = "SELECT * from first_level_divisions";
         ObservableList<Division> allDivisions = FXCollections.observableArrayList();

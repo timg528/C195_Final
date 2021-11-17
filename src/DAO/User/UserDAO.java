@@ -9,6 +9,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 public class UserDAO {
+    /**
+     * This returns all the Users in the database.
+     * @return
+     * @throws Exception
+     */
     public static ObservableList<User> getAllUsers() throws Exception {
         String sql = "SELECT User_ID, User_Name from users";
         ObservableList<User> allUsers = FXCollections.observableArrayList();

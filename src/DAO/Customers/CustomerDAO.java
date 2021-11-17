@@ -12,6 +12,15 @@ import java.sql.ResultSet;
 
 public class CustomerDAO {
 
+    /**
+     * This creates a customer in the database.
+     * @param name
+     * @param address
+     * @param postal
+     * @param phone
+     * @param divisionID
+     * @throws Exception
+     */
     public static void createCustomer(String name, String address, String postal,
                                    String phone, int divisionID) throws Exception {
         String sql = "INSERT INTO customers (Customer_Name, Address, Postal_Code, Phone, "+
@@ -30,6 +39,11 @@ public class CustomerDAO {
 
     }
 
+    /**
+     * This returns all customers in the database.
+     * @return
+     * @throws Exception
+     */
     public static ObservableList<Customer> getAllCustomers() throws Exception {
         String sql = "SELECT * from customers";
         ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
@@ -53,8 +67,16 @@ public class CustomerDAO {
         return allCustomers;
     }
 
-
-
+    /**
+     * This updates a customer in the database specified by the id.
+     * @param id
+     * @param name
+     * @param address
+     * @param postal
+     * @param phone
+     * @param divisionID
+     * @throws Exception
+     */
     public static void updateCustomer(int id, String name, String address, String postal,
                                    String phone, int divisionID) throws Exception {
 
@@ -77,6 +99,11 @@ public class CustomerDAO {
 
     }
 
+    /**
+     * This deletes the customer in the database specified by the customerID.
+     * @param customerID
+     * @throws Exception
+     */
     public static void deleteCustomer(int customerID) throws Exception {
         String sql = "DELETE FROM customers WHERE Customer_ID = ?";
 

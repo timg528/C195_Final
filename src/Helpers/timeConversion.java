@@ -40,6 +40,13 @@ public class timeConversion {
         return UTC;
     }
 
+    /**
+     * This method converts a timestamp in the local timezone and returns
+     * a timestamp in EST for use in validation.
+     * @param timestamp
+     * @return
+     * @throws Exception
+     */
     public static Timestamp localToEST(Timestamp timestamp) throws Exception {
         Timestamp EST = Timestamp.valueOf(timestamp.toLocalDateTime().atZone(
                 ZoneId.of(Data.getLocalTimezone().getId())).withZoneSameInstant(
@@ -47,6 +54,12 @@ public class timeConversion {
         return EST;
     }
 
+    /**
+     * This method takes a timestamp in UTC and returns a timestamp in EST.
+     * @param timestamp
+     * @return
+     * @throws Exception
+     */
     public static Timestamp utcToEST(Timestamp timestamp) throws Exception {
         Timestamp EST = Timestamp.valueOf(timestamp.toLocalDateTime().atZone(
                 ZoneId.of("UTC")).withZoneSameInstant(

@@ -11,6 +11,21 @@ import java.time.LocalTime;
 
 public class validators {
 
+    /**
+     * This takes the basic information about an appointment and really just checks that the times make logical
+     * sense.
+     * @param title
+     * @param description
+     * @param location
+     * @param type
+     * @param start
+     * @param end
+     * @param customer_id
+     * @param user_id
+     * @param contact_id
+     * @return Boolean indicating whether the validation checks passed or failed
+     * @throws Exception
+     */
     public static boolean appointmentValidator(String title, String description, String location,
                                           String type, Timestamp start, Timestamp end, int customer_id,
                                           int user_id, int contact_id ) throws Exception {
@@ -66,6 +81,21 @@ public class validators {
         return true;
     }
 
+    /**
+     * This is used when adding an appointment and checks calls the appointmentValidator to perform basic time checks
+     * but then calls conflictChecker to make sure there aren't any conflicting appointments for the customer.
+     * @param title
+     * @param description
+     * @param location
+     * @param type
+     * @param start
+     * @param end
+     * @param customer_id
+     * @param user_id
+     * @param contact_id
+     * @return Boolean indicating whether or not the validation checks passed or failed
+     * @throws Exception
+     */
     public static boolean addValidator(String title, String description, String location,
                                        String type, Timestamp start, Timestamp end, int customer_id,
                                        int user_id, int contact_id) throws Exception {
@@ -90,6 +120,24 @@ public class validators {
         return true;
     }
 
+    /**
+     * This is used when adding an appointment and checks calls the appointmentValidator to perform basic time checks
+     * but then calls conflictChecker to make sure there aren't any conflicting appointments for the customer. The
+     * primary difference is that this takes the appointment id so that the conflict checker doesn't fire for minor
+     * changes like shifting the appointment by 15 minutes or so.
+     * @param id
+     * @param title
+     * @param description
+     * @param location
+     * @param type
+     * @param start
+     * @param end
+     * @param customer_id
+     * @param user_id
+     * @param contact_id
+     * @return Boolean indicating whether or not the validation checks passed or failed
+     * @throws Exception
+     */
     public static boolean modifyValidator(int id, String title, String description, String location,
                                             String type, Timestamp start, Timestamp end, int customer_id,
                                             int user_id, int contact_id ) throws Exception {
@@ -122,6 +170,17 @@ public class validators {
         return true;
     }
 
+    /**
+     * This lookes for overlaps between appointments for the same customer to ensure that the customer doesn't have
+     * multiple appointments at roughly the same time.
+     * @param apptStart
+     * @param apptEnd
+     * @param aStart
+     * @param aEnd
+     * @param aID
+     * @return Boolean indicating if the checks passed or failed
+     * @throws Exception
+     */
     public static boolean conflictChecker(LocalDateTime apptStart, LocalDateTime apptEnd,
                                           LocalDateTime aStart, LocalDateTime aEnd, int aID) throws Exception {
 
@@ -171,6 +230,11 @@ public class validators {
         return true;
     }
 
+    /**
+     * Handles popups for all the validation checks
+     * @param title The title of the popup
+     * @param content The content of the popup
+     */
     private static void popup(String title, String content) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);

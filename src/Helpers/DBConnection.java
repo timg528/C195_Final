@@ -17,17 +17,29 @@ public class DBConnection {
 
     public static Connection conn = null;
 
+    /**
+     * This starts the database connection
+     * @return
+     * @throws Exception
+     */
     public static Connection startConnection() throws Exception {
         conn = DriverManager.getConnection(dbURL, dbUser, dbPass);
         return conn;
     }
 
+    /**
+     * This closes the database connection
+     * @throws Exception
+     */
     public static void closeConnection() throws Exception {
         conn.close();
     }
 
-
-    // Get Connection
+    /**
+     * This returns the connection to methods that call it (only the DAOs)
+     * @return
+     * @throws Exception
+     */
     public static Connection getConnection() throws Exception {
         return conn;
     }

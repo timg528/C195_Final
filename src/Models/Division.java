@@ -6,7 +6,7 @@ public class Division {
     private int countryID;
 
     /**
-     *
+     * Creates a first level division object
      * @param divisionID
      * @param divisionName
      * @param countryID
@@ -18,7 +18,7 @@ public class Division {
     }
 
     /**
-     *
+     * Sets the countryID of a division
      * @param countryID
      */
     public void setCountryID(int countryID) {
@@ -26,7 +26,7 @@ public class Division {
     }
 
     /**
-     *
+     * Sets the division ID
      * @param divisionID
      */
     public void setDivisionID(int divisionID) {
@@ -34,7 +34,7 @@ public class Division {
     }
 
     /**
-     *
+     * Sets the name of the division
      * @param divisionName
      */
     public void setDivisionName(String divisionName) {
@@ -42,7 +42,7 @@ public class Division {
     }
 
     /**
-     *
+     * Returns the divisionID
      * @return divisionID
      */
     public int getDivisionID() {
@@ -50,7 +50,7 @@ public class Division {
     }
 
     /**
-     *
+     * Returns the countryID of a division
      * @return countryID
      */
     public int getCountryID() {
@@ -58,13 +58,17 @@ public class Division {
     }
 
     /**
-     *
+     * Returns the name of the division
      * @return divisionName
      */
     public String getDivisionName() {
         return divisionName;
     }
 
+    /**
+     * Overrides the toString() method to show division names in combo boxes
+     * @return divisionName
+     */
     public String toString() {
         return divisionName;
     }

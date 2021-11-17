@@ -10,14 +10,24 @@ import javafx.collections.ObservableList;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
+
 
 public class AppointmentDAO {
 
 
+    /**
+     * This handles the creation of appointments in the database.
+     * @param title
+     * @param description
+     * @param location
+     * @param type
+     * @param start
+     * @param end
+     * @param customer_id
+     * @param user_id
+     * @param contact_id
+     * @throws Exception
+     */
     public static void createAppointment(String title, String description, String location, String type,
                                       Timestamp start, Timestamp end, int customer_id, int user_id,
                                       int contact_id)
@@ -48,6 +58,11 @@ public class AppointmentDAO {
 
     }
 
+    /**
+     * This handles reading the database to get all appointments
+     * @return
+     * @throws Exception
+     */
     public static ObservableList<Appointment> getAllAppointments() throws Exception {
         String sql = "SELECT * from appointments";
         ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
@@ -83,7 +98,20 @@ public class AppointmentDAO {
     }
 
 
-
+    /**
+     * This handles updating an appointment of the specified ID with the relevant data.
+     * @param id
+     * @param title
+     * @param description
+     * @param location
+     * @param type
+     * @param start
+     * @param end
+     * @param customer_id
+     * @param user_id
+     * @param contact_id
+     * @throws Exception
+     */
     public static void updateAppointment(int id, String title, String description, String location,
                                          String type, Timestamp start, Timestamp end, int customer_id,
                                          int user_id, int contact_id )
@@ -122,6 +150,11 @@ public class AppointmentDAO {
         ps.executeUpdate();
     }
 
+    /**
+     * This handles deleting the appointment from the database, specified by the appointmentID.
+     * @param appointmentID
+     * @throws Exception
+     */
     public static void deleteAppointment(Integer appointmentID) throws Exception {
         String sql = "DELETE FROM appointments WHERE Appointment_ID = ?";
 

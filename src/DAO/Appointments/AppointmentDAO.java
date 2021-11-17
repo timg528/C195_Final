@@ -11,7 +11,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
 
-
+/**
+ * This handles CRUD actions from the underlying data source (i.e. the database).
+ */
 public class AppointmentDAO {
 
 

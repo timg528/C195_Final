@@ -5,6 +5,9 @@ import Models.Data;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+/**
+ * This helper is designed to find appointments for a given customerID.
+ */
 public class findAppointments {
 
     /**

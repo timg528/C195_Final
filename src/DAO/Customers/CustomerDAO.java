@@ -9,7 +9,9 @@ import javafx.collections.ObservableList;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-
+/**
+ * This handles CRUD actions from the underlying data source (i.e. the database).
+ */
 public class CustomerDAO {
 
     /**

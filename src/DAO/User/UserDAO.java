@@ -8,11 +8,14 @@ import javafx.collections.ObservableList;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+/**
+ * This handles CRUD actions from the underlying data source (i.e. the database).
+ */
 public class UserDAO {
     /**
-     * This returns all the Users in the database.
-     * @return
-     * @throws Exception
+     * This returns an ObservableList of all the Users in the database.
+     * @return allUsers
+     * @throws Exception in case of SQL or other issues.
      */
     public static ObservableList<User> getAllUsers() throws Exception {
         String sql = "SELECT User_ID, User_Name from users";

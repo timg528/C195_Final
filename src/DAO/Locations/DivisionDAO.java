@@ -10,6 +10,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * This handles CRUD actions from the underlying data source (i.e. the database).
+ */
 public class DivisionDAO {
 
     /**

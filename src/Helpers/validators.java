@@ -14,21 +14,20 @@ public class validators {
     /**
      * This takes the basic information about an appointment and really just checks that the times make logical
      * sense.
-     * @param title
-     * @param description
-     * @param location
-     * @param type
-     * @param start
-     * @param end
-     * @param customer_id
-     * @param user_id
-     * @param contact_id
+     * @param title For future use
+     * @param description For future use
+     * @param location For future use
+     * @param type For future use
+     * @param start Timestamp of the appointment start time
+     * @param end Timestamp of the appointment end time
+     * @param customer_id For future use
+     * @param user_id For future use
+     * @param contact_id For future use
      * @return Boolean indicating whether the validation checks passed or failed
-     * @throws Exception
      */
     public static boolean appointmentValidator(String title, String description, String location,
                                           String type, Timestamp start, Timestamp end, int customer_id,
-                                          int user_id, int contact_id ) throws Exception {
+                                          int user_id, int contact_id ) {
         LocalDateTime apptStart = timeConversion.localToEST(start).toLocalDateTime();
         LocalDateTime apptEnd = timeConversion.localToEST(end).toLocalDateTime();
 
@@ -84,21 +83,20 @@ public class validators {
     /**
      * This is used when adding an appointment and checks calls the appointmentValidator to perform basic time checks
      * but then calls conflictChecker to make sure there aren't any conflicting appointments for the customer.
-     * @param title
-     * @param description
-     * @param location
-     * @param type
-     * @param start
-     * @param end
-     * @param customer_id
-     * @param user_id
-     * @param contact_id
+     * @param title For future use
+     * @param description For future use
+     * @param location For future use
+     * @param type For future use
+     * @param start Timestamp of the appointment start time
+     * @param end Timestamp of the appointment end time
+     * @param customer_id For future use
+     * @param user_id For future use
+     * @param contact_id For future use
      * @return Boolean indicating whether or not the validation checks passed or failed
-     * @throws Exception
      */
     public static boolean addValidator(String title, String description, String location,
                                        String type, Timestamp start, Timestamp end, int customer_id,
-                                       int user_id, int contact_id) throws Exception {
+                                       int user_id, int contact_id) {
 
         LocalDateTime apptStart = timeConversion.localToEST(start).toLocalDateTime();
         LocalDateTime apptEnd = timeConversion.localToEST(end).toLocalDateTime();
@@ -125,22 +123,21 @@ public class validators {
      * but then calls conflictChecker to make sure there aren't any conflicting appointments for the customer. The
      * primary difference is that this takes the appointment id so that the conflict checker doesn't fire for minor
      * changes like shifting the appointment by 15 minutes or so.
-     * @param id
-     * @param title
-     * @param description
-     * @param location
-     * @param type
-     * @param start
-     * @param end
-     * @param customer_id
-     * @param user_id
-     * @param contact_id
+     * @param id Used to check other appointments against this appointment and ensure that conflictChecker isn't run against itself
+     * @param title For future use
+     * @param description For future use
+     * @param location For future use
+     * @param type For future use
+     * @param start Timestamp of the appointment start time
+     * @param end Timestamp of the appointment end time
+     * @param customer_id For future use
+     * @param user_id For future use
+     * @param contact_id Used to check this appointment against other appointments by the same customer
      * @return Boolean indicating whether or not the validation checks passed or failed
-     * @throws Exception
      */
     public static boolean modifyValidator(int id, String title, String description, String location,
                                             String type, Timestamp start, Timestamp end, int customer_id,
-                                            int user_id, int contact_id ) throws Exception {
+                                            int user_id, int contact_id ) {
         LocalDateTime apptStart = timeConversion.localToEST(start).toLocalDateTime();
         LocalDateTime apptEnd = timeConversion.localToEST(end).toLocalDateTime();
 
@@ -179,10 +176,9 @@ public class validators {
      * @param aEnd
      * @param aID
      * @return Boolean indicating if the checks passed or failed
-     * @throws Exception
      */
     public static boolean conflictChecker(LocalDateTime apptStart, LocalDateTime apptEnd,
-                                          LocalDateTime aStart, LocalDateTime aEnd, int aID) throws Exception {
+                                          LocalDateTime aStart, LocalDateTime aEnd, int aID) {
 
         String t = "Overlap detected!";
         // Check if the start times are the same

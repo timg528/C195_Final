@@ -6,7 +6,6 @@ import Models.Contact;
 import Models.Data;
 import Models.User;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -26,6 +25,9 @@ import java.util.HashSet;
 import java.util.ResourceBundle;
 import java.util.Set;
 
+/**
+ * This screen displays reports
+ */
 public class reportScreen implements Initializable {
 
     private String reportType;

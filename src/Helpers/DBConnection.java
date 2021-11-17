@@ -2,13 +2,11 @@ package Helpers;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.SQLException;
 
-import java.sql.SQLException;
-
+/**
+ *  This helper manages the database connection, but does not act on it directly.
+ */
 public class DBConnection {
-
-   // private static final String sqlDriver = "com.mysql.jdbc.Driver"; //Not sure if this is used
 
     private static final String dbName="client_schedule";
     private static final String dbURL="jdbc:mysql://localhost:3306/"+dbName;

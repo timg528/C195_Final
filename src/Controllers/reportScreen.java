@@ -94,9 +94,11 @@ public class reportScreen implements Initializable {
             }
         }
 
+        reportText.appendText("Report of the number of appointments by type:\n\n");
         reportText.appendText("Count \t\tType\n");
         numberByType.forEach((k,v) -> reportText.appendText(v + "\t\t" + k + "\n"));
-        reportText.appendText("\n\n\nCount \t\tMonth\n");
+        reportText.appendText("\n\n\nReport of the number of appointments by Month:\n\n");
+        reportText.appendText("Count \t\tMonth\n");
         numberByMonth.forEach((k,v) -> reportText.appendText(v + "\t\t" + k + "\n"));
 
     }
@@ -105,8 +107,10 @@ public class reportScreen implements Initializable {
      * This displays the appointments per Contact in the organization.
      */
     private void contactReport() {
+        reportText.appendText("Report of appointments per Contact\n\n");
         for (Contact contact: Data.getContacts()) {
-            reportText.appendText("Contact:" + contact.getContactName() + "\n");
+
+            reportText.appendText("\n\nContact:" + contact.getContactName() + "\n\n");
             for (Appointment appointment: Data.getAppointments()) {
                 if (appointment.getContact() == contact.getContactID()) {
                     reportText.appendText("Appointment ID: " + appointment.getId() +
@@ -126,8 +130,9 @@ public class reportScreen implements Initializable {
      * This displays the appointments per User in the organization.
      */
     private void userReport() {
+        reportText.appendText("Report of appointments per User\n\n");
         for (User user: Data.getUsers()) {
-            reportText.appendText("User: " + user.getUsername() + "\n");
+            reportText.appendText("\n\nUser: " + user.getUsername() + "\n");
             for (Appointment appointment: Data.getAppointments()) {
                 if (appointment.getUser() == user.getId()) {
                     reportText.appendText("Appointment ID: " + appointment.getId() +

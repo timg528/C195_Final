@@ -33,7 +33,6 @@ import java.util.ResourceBundle;
  * mainScreen Controller class
  * @author Tim Graham
  */
-
 public class mainScreen implements Initializable {
 
     private boolean passesValidation;
@@ -73,10 +72,17 @@ public class mainScreen implements Initializable {
     final ToggleGroup period = new ToggleGroup();
 
 
-
+    /**
+     * The mainscreen class. I ended up leaving it empty and using other classes, but retained it just in case I might need it.
+     */
     public mainScreen() {
     }
 
+    /**
+     * This initializes the main screen by setting the toggles and calling other methods.
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -93,6 +99,9 @@ public class mainScreen implements Initializable {
 
     }
 
+    /**
+     * I keep the combobox initialization in this method to keep it organized.
+     */
     private void generateComboBoxes() {
 
         hours.addAll("0","1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12",
@@ -115,6 +124,14 @@ public class mainScreen implements Initializable {
 
     }
 
+    /**
+     * This handles selecting whether all appointments or appointments by month or week are shown.
+     * <p><b>
+     *     The lambda expressions here are used in a stream filter to convert the appointment start timestamp to
+     *     a LocalDateTime and compare the month/week to the one selected.
+     * </b>
+     * </p>
+     */
     @FXML private void periodSelector() {
         WeekFields weekFields = WeekFields.of(Locale.US);
         Month selectedMonth = dateFilter.getValue().getMonth();
@@ -141,8 +158,13 @@ public class mainScreen implements Initializable {
     }
 
 
-
-
+    /**
+     * This handles filling the tableview with appointments
+     * <p><b>
+     *     It also features a Lambda to handle filling in the text fields and combo boxes when the user
+     *     selects an appointment in the tableview.
+     * </b></p>
+     */
     private void generateAppointmentsTable(){
 
 
@@ -189,6 +211,10 @@ public class mainScreen implements Initializable {
         );
     }
 
+    /**
+     * This handles the act of clearing the textfields and combo boxes. This is separated out from the Clear button
+     * because other functions like creating, updating, and deleting should also clear out the selection and fields.
+     */
     private void clearFields() {
         appointmentsTable.getSelectionModel().clearSelection();
         appointmentIDBox.clear();
@@ -207,28 +233,15 @@ public class mainScreen implements Initializable {
         userBox.setValue(null);
     }
 
-    // Buttons
-
-    /*
-    f.  Write code that generates accurate information in each of the following reports and will display the reports
-     in the user interface:
-Note: You do not need to save and print the reports to a file or provide a screenshot.
-
-•  the total number of customer appointments by type and month
-
-•  a schedule for each contact in your organization that includes appointment ID, title, type and description, start
-date and time, end date and time, and customer ID
-
-•  an additional report of your choice that is different from the two other required reports in this prompt and from
-the user log-in date and time stamp that will be tracked in part C
+    /**
+     * This method checks that the user selected a reportType in the appropriate combobox, then opens the reportScreen
+     * with the value in that combo box.
+     * @param event The user clicking the button
+     * @throws Exception In case something breaks
      */
     @FXML
     private void generateReport(Event event) throws Exception {
         if (reportTypeBox.getValue() != null) {
- /*           switch (reportTypeBox.getValue()){
-                case "Appointments" : Helpers.reports.appointmentReport();
-                case "Contact Schedule" : Helpers.reports.contactSchedule();
-                case "User Load": Helpers.reports.userReport(); */
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/reportScreen.fxml"));
             reportScreen controller = new reportScreen(reportTypeBox.getValue());
 
@@ -246,6 +259,10 @@ the user log-in date and time stamp that will be tracked in part C
 
     }
 
+    /**
+     * This opens the customer screen should the user wish to view or work with customer data
+     * @param event
+     */
     @FXML
     private void customerScreen(Event event) {
         try {
@@ -264,12 +281,24 @@ the user log-in date and time stamp that will be tracked in part C
 
     }
 
+    /**
+     * This is the button to clear the selection and text fields and combo boxes
+     * @param event
+     */
     @FXML
     private void clearButton(Event event) {
         clearFields();
 
     }
 
+    /**
+     * This method listens for a user click, then verifies that the appropriate fields and boxes are filled in,
+     * then it sends the information to a validator to ensure the appointment times are valid. If that passes,
+     * this method then passes the information to the appointmentDAO to create the appointment. After that, it calls
+     * the methods to update the Data object and refresh the table view.
+     * @param event
+     * @throws Exception
+     */
     @FXML
     private void addAppointmentButton(Event event) throws Exception {
         if (!appointmentTitleBox.getText().isEmpty() &&
@@ -322,7 +351,14 @@ the user log-in date and time stamp that will be tracked in part C
 
 
     }
-
+    /**
+     * This method listens for a user click, then verifies that the appropriate fields and boxes are filled in,
+     * then it sends the information to a validator to ensure the appointment times are valid. If that passes,
+     * this method then passes the information to the appointmentDAO to update the appointment. After that, it calls
+     * the methods to update the Data object and refresh the table view.
+     * @param event
+     * @throws Exception
+     */
     @FXML
     private void modifyAppointmentButton(Event event) throws Exception {
 
@@ -377,10 +413,14 @@ the user log-in date and time stamp that will be tracked in part C
         }
     }
 
-    public void deleteAppointment(int appointmentID) throws Exception {
-        AppointmentDAO.deleteAppointment(appointmentID);
-    }
-
+    /**
+     * This listens for a button click, if the appointmentIDBox has text in it, it'll throw up a confirmation
+     * box asking the user if they're sure they want to delete the appointment. If the user answers in the affirmative,
+     * the method calls the AppointmentDAO.deleteAppointment to delete the appointment. Then it regenerates the
+     * Data object's appointment list, refreshes the tableview, and clears the selection and fields.
+     * @param event
+     * @throws Exception
+     */
     @FXML
     private void deleteAppointmentButton(Event event) throws Exception {
         if (appointmentIDBox.getText() != null) {
@@ -391,7 +431,7 @@ the user log-in date and time stamp that will be tracked in part C
             Optional<ButtonType> confirm = confirmation.showAndWait();
 
             if (confirm.get() == ButtonType.OK) {
-                deleteAppointment(Integer.parseInt(appointmentIDBox.getText()));
+                AppointmentDAO.deleteAppointment(Integer.parseInt(appointmentIDBox.getText()));
             }
 
             Data.generateAppointments();
@@ -402,13 +442,21 @@ the user log-in date and time stamp that will be tracked in part C
     }
 
 
-
+    /**
+     * This button closes the database connection and exits the program
+     * @param event
+     * @throws Exception
+     */
     @FXML
     private void exitButton(Event event) throws Exception {
         DBConnection.closeConnection();
         Platform.exit();
     }
 
+    /**
+     * This handles the logic of checking for an impending appointment - one that starts within 15 minutes of the user
+     * accessing the mainscreen.
+     */
     private void impendingAppointment() {
         boolean impAppt = false;
 
@@ -429,6 +477,11 @@ the user log-in date and time stamp that will be tracked in part C
         }
     }
 
+    /**
+     * This handles most of the popups in the mainscreen.
+     * @param title The string of text to display as the title
+     * @param content The string of text to display as the content
+     */
     private void popup(String title, String content) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);

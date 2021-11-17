@@ -34,11 +34,20 @@ public class reportScreen implements Initializable {
     @FXML private Button exitButton;
     @FXML private ComboBox<String> reportBox;
 
+    /**
+     * This takes the reportType parameter and adds it to the reportscreen object.
+     * @param reportType The string representing the type of report to be run.
+     */
     public reportScreen(String reportType) {
         this.reportType = reportType;
 
     }
 
+    /**
+     * This generates the report text by calling a method based on what the reportType is.
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -51,6 +60,9 @@ public class reportScreen implements Initializable {
     }
 
 
+    /**
+     * This gets called for the first type of report and displays the count of appointments by Type and by Month.
+     */
     private void appointmentReport() {
         Set<String> types = new HashSet<>();
         Set<Month> months = new HashSet<>();
@@ -89,6 +101,9 @@ public class reportScreen implements Initializable {
 
     }
 
+    /**
+     * This displays the appointments per Contact in the organization.
+     */
     private void contactReport() {
         for (Contact contact: Data.getContacts()) {
             reportText.appendText("Contact:" + contact.getContactName() + "\n");
@@ -107,6 +122,9 @@ public class reportScreen implements Initializable {
         }
     }
 
+    /**
+     * This displays the appointments per User in the organization.
+     */
     private void userReport() {
         for (User user: Data.getUsers()) {
             reportText.appendText("User: " + user.getUsername() + "\n");
@@ -126,7 +144,11 @@ public class reportScreen implements Initializable {
 
     }
 
-    private void returnToMain(Event event){
+    /**
+     * This handles returning to the main screen when the user is done viewing their report.
+     * @param event
+     */
+    @FXML private void backOut(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/mainScreen.fxml"));
             mainScreen controller = new mainScreen();
@@ -140,6 +162,4 @@ public class reportScreen implements Initializable {
             stage.show();
         } catch (Exception e) {e.printStackTrace();}
     }
-
-    @FXML private void backOut(ActionEvent event) {returnToMain(event);}
 }

@@ -48,10 +48,18 @@ public class Data {
     }
 
 
+    /**
+     * This returns the currently logged-in user
+     * @return currentUser
+     */
     public static int getCurrentUser() {
         return currentUser;
     }
 
+    /**
+     * This sets the current user
+     * @param user
+     */
     public static void setCurrentUser(int user) {
         currentUser = user;
     }
@@ -64,10 +72,19 @@ public class Data {
         countries = CountryDAO.getAllCountries();
     }
 
+    /**
+     * Returns an ObservableList of country objects
+     * @return countries list
+     */
     public static ObservableList<Country> getCountries() {
         return countries;
     }
 
+    /**
+     * Returns a country object specified by the country ID
+     * @param countryID the ID of the country object to be returned
+     * @return country specified by ID
+     */
     public static Country getCountry(int countryID) {
         for (Country c: countries) {
             if (c.getCountryID() == countryID) {
@@ -77,15 +94,28 @@ public class Data {
         return null;
     }
 
+    /**
+     * Generates an observable list of Divisions
+     * @throws Exception
+     */
     public static void generateDivisions() throws Exception {
         divisions.clear();
         divisions = DivisionDAO.getAllDivisions();
     }
 
+    /**
+     * Returns an ObservableList of Divisions
+     * @return divisions
+     */
     public static ObservableList<Division> getDivisions() {
         return divisions;
     }
 
+    /**
+     * Returns a Division object specified by ID
+     * @param divisionID The ID of the division object to be returned
+     * @return division
+     */
     public static Division getDivision(int divisionID) {
         for (Division d : divisions) {
             if (d.getDivisionID() == divisionID) {
@@ -95,11 +125,20 @@ public class Data {
         return null;
     }
 
+    /**
+     * Creates an observable list of customers from the database
+     * @throws Exception In case of a SQL or other Exception
+     */
     public static void generateCustomers() throws Exception {
 
         customers = CustomerDAO.getAllCustomers();
     }
 
+    /**
+     * Returns a customer specified by ID
+     * @param customerID of the Customer object to be returned
+     * @return customer object
+     */
     public static Customer getCustomer(int customerID) {
         for (Customer c: customers) {
             if (c.getId() == customerID) {
@@ -109,25 +148,50 @@ public class Data {
         return null;
     }
 
+    /**
+     * Returns an Observable list of all customers in the database
+     * @return customers
+     */
     public static ObservableList<Customer> getCustomers() {
         return customers;
     }
 
+    /**
+     * Creates an ObservableList of all the appointments in the database
+     * @throws Exception in case of SQL or other exceptions
+     */
     public static void generateAppointments() throws Exception {
         appointments.clear();
         appointments = AppointmentDAO.getAllAppointments();
     }
 
+    /**
+     * Returns a list of all appointments in the database
+     * @return appointments
+     */
     public static ObservableList<Appointment> getAppointments() {
         return appointments;
     }
 
+    /**
+     * Creates an Observable list of Contacts in the database
+     * @throws Exception in case of SQL or other exception
+     */
     public static void generateContacts() throws Exception {
         contacts = ContactDAO.getAllContacts();
     }
 
+    /**
+     * Returns an ObservableList of all contacts in the database
+     * @return contacts
+     */
     public static ObservableList<Contact> getContacts() {return contacts;}
 
+    /**
+     * Return a single contact object specified by contactID
+     * @param contactID of the Contact to be returned
+     * @return contact or null if the contactID is invalid
+     */
     public static Contact getContact(int contactID) {
         for (Contact c: contacts) {
             if (c.getContactID() == contactID) {
@@ -137,12 +201,25 @@ public class Data {
         return null;
     }
 
+    /**
+     * Creates an ObservableList of all users in the database
+     * @throws Exception in case of SQL or other Exception
+     */
     public static void generateUsers() throws Exception {
         users = UserDAO.getAllUsers();
     }
 
+    /**
+     * Returns an Observable list of all users in the database
+     * @return users
+     */
     public static ObservableList<User> getUsers() {return users;}
 
+    /**
+     * Returns a single user object specified by userID
+     * @param userID of the User object to be returned
+     * @return user or null if no user for userID exists
+     */
     public static User getUser(int userID) {
         for (User u: users) {
             if (u.getId() == userID) {
@@ -152,15 +229,27 @@ public class Data {
         return null;
     }
 
+    /**
+     * Creates a timezone object and selects resource bundle based on the application user's computer settings
+     * @throws Exception In case of various issues
+     */
     public static void generateLocalData() throws Exception {
         tz = ZoneId.systemDefault();
         rb = ResourceBundle.getBundle("Main/login", Locale.getDefault());
     }
 
+    /**
+     * Returns the local timezone of the user
+     * @return tz
+     */
     public static ZoneId getLocalTimezone() {
         return tz;
     }
 
+    /**
+     * Returns the resource bundle for localization
+     * @return rb
+     */
     public static ResourceBundle getRB() {
         return rb;
     }

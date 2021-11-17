@@ -105,7 +105,7 @@ public class Login {
                 Data.generateAll();
 
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/mainScreen.fxml"));
-                mainScreen controller = new mainScreen();
+                mainScreen controller = new mainScreen(true);
 
                 loader.setController(controller);
                 Parent root = loader.load();

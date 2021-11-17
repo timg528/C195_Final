@@ -36,6 +36,7 @@ import java.util.ResourceBundle;
 public class mainScreen implements Initializable {
 
     private boolean passesValidation;
+    boolean login;
 
     private final ObservableList<String> hours = FXCollections.observableArrayList();
     private final ObservableList<String> minutes = FXCollections.observableArrayList();
@@ -73,9 +74,12 @@ public class mainScreen implements Initializable {
 
 
     /**
-     * The mainscreen class. I ended up leaving it empty and using other classes, but retained it just in case I might need it.
+     * The mainscreen class. This takes a boolean login that then tells impendingAppointment() whether to fire or not.
+     * Originally, I had impendingAppointment() fire everytime the mainScreen was loaded, but that quickly became
+     * annoying.
      */
-    public mainScreen() {
+    public mainScreen(boolean login) {
+        this.login = login;
     }
 
     /**
@@ -90,7 +94,10 @@ public class mainScreen implements Initializable {
         generateComboBoxes();
         generateAppointmentsTable();
 
-        impendingAppointment();
+        if (this.login) {
+            impendingAppointment();
+        }
+
 
         allRadio.setToggleGroup(period);
         weekRadio.setToggleGroup(period);

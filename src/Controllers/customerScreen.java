@@ -160,7 +160,7 @@ public class customerScreen implements Initializable {
     private void returnToMain(Event event){
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/mainScreen.fxml"));
-            mainScreen controller = new mainScreen();
+            mainScreen controller = new mainScreen(false);
 
             loader.setController(controller);
             Parent root = loader.load();
